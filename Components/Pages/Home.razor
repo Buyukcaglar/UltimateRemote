@@ -1,0 +1,68 @@
+﻿@using UltimateRemote.Components.Shared.Functions
+@using UltimateRemote.Components.Shared.Functions.Drives
+
+@foreach (var layout in LayoutManager.Layouts)
+{
+    <Card Title="@(layout.Name)">
+        @foreach(var item in layout.ValidItems)
+        {
+            switch (item.Type)
+            {
+                case LayoutItemType.StorageContentFile:
+                case LayoutItemType.UploadedFile:
+                    <UserFile Item="item" />
+                    break;
+                case LayoutItemType.HVSCSIDFile:
+                case LayoutItemType.JukeboxPlaylist:
+                    <Jukebox Item="item" />
+                    break;
+                case LayoutItemType.PlaySidMusic:
+                    <PlaySidMusic />
+                    break;
+                case LayoutItemType.PlayModMusic:
+                    <PlayModMusic />
+                    break;
+                case LayoutItemType.RunLoadProgram:
+                    <RunLoadProgram />
+                    break;
+                case LayoutItemType.RunCartridge:
+                    <RunCartridge />
+                    break;
+                case LayoutItemType.MachineFunctions:
+                    <Machine />
+                    break;
+                case LayoutItemType.ResetMachine:
+                case LayoutItemType.RebootMachine:
+                    <BasicFunction FuncType="@item.Type" />
+                    break;
+                case LayoutItemType.ResetRebootStack:
+                    <ResetRebootStack />
+                    break;
+                case LayoutItemType.FloppyDrives:
+                    <FloppyDrives />
+                    break;
+                case LayoutItemType.NonFloppyDrives:
+                    <NonFloppyDrives />
+                    break;
+                case LayoutItemType.DriveByBusId:
+                    <Drive BusId="@(item.GetData<KeyValuePair<string, int>>().Value)" />
+                    break;
+                case LayoutItemType.Streams:
+                    @if (DeviceManager.GetCurrentDevice(ToastService).Type == UltimateDeviceType.UltimateC64)
+                    {
+                        <Streams /> 
+                    }
+                    break;
+                case LayoutItemType.CreateDiskImage:
+                    <CreateDiskImage />
+                    break;
+                case LayoutItemType.GetOnDeviceFileInfo:
+                    <GetOnDeviceFileInfo />
+                    break;
+            }
+        }
+    </Card>
+}
+<script>
+    setContentHeight()
+</script>

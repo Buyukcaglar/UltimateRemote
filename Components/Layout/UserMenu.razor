@@ -1,0 +1,53 @@
+﻿<li class="nav-item nav-item-dropdown-lg dropdown ms-lg-2">
+    <a href="javascript:void(0)" class="navbar-nav-link align-items-center rounded-pill p-1" data-bs-toggle="dropdown">
+        <i class="ph-duotone ph-gear"></i>
+    </a>
+    <div class="dropdown-menu dropdown-menu-end">
+        <a href="@Blazor.RouteTemplates.DeviceManager" class="dropdown-item">
+            <i class="ph-duotone ph-monitor me-2"></i>
+            Device Manager
+        </a>
+        <a href="@Blazor.RouteTemplates.StorageManager" class="dropdown-item">
+            <i class="ph-duotone ph-usb me-2"></i>
+            Storage Content Manager
+        </a>
+        <a href="@Blazor.RouteTemplates.LayoutManager" class="dropdown-item">
+            <i class="ph-duotone ph-layout me-2"></i>
+            Layout Manager
+        </a>
+        <a href="@Blazor.RouteTemplates.ConfigurationManager" class="dropdown-item">
+            <i class="ph-duotone ph-sliders me-2"></i>
+            Configuration Manager
+        </a>
+        <a href="@Blazor.RouteTemplates.BasicEditor" class="dropdown-item">
+            <i class="ph-duotone ph-code me-2"></i>
+            Basic Editor
+        </a>
+        <a href="@Blazor.RouteTemplates.JukeboxManager" class="dropdown-item">
+            <i class="ph-duotone ph-vinyl-record me-2"></i>
+            Jukebox Manager
+        </a>
+        <a href="@Blazor.RouteTemplates.Preferences" class="dropdown-item">
+            <i class="ph-duotone ph-toggle-left me-2"></i>
+            Preferences
+        </a>
+        <div class="dropdown-divider"></div>
+        <a href="javascript:void(0)" class="dropdown-item themeSwitcher" onclick="switchTheme();">
+            <i class="ph-duotone ph-moon me-2" id="themeSwitcher"></i>
+            Switch to dark theme
+        </a>
+        <div class="dropdown-divider"></div>
+        <a href="@Blazor.RouteTemplates.Help" class="dropdown-item">
+            <i class="ph-duotone ph-question me-2"></i>
+            Help
+        </a>
+        <a href="javascript:void(0)" class="dropdown-item" @onclick="DisplayAboutModal">
+            <i class="ph-duotone ph-info me-2"></i>
+            About Ultimate Remote
+        </a>
+    </div>
+</li>
+
+<script>
+    adjustThemeSwitcher();
+</script>

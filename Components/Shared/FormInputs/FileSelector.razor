@@ -1,0 +1,38 @@
+﻿@using UltimateRemote.Models
+@inherits BaseComponent
+<div class="@ContainerCss">
+    <div class="form-text bg-light border border-bottom-0 p-1 mb-0 d-flex justify-content-between align-items-center @HeaderLabelContainerCss">
+        <span class="fw-semibold">@HeaderLabel</span>
+        <div class="d-flex flex-row justify-content-end">
+            @if (HeaderContent != null)
+            {
+                @HeaderContent
+            }
+            @if (FileLists is {Length: > 0})
+            {
+                <ContextDropdown HeaderLabel="@Strings.Generic.SearchInLists"
+                                 HeaderIconCss="file-search"
+                                 Options="FileLists"
+                                 ItemSelectedEvent="SearchInList"/>
+            }
+        </div>
+    </div>
+    <div class="input-group">
+        <DropdownList T="DeviceLocation" Options="@DeviceLocations" 
+                      HeaderLabel="Location" 
+                      HeaderIconCss="hard-drives ph-duotone"
+                      ContainerCss="m-0 d-flex"
+                      ButtonCss="@($"dropdown-toggle p-1 {DeviceLocationButtonCss}")"
+                      AlignMenuStart="true"
+                      LabelFunc="location => location.Name" 
+                      IconFunc="@(location => location.IconCss ?? "")" 
+                      ItemSelectedEvent="OnDeviceLocationSelect" />
+        <TextInput Placeholder="@Placeholder" @bind-Value="FilePath" Css="@($"rounded-top-0 {_textInputValidationStateStyle}")" />
+        @if (null != InputGroupContent)
+        {
+            @InputGroupContent
+        }
+        <ButtonInput Css="@ActionButtonCss" IconCss="@ButtonIconCss" ClickedEvent="ButtonClicked" />
+    </div>
+
+</div>

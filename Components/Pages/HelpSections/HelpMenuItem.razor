@@ -1,0 +1,42 @@
+﻿@inherits MenuItemBase
+@if (null != ItemAttribute)
+{
+    <li class="@GetItemCss(ItemAttribute)">
+        @if (!ItemAttribute.NonSelectable)
+        {
+            <a href="@ItemLink" class="text-body">
+                @if (!string.IsNullOrWhiteSpace(ItemAttribute.IconCss))
+                {
+                    <i class="ph-@ItemAttribute.IconCss me-2"></i>
+                }
+                @ItemAttribute.Name
+            </a>
+        }
+        else
+        {
+            @ItemAttribute.Name
+            @if (!string.IsNullOrWhiteSpace(ItemAttribute.IconCss))
+            {
+                <i class="ph-@ItemAttribute.IconCss me-2"></i>
+            }
+        }
+        @if (ItemAttribute.HasSubTopics)
+        {
+            <a data-bs-toggle="collapse" class="d-flex align-items-center text-body collapsed" href="#@ItemAttribute.Name.ToSlug()">
+                <i class="ph-caret-down collapsible-indicator ms-auto"></i>
+            </a>
+        }
+    </li>
+    @if (ItemAttribute.HasSubTopics)
+    {
+        <li id="@ItemAttribute.Name.ToSlug()" class="border-top border-bottom ms-2px collapse">
+            <ul class="list-plain">
+                @for (var i = 0; i < ItemAttribute.SubTopics!.Length; i++)
+                {
+                    var subItem = ItemAttribute.SubTopics![i];
+                    <HelpMenuItem MenuItem="subItem" Index="i" />
+                }
+            </ul>
+        </li>
+    }
+}

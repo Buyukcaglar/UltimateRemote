@@ -1,0 +1,25 @@
+﻿@inherits BaseComponent
+
+@if (!string.IsNullOrWhiteSpace(DriveInfo?.Key))
+{
+    switch (DriveInfo.Value.Value.Type)
+    {
+        case "1541":
+        case "1571":
+        case "1581":
+            <FloppyDrive DriveInfo="DriveInfo.Value" DriveChangedEvent="@(() => GetDriveInfo(false))" />
+            break;
+    }
+
+    switch (DriveInfo?.Key)
+    {
+        case "IEC Drive":
+        case "softiec": // <- saw this one on api docs, guess its changed since ...
+            <IECDrive DriveInfo="DriveInfo.Value" DriveChangedEvent="@(() => GetDriveInfo(false))" />
+            break;
+        case "Printer Emulation":
+            <PrinterEmu DriveInfo="DriveInfo.Value" DriveChangedEvent="@(() => GetDriveInfo(false))" />
+            break;
+    }
+
+}

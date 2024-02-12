@@ -1,0 +1,20 @@
+﻿@inherits BaseFileFunctionComponent
+
+<FunctionCard Title="@Strings.Function.Names.PlaySidMusic" IconClass="@Strings.Function.Icons.PlaySidMusic" InfoText="@Strings.Function.Infos.PlaySidMusic">
+    <FileSelector Placeholder="@Strings.Generic.SidFileSelectorPlaceHolder"
+                  ButtonIconCss="play ph-duotone"
+                  FileTypeGroups="AllowedFileTypeGroups"
+                  ModalTitleTemplate="Search SID files in {0}"
+                  DeviceLocations="EnabledLocations"
+                  Enable74CharWarning="true"
+                  ButtonClickedEvent="ButtonClicked">
+        <HeaderContent>
+            <RecentFilesDropdown FileTypeGroups="AllowedFileTypeGroups"
+                                 ItemSelectedEvent="HistoryItemSelected" />
+            <ButtonInput Css="form-text border-0 m-0 p-1 mx-1" IconCss="upload ph-dutotone" ClickedEvent="UploadFile" />
+        </HeaderContent>
+        <InputGroupContent>
+            <NumberInput @bind-Value="_songNr" Min="1" Max="99" />
+        </InputGroupContent>
+    </FileSelector>
+</FunctionCard>

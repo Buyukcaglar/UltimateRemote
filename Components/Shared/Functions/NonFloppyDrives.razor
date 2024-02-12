@@ -1,0 +1,23 @@
+﻿@using UltimateRemote.Components.Shared.Functions.Drives
+@inherits BaseComponent
+@if (_driveInfos is {Length: > 0})
+{
+    foreach (var driveInfo in _driveInfos)
+    {
+        @if (!string.IsNullOrWhiteSpace(driveInfo.Key))
+        {
+            switch (driveInfo.Key)
+            {
+                case "IEC Drive":
+                case "softiec":
+                    <IECDrive DriveInfo="driveInfo" DriveChangedEvent="@(() => OnDeviceListUpdated(null, EventArgs.Empty))" />
+                    break;
+                case "Printer Emulation":
+                    <PrinterEmu DriveInfo="driveInfo" DriveChangedEvent="@(() => OnDeviceListUpdated(null, EventArgs.Empty))" />
+                    break;
+            }
+
+        }
+
+    }
+}

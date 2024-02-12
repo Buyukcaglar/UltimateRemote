@@ -1,0 +1,14 @@
+﻿@if (string.IsNullOrWhiteSpace(Label))
+{
+    <button type="button" class="btn btn-light ph-@(IconCss) @Css" @onclick="ButtonClicked"></button>
+}
+else
+{
+    <button type="button" class="btn btn-light @Css" @onclick="@(() => ClickedEvent.InvokeAsync())">
+        <span class="form-text fw-semibold m-0">@Label</span>
+        @if (!string.IsNullOrWhiteSpace(IconCss))
+        {
+            <i class="form-text ps-1 m-0 ph-@(IconCss)"></i>
+        }
+    </button>
+}

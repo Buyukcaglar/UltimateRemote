@@ -1,0 +1,39 @@
+﻿@using UltimateRemote.Models
+<Modal ShowFooter="false" Size="UltimateRemote.Enums.ModalSize.Large" Title="@ModalTitle" VCenter="true" Show="true" BodyCss="p-1">
+    <Content>
+        <div class="d-flex flex-column align-items-center">
+            <CompositeTextInput Placeholder="Type to start search" Label="@InputLabel" ValueChanged="ValueChanged" />
+            @if (_selectedItems.Count > 0)
+            {
+                <ButtonInput Label="Add Selected Tunes" Css="m-2" ClickedEvent="AddItems" />
+            }
+        </div>
+        @if (_searchResult is { Length: > 0 })
+        {
+            <div class="d-flex flex-column form-text mt-2 list-group">
+                @foreach (var sidFileInfo in _searchResult)
+                {
+                    <div class="d-flex justify-content-between align-items-center list-group-item list-group-item-action">
+                        @if (MultiSelect)
+                        {
+                            <ItemCheckBoxSwitch T="SidFileInfo"
+                                                Item="@sidFileInfo"
+                                                SelectedItems="@_selectedItems"
+                                                ValueChangedEvent="@OnItemSelect" />
+                        }
+                        
+                        <div class="d-flex flex-column flex-fill px-1">
+                            <span class="text-break">@sidFileInfo.FilePath</span>
+                            <div>
+                                <span class="fw-semibold"># of Songs:</span> @sidFileInfo.NumberOfSongs
+                                <span class="fw-semibold ms-1">Total Length</span> @sidFileInfo.TotalLength.ToString()
+                            </div>
+                        </div>
+                        
+                        <i class="ph-duotone ph-hand-tap m-1" role="button" @onclick="@(() => ItemSelected(sidFileInfo))"></i>
+                    </div>
+                }
+            </div>
+        }
+    </Content>
+</Modal>

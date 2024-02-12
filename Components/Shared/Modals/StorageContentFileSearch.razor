@@ -1,0 +1,90 @@
+﻿<Modal ShowFooter="false" Size="UltimateRemote.Enums.ModalSize.Large" Title="@ModalTitle" VCenter="true" Show="true" BodyCss="p-1">
+    <Content>
+        <div class="d-flex justify-content-center">
+            <div class="d-flex flex-column">
+                <CompositeTextInput Placeholder="Type to start search" ValueChanged="ValueChanged">
+                    <CustomLabel>
+                        <div class="form-text bg-light border border-bottom-0 rounded-top px-2 py-1 mb-0 d-flex justify-content-between align-items-center">
+                            <span>@_inputLabel</span>
+                            <ContextDropdown HeaderLabel="Search in file types" 
+                                             HeaderIconCss="asterisk" 
+                                             Options="_fileTypeGroupOptions" 
+                                             ItemSelectedEvent="SearchInExtensions" />
+                        </div>
+                    </CustomLabel>
+                </CompositeTextInput>
+                <div>
+                    <div class="d-flex form-text bg-light border rounded px-2 py-1 align-items-center justify-content-center">
+                        <span style="margin-top:2px">@Strings.Generic.SearchOnlyFileNames</span>
+                        <CheckBoxSwitch @bind-Value="_searchOnlyFileNames"/>
+                    </div>
+                </div>
+                <LabelInput LabelText="@ExtensionsIndicator" />
+                @if (!_selectionEnabled)
+                {
+                    <span class="text-warning">
+                        <i class="ph-duotone ph-warning text-warning pe-1"></i>
+                        @((MarkupString)Strings.ContentListSearch.NoDeviceRegistered)
+                    </span>
+                }
+            </div>
+        </div>
+
+        @if (_searchResult is { Count: > 0 })
+        {
+            <div class="table-responsive rounded">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>File</th>
+                        <th class="text-center">
+                            <i class="ph-duotone ph-clipboard-text"></i>
+                        </th>
+                        @if (_selectionEnabled)
+                        {
+                            <th class="text-center">Select</th>
+                        }
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var file in _searchResult)
+                    {
+                        <tr>
+                            <td class="text-break">@file</td>
+                            <td class="text-break" role="button" @onclick="() => CopyToClipboard(file)">
+                                <i class="ph-duotone ph-copy"></i>
+                            </td>
+                            @if (_selectionEnabled)
+                            {
+                                if (_enforceApiV01CharLimit && file.Length > 74)
+                                {
+                                    <td class="text-center" role="button" onclick="blockPagePopUp('bcApiV01Warning')">
+                                        <i class="ph-duotone ph-warning text-warning"></i>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td class="text-center" role="button" @onclick="@(() => ItemSelected(file))">
+                                        <i class="ph-duotone ph-hand-tap"></i>
+                                    </td>
+                                }
+                            }
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+
+            </div>
+        }
+        
+    </Content>
+</Modal>
+
+<div id="bcApiV01Warning" class="bg-transparent text-body" style="display: none;">
+    <div class="text-justify">@((MarkupString)Strings.ContentListSearch.ApiV01CharLimit(_currentDeviceName))</div>
+    <br /><br />
+    <button id="bcApiV01WarningClose" class="btn btn-sm btn-default text-body border">
+        Dismiss
+        <i class="ph-duotone ph-x-square ms-1"></i>
+    </button>
+</div>

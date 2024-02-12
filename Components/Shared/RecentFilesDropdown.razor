@@ -1,0 +1,13 @@
+﻿@using UltimateRemote.Models
+@inherits BaseComponent
+@if (_recentFiles is {Length: > 0 })
+{
+    <DropdownList T="HistoryItem" 
+                  ContainerCss="border-0 m-0 mx-1"
+                  ButtonCss="ph-clock-counter-clockwise m-0 py-1 px-1 border-0"
+                  HeaderIconCss="file-search"
+                  Options="_recentFiles"
+                  ItemSelectedEvent="OnItemSelected"
+                  LabelFunc="item => item.FileName"
+                  IconFunc="GetHistoryItemIcon" />
+}

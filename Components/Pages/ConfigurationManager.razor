@@ -1,0 +1,26 @@
+﻿@inherits BaseComponent
+
+<h3 class="border-bottom mb-2 text-center">@Strings.Function.Names.ConfigurationManager</h3>
+
+@if (_configCategories is { Length: > 0 })
+{
+    foreach (var configCategory in _configCategories)
+    {
+        <Card Title="@configCategory.CategoryName" BodyCss="">
+            <ExternalActions>
+                <a class="text-body ms-1 pe-2" title="Save Configuration to Flash" role="button" @onclick="@(() => ConfirmConfigurationOperation(ConfigOp.SaveToFlash))">
+                    <i class="ph-lightning ph-duotone"></i>
+                </a>
+                <a class="text-body ms-1 pe-2" title="Load Configuration From Flash" role="button" @onclick="@(() => ConfirmConfigurationOperation(ConfigOp.LoadFromFlash))">
+                    <i class="ph-file-arrow-up ph-duotone"></i>
+                </a>
+                <a class="text-body ms-1 pe-2" title="Reset Configuration" role="button" @onclick="@(() => ConfirmConfigurationOperation(ConfigOp.ResetToDefault))">
+                    <i class="ph-recycle ph-duotone"></i>
+                </a>
+            </ExternalActions>
+            <ChildContent>
+                <ConfigCategory CategoryName="@configCategory.CategoryName" ConfigCategoryItems="@configCategory.CategoryItems" />
+            </ChildContent>
+        </Card>
+    }
+}

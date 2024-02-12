@@ -1,0 +1,104 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+    <PropertyGroup>
+        <TargetFrameworks>net8.0-ios;net8.0-maccatalyst;net8.0-android</TargetFrameworks>
+        <!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
+        <!-- <TargetFrameworks>$(TargetFrameworks);net8.0-tizen</TargetFrameworks> -->
+
+        <!-- Note for MacCatalyst:
+            The default runtime is maccatalyst-x64, except in Release config, in which case the default is maccatalyst-x64;maccatalyst-arm64.
+            When specifying both architectures, use the plural <RuntimeIdentifiers> instead of the singular <RuntimeIdentifier>.
+            The Mac App Store will NOT accept apps with ONLY maccatalyst-arm64 indicated;
+            either BOTH runtimes must be indicated or ONLY macatalyst-x64. -->
+        <!-- For example: <RuntimeIdentifiers>maccatalyst-x64;maccatalyst-arm64</RuntimeIdentifiers> -->
+
+        <OutputType>Exe</OutputType>
+        <RootNamespace>UltimateRemote</RootNamespace>
+        <UseMaui>true</UseMaui>
+        <SingleProject>true</SingleProject>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <EnableDefaultCssItems>false</EnableDefaultCssItems>
+        <Nullable>enable</Nullable>
+
+        <!-- Display name -->
+        <ApplicationTitle>Ultimate Remote</ApplicationTitle>
+
+        <!-- App Identifier -->
+        <ApplicationId>com.buyukcaglar.ultimateremote</ApplicationId>
+
+        <!-- Versions -->
+        <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+        <ApplicationVersion>1</ApplicationVersion>
+
+        <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
+        <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">14.0</SupportedOSPlatformVersion>
+        <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">24.0</SupportedOSPlatformVersion>
+        <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
+        <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
+        <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(TargetFramework)'=='net8.0-ios'">
+      <CodesignKey>Apple Development: Created via API (6J4C523F57)</CodesignKey>
+      <CodesignProvision>VS: com.buyukcaglar.ultimateremote Development</CodesignProvision>
+      <ProvisioningType>automatic</ProvisioningType>
+    </PropertyGroup>
+
+    <PropertyGroup>
+      <Title>Ultimate Remote</Title>
+    </PropertyGroup>
+
+    <PropertyGroup>
+      <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
+      <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
+      <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
+      <PackageCertificateThumbprint>73208CBEA51DCC93AA8ED2AC9799EA61A7FAB653</PackageCertificateThumbprint>
+      <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
+      <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
+      <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
+      <GenerateTestArtifacts>True</GenerateTestArtifacts>
+      <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <!-- App Icon -->
+        <MauiIcon Include="Resources\AppIcon\appicon.svg" Color="#F1F4F9" />
+        
+        <!-- Splash Screen -->
+        <MauiSplashScreen Include="Resources\Splash\splashicon.svg" Color="#F1F4F9" BaseSize="96,96" />
+
+        <!-- Images -->
+        <MauiImage Include="Resources\Images\*" />
+        <MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
+
+        <!-- Custom Fonts -->
+        <MauiFont Include="Resources\Fonts\*" />
+
+        <!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
+        <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="Resources\AppIcon\appicon.svg">
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Blazored.Modal" Version="7.1.0" />
+        <PackageReference Include="Blazored.Toast" Version="4.1.0" />
+        <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
+        <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
+        <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="$(MauiVersion)" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
+        <PackageReference Include="MonkeyCache.FileStore" Version="2.0.1" />
+        <PackageReference Include="SharpCompress" Version="0.36.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Models\RequestModels\" />
+    </ItemGroup>
+
+</Project>

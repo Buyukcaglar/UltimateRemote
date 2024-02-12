@@ -1,0 +1,24 @@
+﻿@if (Options is { Length: > 0 })
+{
+    <button type="button" class="btn btn-light btn-icon @ButtonCss" data-bs-toggle="dropdown"></button>
+    <div class="dropdown-menu dropdown-menu-end" style="min-width: 8rem;">
+        <div class="dropdown-header d-flex py-0 px-2 justify-content-between">
+            @HeaderLabel
+            @if (!string.IsNullOrWhiteSpace(HeaderIconCss))
+            {
+                <i class="ph-@(HeaderIconCss) ms-1"></i>
+            }
+        </div>
+        <div class="dropdown-divider"></div>
+        @foreach (var option in Options)
+        {
+            <a href="javascript:void(0);" class="dropdown-item" @onclick="() => ItemSelectedEvent.InvokeAsync(option.Value)">
+                @if (!string.IsNullOrWhiteSpace(option.IconCss))
+                {
+                    <i class="ph-@(option.IconCss) mx-1"></i>
+                }
+                @option.Label
+            </a>
+        }
+    </div>
+}

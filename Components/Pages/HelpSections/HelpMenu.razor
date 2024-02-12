@@ -1,0 +1,55 @@
+﻿<div class="card me-2 pt-2 pe-3 d-none d-md-block">
+    <ul class="list-plain ps-2 mb-2">
+        @foreach (var helpTopicIdentifier in HelpTopicIdentifier.Basics.GetEnumValues().Where(identifier => identifier.GetHelpTopicAttr<HelpTopicIdentifier>()?.TopLevel == true))
+        {
+            <HelpMenuItem MenuItem="helpTopicIdentifier" />
+        }
+    </ul>
+    @* 
+    <ul class="list-plain ps-2 mb-2">
+        <li><a href="#" class="text-body"><i class="ph-list me-2"></i> Basics, Icons and Functions</a></li>
+        <li><a href="#" class="text-body"><i class="ph-duotone ph-gear me-2"></i> User Menu</a></li>
+        <li><a href="#" class="text-body"><i class="ph-duotone ph-monitor me-2"></i> Device Manager</a></li>
+        <li><a href="#" class="text-body"><i class="ph-duotone ph-usb me-2"></i> Storage Content Manager</a></li>
+        <li class="d-flex justify-content-between">
+            <a href="#" class="text-body"><i class="ph-duotone ph-layout me-2"></i> Layout Manager</a>
+            <a data-bs-toggle="collapse" class="d-flex align-items-center text-body collapsed" href="#layoutItems">
+                <i class="ph-caret-down collapsible-indicator ms-auto"></i>
+            </a>
+        </li>
+        <li id="layoutItems" class="border-top border-bottom ms-2px collapse">
+            <ul class="list-plain">
+                <li class="text-muted">Layout Item Types</li>
+
+                <li class="text-muted border-bottom border-top">User Types</li>
+
+                <li><a href="#" class="text-body"><i class="ph-usb ph-duotone me-2"></i> Storage Content File</a></li>
+                <li><a href="#" class="text-body"><i class="ph-upload ph-duotone me-2"></i> Uploaded File</a></li>
+                <li><a href="#" class="text-body"><i class="ph-wave-triangle ph-duotone me-2"></i> HVSC SID File</a></li>
+                <li><a href="#" class="text-body"><i class="ph-playlist ph-duotone me-2"></i> Jukebox Playlist</a></li>
+
+                <li class="text-muted border-bottom border-top">Function Types</li>
+
+                <li><a href="#" class="text-body"><i class="ph-wave-triangle ph-duotone me-2"></i> Play SID Music</a></li>
+                <li><a href="#" class="text-body"><i class="ph-music-note ph-duotone me-2"></i> Play MOD Music</a></li>
+                <li><a href="#" class="text-body"><i class="ph-app-window ph-duotone me-2"></i> Run/Load Program</a></li>
+                <li><a href="#" class="text-body"><i class="ph-circuitry ph-duotone me-2"></i> Run Cartridge</a></li>
+                <li><a href="#" class="text-body"><i class="ph-arrow-clockwise ph-duotone me-2"></i> Reset Machine</a></li>
+                <li><a href="#" class="text-body"><i class="ph-arrow-counter-clockwise ph-duotone me-2"></i> Reboot Machine</a></li>
+                <li><a href="#" class="text-body"><i class="ph-arrows-clockwise ph-duotone me-2"></i> Reset/Reboot Stack</a></li>
+                <li><a href="#" class="text-body"><i class="ph-cpu ph-duotone me-2"></i> Machine Functions</a></li>
+                <li><a href="#" class="text-body"><i class="ph-floppy-disk ph-duotone me-2"></i> Floppy Drives</a></li>
+                <li><a href="#" class="text-body"><i class="ph-hard-drives ph-duotone me-2"></i> Non-Floppy Drives</a></li>
+                <li><a href="#" class="text-body"><i class="ph-floppy-disk ph-duotone me-2"></i> Drive by BusId</a></li>
+                <li><a href="#" class="text-body"><i class="ph-flow-arrow ph-duotone me-2"></i> Streams</a></li>
+                <li><a href="#" class="text-body"><i class="ph-disc ph-duotone me-2"></i> Create Disk Image</a></li>
+                <li><a href="#" class="text-body"><i class="ph-file-search ph-duotone me-2"></i> Get File Info</a></li>
+            </ul>
+        </li>
+        <li><a href="#" class="text-body"><i class="ph-duotone ph-sliders me-2"></i> Configuration Manager</a></li>
+        <li><a href="#" class="text-body"><i class="ph-duotone ph-code me-2"></i> Basic Editor</a></li>
+        <li><a href="#" class="text-body"><i class="ph-duotone ph-vinyl-record me-2"></i> Jukebox Manager</a></li>
+        <li><a href="#" class="text-body"><i class="ph-duotone ph-toggle-left me-2"></i> Preferences</a></li>
+    </ul>
+ *@
+</div>

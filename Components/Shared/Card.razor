@@ -1,0 +1,25 @@
+﻿<div class="card">
+    <div class="card-header bg-light d-flex flex-wrap">
+        <h6 class="mb-0">@Title</h6>
+        @if (DisplayActions)
+        {
+            <div class="d-inline-flex ms-auto">
+                @if (null != ExternalActions)
+                {
+                    @ExternalActions
+                }
+                @* <a class="text-body" data-card-action="fullscreen">
+                    <i class="ph-arrows-out"></i>
+                </a> *@
+                <a class="text-body ms-1" data-card-action="collapse">
+                    <i class="ph-caret-down"></i>
+                </a>
+            </div>
+        }
+    </div>
+    <div class="collapse show">
+        <div class="card-body @BodyCss">
+            @ChildContent
+        </div>
+    </div>
+</div>

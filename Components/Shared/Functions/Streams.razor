@@ -1,0 +1,36 @@
+﻿@inherits BaseComponent
+@if (CurrentDevice.Type == UltimateDeviceType.UltimateC64)
+{
+    <FunctionCard Title="@Strings.Function.Names.Streams"
+                  IconClass="@Strings.Function.Icons.Streams"
+                  InfoText="@Strings.Function.Infos.Streams">
+        <div class="fs-container rounded-top border border-bottom-0 d-flex">
+            <DropdownList T="StreamType" Options="@(StreamType.Video.GetEnumValues())"
+                          HeaderLabel="@Strings.Streams.StreamType"
+                          HeaderIconCss="flow-arrow ph-duotone"
+                          ContainerCss="m-0 border-start"
+                          ButtonCss="border-0 rounded-0 rounded-top-start dropdown-toggle p-1"
+                          LabelTemplate="@Strings.Streams.StreamTypeTemplate"
+                          LabelFunc="streamType => streamType.GetStringValue()!"
+                          @bind-SelectedOption="_streamType" />
+            <ButtonInput IconCss="stop ph-duotone ms-1" 
+                         Label="Stop"
+                         Css="btn btn-light p-1 border-0 border-end border-start rounded-0 rounded-top-end mx-n1 w-100"
+                         ClickedEvent="@StopStream" />
+        </div>
+        <InputGroupTextButton Id="streamIpTextBox"
+                              Label="@Strings.Streams.StreamTo"
+                              LabelCss="border border-bottom-0 p-1 m-0"
+                              ButtonIconCss="play ph-duotone"
+                              Placeholder="@Strings.Streams.IpPortPlaceHolder"
+                              MaxLen="21"
+                              Required="true"
+                              DisplayMaxLengthCount="false"
+                              CustomInputFunction="@JsFunctions.IpAndPort"
+                              ContainerCss="fs-container"
+                              ValidatorMessage="@Strings.Streams.InvalidIpPort"
+                              HideValidationMessage="true"
+                              FuncValidator="ValidateIpPort"
+                              ButtonClickedEvent="StartStream" />
+    </FunctionCard>
+}

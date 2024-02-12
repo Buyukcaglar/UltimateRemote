@@ -1,0 +1,33 @@
+﻿<div class="modal fade @(Show ? "show d-block" : "") @(VCenter ? "modal-dialog-centered" : "")" tabindex="-1" role="dialog">
+    <div class="modal-backdrop fade @(Show ? "show": "")" @onclick="Cancel"></div>
+    <div class="modal-dialog modal-dialog-scrollable modal@(Size.GetStringValue())" style="z-index: 1050">
+        <div class="modal-content">
+            <div class="modal-header bg-light py-2 px-3">
+                <h6 class="modal-title hstack gap-2 mb-0">
+                    @if (!string.IsNullOrWhiteSpace(TitleIcon))
+                    {
+                        <i class="ph-@TitleIcon py-1"></i>
+                    }
+                    @Title
+                </h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" @onclick="Cancel"></button>
+            </div>
+            <div class="modal-body @BodyCss">
+                @Content
+            </div>
+            @if (ShowFooter)
+            {
+                <div class="modal-footer">
+                    @if (FooterContent == null)
+                    {
+                        <button type="button" class="btn btn-primary" @onclick="Close">Kapat</button>
+                    }
+                    else
+                    {
+                        @FooterContent
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>

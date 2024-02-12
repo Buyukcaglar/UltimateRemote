@@ -1,0 +1,43 @@
+﻿@inherits BaseFormInput
+
+<div class="@ContainerCss">
+
+    @if (!string.IsNullOrWhiteSpace(Label))
+    {
+        <div class="form-text fw-semibold bg-light @LabelCss">@Label</div>
+    }
+
+    <div class="input-group">
+        @if (null != BeforeTextInputContent)
+        {
+            @BeforeTextInputContent
+        }
+        
+        <TextInput Placeholder="@Placeholder" 
+                   MaxLen="@MaxLen" 
+                   Required="@Required" 
+                   Disabled="@Disabled" 
+                   NumericInputOnly="@NumericInputOnly"
+                   Css="@($"{InputCss} {ValidationState.InputStyle()}")"
+                   @bind-Value="@Value" />
+        
+        <ButtonInput Label="@ButtonText" 
+                     IconCss="@ButtonIconCss" 
+                     Css="@($"rounded-top-0 {ButtonCss}")"
+                     ClickedEvent="ButtonClicked" />
+    </div>
+
+    <div class="d-flex flex-row">
+        @if (!HideValidationMessage)
+        {
+            <div class="d-flex me-auto @ValidationState.FeedbackStyle()">@ValidationMessage</div>
+        }
+        @if (MaxLen is > 0 && DisplayMaxLengthCount)
+        {
+            <div class="d-flex justify-content-end col-auto form-text me-1 @((Value?.Length ?? 0) == MaxLen.Value ? "text-danger" : null)">
+                @(Value?.Length ?? 0) / @MaxLen.Value
+            </div>
+        }
+    </div>
+
+</div>

@@ -1,0 +1,100 @@
+﻿<p>Home screen layout can be customized, items and shortcuts may be added or removed from this module.</p>
+
+<p>Ultimate Remote presents default layout which has the following layout groups and content; <span class="fw-semibold text-muted ">Run/Load, Play Music, Machine, Floppy Drives, Non-Floppy Drives, Create Disk Image, Get File Info</span> </p>
+
+
+<p>Layouts may contain several different Layout Items as desired.</p>
+
+<p>The icons and their functions are described below;</p>
+
+<p>
+    <span class="fw-semibold">
+        <i class="ph-plus-circle ph-duotone"></i>
+    </span>
+    Adds new Layout. To rename newly added (or any previously added) layout, @PlatformDependent.ClickTap to name area on top left corner in order to edit its name.
+</p>
+
+<p>
+    <span class="fw-semibold">
+        <i class="ph-caret-down ph-duotone"></i>
+    </span>
+    Used to sort Layouts or Layout Items, moves down relevant Layout or Layout Item.
+</p>
+
+<p>
+    <span class="fw-semibold">
+        <i class="ph-caret-up ph-duotone"></i>
+    </span>
+    Used to sort Layouts or Layout Items, moves up relevant Layout or Layout Item.
+</p>
+
+<p>
+    <span class="fw-semibold">
+        <i class="ph-trash ph-duotone"></i>
+    </span>
+    Removes Layout and all its contents (Layout Items) along with it.
+</p>
+
+<p>
+    <span class="fw-semibold">
+        <i class="ph-trash"></i>
+    </span>
+    Removes Layout Item from Layout.
+</p>
+
+<p>
+    <span class="fw-semibold">
+        <i class="ph-caret-down"></i>
+        Add Item:
+    </span>
+    Adds a new Layout Item of the selected type to Layout.
+</p>
+
+<h6 class="border-bottom w-fitcontent">About Layout Items</h6>
+
+<p>
+    There are two main types of Layout Items exists, these are;
+</p>
+
+<p>
+    <span class="fw-semibold border-bottom">User Item Types</span>
+</p>
+<p>
+    <span class="fw-semibold">Storage Content File:</span> This is basicaly a shortcut to a file that is found on the Ultimate device. Any arbitrary valid file path or any selected item from previously imported Storage Content File List can be used as this type of shortcut.
+</p>
+<p>
+    <span class="fw-semibold">Uploaded File:</span> This is an uploaded file, when selected it is required to upload a new external file, for this shortcut, app will internally cache and create a shortcut for it.<br />
+</p>
+<p>
+    <span class="fw-semibold">HVSC SID File:</span> When High Voltage SID Collection is imported via Jukebox Manager module, HVSC SID Files can be searched and added as shortcuts to the layouts. This will display a mini-player on the layout for the relevant SID file.<br />
+</p>
+<p>
+    <span class="fw-semibold">Jukebox Playlist:</span> When High Voltage SID Collection is imported via Jukebox Manager module and any Jukebox Playlists are created from the same module. Those playlists can be selected as shortcuts to be added to relevant layout. A mini player similar to HVSC SID File player will appear on layout.
+</p>
+<p>
+    <span class="fw-semibold">Note about customization:</span> All User Item Types except Jukebox Playlist can be customized with user provided <span class="fw-semibold">Name (or Title)</span> and with an <span class="fw-semibold">externally uploaded icon file</span>. It is recommended that the custom icon file provided to be in <span class="fw-semibold">1:1 square aspect ratio</span>, and <span class="fw-semibold">below 100kb in size</span>. Any PNG, WebP or SVG files are eligible for custom icon.
+</p>
+
+<p>
+    <span class="fw-semibold border-bottom">Function Types</span>
+</p>
+
+<p>
+    Most Function Types are straightforward and perform actions that are related to their names. The following are side notes related to some of them.
+</p>
+
+<p>
+    <span class="fw-semibold">Reset Reboot Stack:</span> This is purely aesthetical component, changes its stack orientation depending whether being displayed on mobile or on desktop. Otherwise, performs the same functionalities as the individual ones.
+</p>
+
+<p>
+    <span class="fw-semibold">Floppy Drives, Non-Floppy Drives, Drive By BusId:</span> These components tries to query current selected Ultimate device, if API query fails, then they are not displayed at all.
+</p>
+
+<p>
+    <span class="fw-semibold">Machine:</span> Read/Write Debug register is Ultimate C64 only API feature, so if the current selected device type is not UC64 these functions will not be visible on the UI.
+</p>
+
+<p>
+    <span class="fw-semibold">Streams:</span> Streams is Ultimate C64 only API feature, so if the current selected device type is not UC64, this component will not be displayed at all.
+</p>

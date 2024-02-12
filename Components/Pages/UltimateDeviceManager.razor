@@ -1,0 +1,148 @@
+﻿@inherits BaseComponent
+
+<h3 class="border-bottom mb-2 text-center">@Strings.Function.Names.DeviceManager</h3>
+
+<div class="d-flex justify-content-center flex-wrap">
+    <FunctionCard IconClass="target"
+                  Title="@Strings.Function.Names.ScanDevice"
+                  InfoText="@Strings.Function.Infos.ScanDevice"
+                  RaiseEventOnClick="true"
+                  ClickedEvent="Scan"/>
+
+    <FunctionCard IconClass="target"
+                  Title="@Strings.Function.Names.ScanIp"
+                  InfoText="@Strings.Function.Infos.ScanIp" 
+                  ContainerCss="mw-17rem">
+        <InputGroupTextButton Id="scanIpTextBox"
+                              Label="@Strings.Generic.IpAddress"
+                              ButtonIconCss="target ph-duotone"
+                              Placeholder="@Strings.DeviceManager.IpAddressPlaceHolder"
+                              MaxLen="15"
+                              Required="true"
+                              DisplayMaxLengthCount="false"
+                              NumericInputOnly="true"
+                              ContainerCss="fs-container"
+                              ValidatorMessage="@Strings.DeviceManager.InvalidIpAddress"
+                              HideValidationMessage="true"
+                              FuncValidator="ValidateIpAddress"
+                              ButtonClickedEvent="ScanIp"/>
+    </FunctionCard>
+    
+    <FunctionCard IconClass="pencil-line"
+                  Title="@Strings.Function.Names.ManualRegister"
+                  InfoText="@Strings.Function.Infos.ManualRegister"
+                  ContainerCss="mw-17rem">
+        <CompositeTextInput Id="manualRegisterDeviceIp"
+                            Placeholder="@Strings.DeviceManager.IpAddressPlaceHolder"
+                            MaxLen="15"
+                            Required="true"
+                            NumericInputOnly="true"
+                            DisplayMaxLengthCount="false"
+                            ContainerCss="fs-container"
+                            InputCss="rounded-0"
+                            @bind-Value="_manualRegisterDevice.IpAddress">
+            <CustomLabel>
+                <div class="d-flex form-text bg-light rounded rounded-bottom-0 border border-bottom-0 p-2 m-0 justify-content-between align-items-center">
+                    <span>@Strings.Generic.IpAddress</span>
+                    <DropdownList T="UltimateDeviceType"
+                                  Options="_deviceTypes"
+                                  ButtonCss="dropdown-toggle p-1 border-0"
+                                  Label="@Strings.Generic.SelectDeviceType"
+                                  LabelTemplate="Device Type: {0}"
+                                  ContainerCss="m-0 ms-2"
+                                  @bind-SelectedOption="_manualRegisterDevice.Type"
+                                  LabelFunc="@(deviceType => deviceType.GetStringValue()!)"/>
+                </div>
+            </CustomLabel>
+        </CompositeTextInput>
+        <CompositeTextInput Id="manualRegisterDeviceName"
+                            Placeholder="@Strings.DeviceManager.DeviceNamePlaceHolder"
+                            MaxLen="35"
+                            DisplayMaxLengthCount="false"
+                            ContainerCss="fs-container"
+                            @bind-Value="_manualRegisterDevice.Name">
+            <CustomLabel>
+                <div class="d-flex form-text bg-light border border-bottom-0 border-top-0 p-2 mt-1 justify-content-between align-items-center">
+                    <span>@Strings.Generic.DeviceName</span>
+                    <ButtonInput Css="rounded p-0 px-1 border-0" IconCss="pencil-line ph-dutotone" ClickedEvent="ManualRegister" />
+                </div>
+            </CustomLabel>
+        </CompositeTextInput>
+    </FunctionCard>
+
+</div>
+
+@if (_devicesToBeRegistered is {Length: > 0})
+{
+    <div class="d-flex flex-column align-items-center">
+        <h6 class="border-bottom mb-2 text-center">Found Devices</h6>
+        <div class="d-flex flex-row flex-wrap justify-content-center">
+            @{ var idx = 0; }
+            @foreach (var device in _devicesToBeRegistered)
+            {
+                <CompositeTextInput MaxLen="35"
+                                    Required="true"
+                                    ContainerCss="me-1"
+                                    Placeholder="@Strings.DeviceManager.DeviceNamePlaceHolder"
+                                    @bind-Value="device.Name">
+                    <CustomLabel>
+                        <span class="text-body">
+                            @Strings.DeviceManager.NewDeviceLabel(idx: ++idx, ip: device.IpAddress, device.Version)
+                        </span>
+                        <DropdownList T="UltimateDeviceType"
+                                      Options="_deviceTypes"
+                                      ButtonCss="dropdown-toggle p-1 border-0"
+                                      Label="Select Device Type"
+                                      LabelTemplate="Device Type: {0}"
+                                      ContainerCss="d-flex justify-content-between align-items-center p-1 border rounded rounded-bottom-0 border-bottom-0"
+                                      @bind-SelectedOption="device.Type"
+                                      LabelFunc="@(deviceType => deviceType.GetStringValue()!)" />
+                    </CustomLabel>
+                </CompositeTextInput>
+            }
+        </div>
+    </div>
+    <div class="d-flex justify-content-center text-body">
+        <ButtonInput Label="Register" IconCss="pencil-line ph-duotone" ClickedEvent="RegisterDevices" />
+    </div>
+    <div id="deviceRegistry"></div>
+    <script>
+        scrollToId("deviceRegistry");
+    </script>
+}
+
+@if (DeviceManager.Devices is {Count: > 0})
+{
+    <div class="table-responsive rounded">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th colspan="7" class="text-center">List of Registered Devices</th>
+            </tr>
+            <tr>
+                <th>Device Name</th>
+                <th class="text-center">IP Address</th>
+                <th class="text-center">API Version</th>
+                <th class="text-center">Device Type</th>
+                <th class="text-center">Online</th>
+                <th class="text-center">Current</th>
+                <th class="text-center">Remove</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var device in DeviceManager.Devices)
+            {
+                <tr>
+                    <td>@device.Name</td>
+                    <td class="text-center">@device.IpAddress</td>
+                    <td class="text-center">@($"v{device.Version}")</td>
+                    <td class="text-center">@device.Type.GetStringValue()</td>
+                    <td class="text-center"><BoolBadge BoolFunc="@(() => device.Online)" TrueText="ONLINE" FalseText="OFFLINE" /></td>
+                    <td class="text-center"><BoolBadge BoolFunc="@(() => device.Equals(DeviceManager.GetCurrentDevice(ToastService)))" TrueText="YES" FalseText="NO" /></td>
+                    <td class="text-center" role="button" @onclick="() => RemoveDevice(device.IpAddress)"><i class="ph-duotone ph-trash-simple"></i></td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}

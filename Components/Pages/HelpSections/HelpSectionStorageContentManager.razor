@@ -1,0 +1,74 @@
+﻿<p>Contents of Storage Media (usb stick, sd card, ssd disk etc. whatever storage media is being used on your Ultimate device) that is used on Ultimate device(s) can be imported from this module. In order to import contents of storage media, it is neccessary to create an import file first and then select created import file from here.</p>
+
+<h6>How to create import file?</h6>
+
+<p class="fw-semibold">
+    In a nutshell, Storage Content Import Files are simple text files (with .txt extension) containing list of full path of files in storage media, seperated by lines.
+</p>
+
+<p>Creation of import file is more or less the same on each platform. The following are the steps to create import file on Windows platforms;</p>
+
+<ol class="list-group list-group-borderless list-group-numbered">
+    <li class="list-group-item py-1">Insert (mount) your storage media to your PC.</li>
+    <li class="list-group-item py-1">Open command prompt and go to root folder of your storage media</li>
+    <li class="list-group-item py-1">
+        Run the folowing command 
+        <code>dir /b /s /a-d >> c:\temp\my-ultimate-files.txt</code> <br />
+        Note that <code>c:\temp\my-ultimate-files.txt</code> is just for example, you can change the filename (but not the .txt extension) and save path however as you like.
+    </li>
+</ol>
+
+<p class="d-flex flex-column">
+    The following listing formats are all valid formats and Ultimate Remote will automatically recognize and parse contents;
+    <div class="d-flex flex-wrap">
+        <code class="code-lines m-1">H:\Demos\CSDB\All\0-9\006\Test of the Demo Designer 3.0\testdd3-006.d64
+            H:\Demos\CSDB\All\0-9\007\Cry\cry_007.d64
+            H:\Demos\CSDB\All\0-9\007\P\pdemo_007.d64
+            H:\Demos\CSDB\All\0-9\007\Radioactivity\radioactivity_007.d64
+            H:\Demos\CSDB\All\0-9\007\Split Personalities Demo\splitpersonalitiesdemo_007.d64
+        </code>
+        <code class="code-lines m-1">/Demos/CSDB/All/0-9/006/Test of the Demo Designer 3.0/testdd3-006.d64
+            /Demos/CSDB/All/0-9/007/Cry/cry_007.d64
+            /Demos/CSDB/All/0-9/007/P/pdemo_007.d64
+            /Demos/CSDB/All/0-9/007/Radioactivity/radioactivity_007.d64
+            /Demos/CSDB/All/0-9/007/Split Personalities Demo/splitpersonalitiesdemo_007.d64
+        </code>
+    </div>
+</p>
+
+<p>
+    Note that mount point names on file listings are <b>NOT valid</b> (although Windows drive letters are ok) for import purposes and needs to be removed manually if present;
+    <div class="d-flex flex-wrap">
+        <code class="code-lines m-1"><b>/media</b>/Demos/CSDB/All/0-9/006/Test of the Demo Designer 3.0/testdd3-006.d64
+            <b>/media</b>/Demos/CSDB/All/0-9/007/Cry/cry_007.d64
+            <b>/media</b>/Demos/CSDB/All/0-9/007/P/pdemo_007.d64
+            <b>/media</b>/Demos/CSDB/All/0-9/007/Radioactivity/radioactivity_007.d64
+            <b>/media</b>/Demos/CSDB/All/0-9/007/Split Personalities Demo/splitpersonalitiesdemo_007.d64
+        </code>
+    
+        <code class="code-lines m-1"><b>/hd0</b>/Demos/CSDB/All/0-9/006/Test of the Demo Designer 3.0/testdd3-006.d64
+            <b>/hd0</b>/Demos/CSDB/All/0-9/007/Cry/cry_007.d64
+            <b>/hd0</b>/Demos/CSDB/All/0-9/007/P/pdemo_007.d64
+            <b>/hd0</b>/Demos/CSDB/All/0-9/007/Radioactivity/radioactivity_007.d64
+            <b>/hd0</b>/Demos/CSDB/All/0-9/007/Split Personalities Demo/splitpersonalitiesdemo_007.d64
+        </code>
+    </div>
+    If mount point names exists and not removed, Ultimate Remote will complete import operation but will cause 'file not found' errors while trying to use.
+
+</p>
+
+<p>Once the file is ready, it can be imported by @PlatformDependent.ClickingTapping <span class="fw-semibold">Import SD Card/USB Drive Content List <i class="ph-pencil-line ph-duotone"></i></span> </p>
+
+<p>
+    Following system folders will be excluded by default and will be filtered automatically;
+    <code>"System Volume Information", ".DS_Store", ".Spotlight-V100", ".fseventsd", ".db", "__MACOSX"</code>
+</p>
+
+<p>
+    Only the files with following extensions are imported;
+    <code>.d64, .g64, .d71, .g71, .d81, .prg, .t64, .sid, .crt, .bin, .reu, .rom, .tap, .p00</code>
+</p>
+
+<p class="fw-semibold">It is required to provide a unique name for each imported file.</p>
+
+<p>Successfully imported file lists will be listed at the bottom of screen, along with basic information about them. <i class="ph-info ph-duotone"></i> Icon will provide list of imported files grouped by their extensions and their file count. </p>

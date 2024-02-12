@@ -1,0 +1,15 @@
+﻿@if (!string.IsNullOrWhiteSpace(LabelText) || !string.IsNullOrWhiteSpace(LabelHtml))
+{
+    <div class="@ContainerCss">
+        <div class="d-flex form-text bg-light border rounded @CssPaddingOverride @Css">
+            @if (!string.IsNullOrWhiteSpace(LabelText))
+            {
+                <span class="@LabelCss">@LabelText</span>
+            }
+            @if (!string.IsNullOrWhiteSpace(LabelHtml))
+            {
+                @((MarkupString)LabelHtml)
+            }
+        </div>
+    </div>
+}

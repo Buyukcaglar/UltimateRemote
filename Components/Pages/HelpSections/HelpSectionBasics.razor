@@ -1,0 +1,70 @@
+﻿<p>
+    Wellcome to Ultimate Remote, the following section consists basics about the operation mechanism of application.
+</p>
+<p>
+    Header portion of Ultimate Remote consists three different functions. From left to right these are;
+</p>
+
+<p>
+    <span class="fw-semibold">C64/App Icon: </span>Acts as return to Home Screeen button.
+</p>
+
+<p>
+    <span class="fw-semibold">Device List: </span> Registered Ultimate devices will appear here and if more than one device is registered, then they can be switched on-the-fly. Any functions will be performed on the current selected device. Device list will represent registered devices in following naming manner <span class="fw-semibold">{Device Name}</span> - <span class="fw-semibold">{Device Ip}</span> - <span class="fw-semibold">{Device Type}</span> - <span class="fw-semibold">{Api Version}</span>
+</p>
+
+<p>
+    <span class="fw-semibold">User Menu (<i class="ph-duotone ph-gear"></i>): </span> User Menu contains several shortcuts to various modules, such that Device Manager, Storage Content Manager, Layout Manager etc.
+</p>
+
+<p>
+    In order to be able to use Ultimate Remote app, it is necessary to register Ultimate device(s) on local network. This can be achieved via <i class="ph-duotone ph-monitor me-1"></i>Device Manager.
+</p>
+
+<h6 class="border-bottom w-fitcontent">Common Icons and Their Functions</h6>
+
+<p>
+    The following icons and their functionalities can be seen on the app;
+</p>
+
+<p>
+    <span class="fw-semibold">
+        <i class="ph-info ph-duotone me-1"></i> Info:
+    </span>
+    Specifies information about related function. Will open popup and provide brief info/help about aforementioned function.
+</p>
+
+<p>
+    <span class="fw-semibold">
+        <i class="ph-upload me-1"></i> Upload:
+    </span>
+    Denotes uploading of an external file to Ultimate device where in enabled available functions such that; Play SID/MOD, Run/Load Program, Run Cartridge, Mount Disk Image.
+</p>
+
+<p>
+    <span class="fw-semibold">
+        <i class="ph-clock-counter-clockwise me-1"></i> History:
+    </span>
+    When History is not disabled (default is enabled) and there appears to be any related recently used files for the relevant function, this icon appears and lists recently used files. For a file to be added to history list, relevant api request for involving for that file must have returned success response, otherwise files with failed requests will not be added to history list. In history list files with <i class="ph-usb ph-duotone me-1"></i> icon denotes that file is a shortcut to a 'Storage Content File' which represents a file path on Ultimate device and <i class="ph-upload ph-duotone me-1"></i> icon denotes previously uploaded external file from @(PlatformDependent.DeviceName). Note that previously uploaded files are automatically cached by Ultimate Remote internally and even if removed from device, they will function as expected.
+</p>
+
+<p>
+    <span class="fw-semibold">
+        <i class="ph-paper-plane-tilt ph-duotone me-1"></i> Perform Action:
+    </span>
+    Most of the Ultimate Remote functions are reactive, which means there are no confirm or action button to perform relevant action. For example when a recently used file is selected from history list, relevant action to that file will automatically be performed. However, some actions may require user input like manually entering a file path on Ultimate device, or selecting a specific song number on a SID file to play etc. So this icon performs relevant action where user has required to enter manual input data or provide values. On Play SID/MOD function this is replaced by play (<i class="ph-play ph-duotone"></i>) icon.
+</p>
+
+<p>
+    <span class="fw-semibold">
+        <i class="ph-gear ph-duotone me-1"></i> Configuration:
+    </span>
+    Aside from being icon for User Menu on top right corner. This icon specifies relevant functions have their related configurations settings. By @(PlatformDependent.ClickingTapping) this icon will result of opening relevant configuration settings popup to display. Changes made here will be reflected instantaneously, but will not be persisted until specifically saved from Configuration Manager module.
+</p>
+
+<p>
+    <span class="fw-semibold">
+        <i class="ph-caret-down me-1"></i> Caret Down:
+    </span>
+    Aside from one exception mentioned below, this icon represents a drop-down menu. Most of the time it will either be Device Locations on Ultimate device or previosly imported Storage Content Files list. The other functionality is to collapse or expand User Layouts.
+</p>

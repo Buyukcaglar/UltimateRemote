@@ -1,0 +1,16 @@
+﻿@inherits BaseFileFunctionComponent
+
+<FunctionCard Title="@Strings.Function.Names.PlayModMusic" IconClass="@Strings.Function.Icons.PlayModMusic" InfoText="@Strings.Function.Infos.PlayModMusic" ContainerCss="mw-19rem">
+    <FileSelector Placeholder="@Strings.Generic.ModFileSelectorPlaceHolder"
+                  ButtonIconCss="play ph-duotone"
+                  FileTypeGroups="AllowedFileTypeGroups"
+                  ModalTitleTemplate="Search MOD files in {0}"
+                  DeviceLocations="EnabledLocations"
+                  ButtonClickedEvent="ButtonClicked">
+        <HeaderContent>
+            <RecentFilesDropdown FileTypeGroups="AllowedFileTypeGroups"
+                                 ItemSelectedEvent="HistoryItemSelected" />
+            <ButtonInput Css="form-text border-0 m-0 p-1 mx-1" IconCss="upload ph-dutotone" ClickedEvent="UploadFile" />
+        </HeaderContent>
+    </FileSelector>
+</FunctionCard>

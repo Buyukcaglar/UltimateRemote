@@ -1,0 +1,21 @@
+﻿@using UltimateRemote.Models
+@inherits BaseComponent
+
+@if (RegisteredDevices.Length > 0)
+{
+    <div class="d-flex rounded border bg-light align-items-center">
+        <span class="form-text m-0 mx-1 @OnlineIndicatorCss">@DropdownLabel</span>
+        <DropdownList T="UltimateDeviceInfo" 
+                      ContainerCss="m-0"
+                      ButtonCss="dropdown-toggle p-1 py-2 border-0 h-100"
+                      Options="RegisteredDevices" 
+                      LabelFunc="@_labelFunc"
+                      NoLabel="true"
+                      ItemSelectedEvent="OnDeviceSelect"
+                      @bind-SelectedOption="SelectedDevice" />
+    </div>
+}
+else
+{
+    <a href="@Blazor.RouteTemplates.DeviceManager" class="form-text">No Device Registered</a>
+}

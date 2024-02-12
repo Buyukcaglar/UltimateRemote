@@ -1,0 +1,23 @@
+﻿@inherits BaseComponent
+<style>
+    #basicmsg { flex-grow: 1; padding: 20px; display: none; background-color: red; color: white; width: 400px; }    
+    .c64-textarea { font-family: 'C64Pro', monospace; background-color: #1966be; /* Commodore 64 screen color */ color: #68bee6; /* Light blue text color */ border: none; border-radius: 0; padding: 10px; font-size: 16px; line-height: 1.5; width: 900px; height: 400px; resize: none; }
+</style>
+
+<h3 class="d-flex align-items-center justify-content-center border-bottom mb-2">
+    <span>@Strings.Function.Names.BasicEditor</span>
+</h3>
+
+<div id="tokenizer" class="d-flex flex-column accordion align-items-md-center">
+    <p>Enter BASIC program below, and hit Upload button to send it directly to your machine.</p>
+    <p><b>Special characters:</b></p>
+    <div id="tableContainer" class="my-2"><table border="0"><tr><td>{rvs off}</td><td>{rvs on}</td><td>{up}</td><td>{down}</td><td>{left}</td><td>{rght}</td><td>{clr}</td><td>{clear}</td><td>{home}</td><td>{blk}</td></tr><tr><td>{wht}</td><td>{red}</td><td>{cyn}</td><td>{pur}</td><td>{grn}</td><td>{blu}</td><td>{yel}</td><td>{org}</td><td>{brn}</td><td>{lred}</td></tr><tr><td>{dgry}</td><td>{mgry}</td><td>{lgrn}</td><td>{lblu}</td><td>{lgry}</td><td></td><td></td><td></td><td></td><td></td></tr></table></div>
+    <textarea id="basiceditor" class="c64-textarea" cols="80" spellcheck="false">10 print chr$(205.5+rnd(1));:goto 10</textarea>
+    <p class="my-2">
+        <input type="button" class="btn btn-light" value="Upload" @onclick="ParseBasic" />
+    </p>
+
+    <div id="basicmsg">An error has occurred. Check for valid codes.</div>
+
+</div>
+

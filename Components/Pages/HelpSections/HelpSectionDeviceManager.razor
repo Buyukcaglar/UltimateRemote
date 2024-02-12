@@ -1,0 +1,21 @@
+﻿<p>
+    Device Manager provides registration facilities for Ultimate devices to be registered within the application.
+</p>
+
+<p>Ultimate devices on local network can be registered by one the following three ways;</p>
+
+<p><span class="fw-semibold">Scan Devices (<i class="ph-target ph-duotone"></i>):</span>  Performs automatic scan by first trying to obtain local IP address of @PlatformDependent.DeviceName and if successful then scans entire subnet for Ultimate device by querying API Url on each 0-255 IP address range. For automatic scan to work properly, your Ultimate device(s) must be online on the same network and subnet as @PlatformDependent.DeviceName. At the end of the scan process, found device(s) will be listed bottom of the screen.</p>
+
+<p><span class="fw-semibold">Scan Specific IP Range (<i class="ph-target ph-duotone"></i>):</span>  If Ultimate device(s) is/are on a different subnet or network other than @PlatformDependent.DeviceName's, this function enables user to enter specific ip address to sweep provided ip address range by querying API Url on each 0-255 IP address. For automatic scan to work properly, your Ultimate device(s) must be online on the same network and subnet as with provided IP address. At the end of the scan process, found device(s) will be listed bottom of the screen.</p>
+
+<p><span class="fw-semibold">Manual Register (<i class="ph-pencil-line ph-duotone"></i>):</span> If the IP address of Ultimate device(s) is/are known, then it/they can be manually registered from here. In oder to successfully complete registry operation, Ultimate device should be up and running and have the IP address provided for API version querying.</p>
+
+<p>
+    Aside from providing IP address for the registering devices either in automatic scan or manual register, Device Type (wheter U-II or UC64) must be selected. Device Name is optional and if not provided app will assign default name of 'My Ultimate Device' to every registered device.
+</p>
+
+<p>
+    Successfully registered devices will appear in a list at the bottom of the screen, and also on the device selection drop-down at header area.
+</p>
+
+<p class="fw-semibold">Note that device list is unique by ip address, which means if more than one device having same ip address is registered, (either by automatic scan or manual registry) last registered one will override the previous one.</p>

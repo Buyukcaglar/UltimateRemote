@@ -1,0 +1,13 @@
+﻿<div class="toast bg-transparent fade show" role="alert" aria-live="assertive" aria-atomic="true" style="margin: auto;">
+    <div class="toast-header @HeaderColor.GetStringValue()">
+        <i class="@Icon.GetStringValue() me-2"></i>
+        <div class="fw-semibold me-auto">@Title</div>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    @if (!string.IsNullOrWhiteSpace(Message))
+    {
+        <div class="toast-body bg-light">
+            @((MarkupString)Message)
+        </div>
+    }
+</div>

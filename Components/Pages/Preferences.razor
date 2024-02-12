@@ -1,0 +1,85 @@
+﻿@inherits BaseComponent
+
+<h3 class="d-flex align-items-center justify-content-center border-bottom mb-2">
+    <span class="ms-auto">@Strings.Function.Names.Preferences</span>
+    <i class="ph-floppy-disk ph-duotone ms-auto" role="button" title="Save Preferences" @onclick="@SaveChanges"></i>
+</h3>
+
+<p class="text-center">
+    @((MarkupString)Strings.Preferences.SaveChangesDescription)
+</p>
+
+<div class="row justify-content-center m-1">
+    
+    <PrefItem Label="History Enabled" Css="@PrefItemCss">
+        <CheckBoxSwitch @bind-Value="@PrefsMgr.UserPrefs.HistoryEnabled"/>
+        <div class="@PrefItemDescCss">Controls automatic saving of recently used files. <span class="fw-semibold">Default:</span> Enabled</div>
+    </PrefItem>
+    
+    <PrefItem Label="History Size" Css="@PrefItemCss">
+        <div class="me-2">
+            <div class="input-group flex-nowrap">
+                <NumberInput Min="10" Max="500" @bind-Value="@HistorySize"/>
+            </div>
+        </div>
+        <div class="@PrefItemDescCss">Maximum number of items in history. This is shared between all history enabled components. <span class="fw-semibold">Min:</span> 10, <span class="fw-semibold">Max:</span> 500, Default: 100</div>
+    </PrefItem>
+    
+    <PrefItem Label="Popup Duration" Css="@PrefItemCss">
+        <div class="me-2">
+            <div class="input-group flex-nowrap">
+                <NumberInput Min="3" Max="30" @bind-Value="@SnackDuration"/>
+            </div>
+        </div>
+        <div class="@PrefItemDescCss">Popup display duration in seconds. <span class="fw-semibold">Min:</span> 3 <span class="fw-semibold">Max:</span> 30 <span class="fw-semibold">Default:</span> 5</div>
+    </PrefItem>
+    
+    <PrefItem Label="Connectivity Check" Css="@PrefItemCss">
+        <CheckBoxSwitch @bind-Value="@ConnectivityCheckEnabled" />
+        <div class="@PrefItemDescCss">Enables or disables connectivity check of registered ultimate devices. <span class="fw-semibold">Default:</span> Enabled</div>
+    </PrefItem>
+
+    <PrefItem Label="Connectivity Check Interval" Css="@PrefItemCss">
+        <div class="me-2">
+            <div class="input-group flex-nowrap">
+                <NumberInput Min="5" Max="30" @bind-Value="@ConnectivityCheckInterval"/>
+            </div>
+        </div>
+        <div class="@PrefItemDescCss">Device connectivity check interval in seconds. <span class="fw-semibold">Min:</span> 5, <span class="fw-semibold">Max:</span>: 30, <span class="fw-semibold">Default:</span> 5</div>
+    </PrefItem>
+    
+    <PrefItem Label="API Timeout" Css="@PrefItemCss">
+        <div class="me-2">
+            <div class="input-group flex-nowrap">
+                <NumberInput Min="1" Max="120" @bind-Value="@ApiTimeOutDuration"/>
+            </div>
+        </div>
+        <div class="@PrefItemDescCss">API request timeout duration in seconds. <span class="fw-semibold">Min:</span> 1, <span class="fw-semibold">Max:</span> 120, <span class="fw-semibold">Default:</span> 15</div>
+    </PrefItem>
+    
+    <PrefItem Label="API v0.1 Char Limit" Css="@PrefItemCss">
+        <CheckBoxSwitch @bind-Value="@PrefsMgr.UserPrefs.ApiV01CharLimitEnforcement" />
+        <div class="@PrefItemDescCss">Enables or disables character limit enforcement on SID file selection popup displays. <span class="fw-semibold">Default:</span> Enabled</div>
+    </PrefItem>
+    
+    <PrefItem Label="Display Shortcut Options" Css="@PrefItemCss">
+        <CheckBoxSwitch @bind-Value="@PrefsMgr.UserPrefs.DisplayShortcutOptions" />
+        <div class="@PrefItemDescCss">Displays extra functions on User File shortcuts. <span class="fw-semibold">Default:</span> Disabled</div>
+    </PrefItem>
+    
+    <PrefItem Label="HVSC Download Address" Css="@PrefItemCss">
+        <TextInput @bind-Value="@PrefsMgr.UserPrefs.HVSCArchiveLocation" />
+        <div class="@PrefItemDescCss">Download path for High Voltage SID Collection RAR archive. <span class="fw-semibold">Default:</span> https://hvsc.brona.dk/HVSC/HVSC_80-all-of-them.rar</div>
+    </PrefItem>
+    
+    <PrefItem Label="SongLengths Download Address" Css="@PrefItemCss">
+        <TextInput @bind-Value="@PrefsMgr.UserPrefs.SongLengthDbFileLocation" />
+        <div class="@PrefItemDescCss">Download path for HVSC Songlengths.md5 file. <span class="fw-semibold">Default:</span> https://www.hvsc.c64.org/download/C64Music/DOCUMENTS/Songlengths.md5</div>
+    </PrefItem>
+    
+    <PrefItem Label="Display file path on HVSC SID Play" Css="@PrefItemCss">
+        <CheckBoxSwitch @bind-Value="@PrefsMgr.UserPrefs.DisplayFilepathWhileHVSCPlay" />
+        <div class="@PrefItemDescCss">Displays full file path of SID file, instead of formatted file name while playing HVSC SID files. <span class="fw-semibold">Default:</span> Disabled</div>
+    </PrefItem>
+    
+</div>

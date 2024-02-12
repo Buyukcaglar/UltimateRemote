@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, shrink-to-fit=no" />
+    <meta name="theme-color" content="#f1f4f9">
+    <title>Ultimate Remote</title>
+    <base href="/" />
+
+    <link href="/assets/fonts/roboto/roboto.css" rel="stylesheet" type="text/css">
+    <link href="/assets/icons/phosphor/regular/styles.min.css" rel="stylesheet" type="text/css">
+    <link href="/assets/icons/phosphor/duotone/style.css" rel="stylesheet" type="text/css">
+    <link href="/assets/css/theme.css" id="stylesheet" rel="stylesheet" type="text/css">
+    <link href="/assets/css/overrides.css" rel="stylesheet" type="text/css">
+
+    
+    <script src="/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/jquery.blockUI.js"></script>
+    <script src="/assets/js/ultimateremote.js"></script>
+
+    <link rel="stylesheet" href="UltimateRemote.styles.css" />
+    <link rel="icon" type="image/png" href="favicon.png" />
+
+    <style>
+        .startup { position: absolute; top: 30%; left: 50%; -moz-transform: translateX(-50%) translateY(-50%); -webkit-transform: translateX(-50%) translateY(-50%); transform: translateX(-50%) translateY(-50%); }        
+    </style>
+
+    <script type="text/javascript">
+        function setDarkTheme() {
+            localStorage.setItem('theme', 'dark');
+            document.documentElement.setAttribute('data-color-theme', 'dark');
+            removeClass(document.getElementById('themeSwitcher'), 'ph-moon');
+            addClass(document.getElementById('themeSwitcher'), 'ph-sun');
+
+            var themeColor = document.querySelector('meta[name="theme-color"]');            
+            themeColor.setAttribute('content', "#32333A");
+        }
+
+        function setLightTheme() {
+            localStorage.setItem('theme', 'light');
+            document.documentElement.setAttribute('data-color-theme', 'light');
+            removeClass(document.getElementById('themeSwitcher'), 'ph-sun');
+            addClass(document.getElementById('themeSwitcher'), 'ph-moon');
+
+            var themeColor = document.querySelector('meta[name="theme-color"]');
+            themeColor.setAttribute('content', "#252b36");
+        }
+    </script>
+
+</head>
+
+<body oncontextmenu="event.preventDefault()">
+
+    <div class="status-bar-safe-area"></div>
+
+    <div id="app">
+        <div class="startup text-center">
+            <svg version="1.1" viewBox="0 0 213 213" xmlns="http://www.w3.org/2000/svg" title="Ultimate Remote" alt="UltimateRemote Logo" class="rounded mb-2" style="max-width: 96px;">
+                <g fill="none" stroke-width="2"><path d="m213 70.9-89.65-0.14" stroke="#f1b093" vector-effect="non-scaling-stroke"/><path d="m123.35 70.76-0.07-17.46a1.67 1.65-82 0 0-1.18-1.58c-7.56-2.23-15.5-3.2-23.18-2.28q-23.44 2.79-38.62 21.46" stroke="#a19b8e" vector-effect="non-scaling-stroke"/><path d="m60.3 70.9-60.3-0.01" stroke="#f1b093" vector-effect="non-scaling-stroke"/><path d="m123.35 70.76v5.93a0.52 0.51-77.6 0 1-0.73 0.47q-15.76-7.43-32.39-1.43-7.17 2.59-12.53 9.05" stroke="#aa6f5f" vector-effect="non-scaling-stroke"/><path d="m77.7 84.78q-4.63 5.51-6.27 14.23" stroke="#ab8760" vector-effect="non-scaling-stroke"/><path d="m71.43 99.01q-1.16 6.99 0.05 13.91" stroke="#ac9c60" vector-effect="non-scaling-stroke"/><path d="m71.48 112.92q1.29 8.14 5.62 14.02" stroke="#72816c" vector-effect="non-scaling-stroke"/><path d="m77.1 126.94q5.08 7.27 12.93 10.45 14.4 5.84 28.44 0.64c1.39-0.52 2.62-1.28 4.09-1.49q0.61-0.08 0.64 0.54l0.18 4.07" stroke="#516a72" vector-effect="non-scaling-stroke"/><path d="m123.38 141.15-0.05 17.89a1.19 1.19 0 0 1-0.84 1.14q-26.67 8.03-49.77-7.37-4.72-3.15-13.12-11.76" stroke="#a19b8e" vector-effect="non-scaling-stroke"/><path d="m59.6 141.05q-0.31-0.34-0.27-0.87 0.04-0.48-0.26-0.86-4.47-5.74-6.89-12.57" stroke="#516a72" vector-effect="non-scaling-stroke"/><path d="m52.18 126.75q-2.69-6.61-3.55-13.92" stroke="#72816c" vector-effect="non-scaling-stroke"/><path d="m48.63 112.83q-0.71-6.62 0.04-13.7" stroke="#ac9c60" vector-effect="non-scaling-stroke"/><path d="m48.67 99.13q0.78-6.72 3.49-13.89" stroke="#ab8760" vector-effect="non-scaling-stroke"/><path d="m52.16 85.24q2.88-7.32 8.14-14.34" stroke="#aa6f5f" vector-effect="non-scaling-stroke"/><path d="m213 84.98-48.77 0.08" stroke="#fb9c65" vector-effect="non-scaling-stroke"/><path d="m164.23 85.06 1.14-3.16q0.18-0.51-0.36-0.51l-41.27-0.04a0.48 0.47 0.6 0 0-0.48 0.46l-0.08 3.73" stroke="#aa6f5f" vector-effect="non-scaling-stroke"/><path d="m123.18 85.54q-3.6-1.02-5.68-0.9-9.24 0.54-18.5 0.43-10.43-0.12-21.3-0.29" stroke="#fb9c65" vector-effect="non-scaling-stroke"/><path d="m52.16 85.24-52.16-0.24" stroke="#fb9c65" vector-effect="non-scaling-stroke"/><path d="m164.23 85.06-5.82 14.04" stroke="#ab8760" vector-effect="non-scaling-stroke"/><path d="m158.41 99.1-1.64 3.54q-0.23 0.49-0.76 0.49l-31.65-0.02a0.94 0.93-2 0 1-0.94-0.87l-0.24-3.3" stroke="#ac9c60" vector-effect="non-scaling-stroke"/><path d="m123.18 98.94v-13.4" stroke="#ab8760" vector-effect="non-scaling-stroke"/><path d="m123.18 98.94-51.75 0.07" stroke="#fdc966" vector-effect="non-scaling-stroke"/><path d="m213 98.97-46.72 0.17" stroke="#fdc966" vector-effect="non-scaling-stroke"/><path d="m166.28 99.14-7.87-0.04" stroke="#fdc966" vector-effect="non-scaling-stroke"/><path d="m48.67 99.13-48.67-0.17" stroke="#fdc966" vector-effect="non-scaling-stroke"/><path d="m166.28 99.14 0.11 13.73" stroke="#fede66" vector-effect="non-scaling-stroke"/><path d="m166.39 112.87-7.86 0.08" stroke="#c4c372" vector-effect="non-scaling-stroke"/><path d="m158.53 112.95-1.73-3.79q-0.21-0.46-0.72-0.47l-12.54-0.21q-0.16 0-0.29 0.08-0.12 0.07-0.26 0.07-8.87-0.03-18.04 0.04a2 1.98 10 0 0-1.85 1.28l-0.83 2.2" stroke="#fcb165" vector-effect="non-scaling-stroke"/><path d="m122.27 112.15q-0.52 0.25-1.16 0.3-7.16 0.57-14.36 0.5-17.46-0.17-35.27-0.03" stroke="#c4c372" vector-effect="non-scaling-stroke"/><path d="m48.63 112.83-48.63 0.08" stroke="#c4c372" vector-effect="non-scaling-stroke"/><path d="m213 112.95-46.61-0.08" stroke="#c4c372" vector-effect="non-scaling-stroke"/><path d="m158.53 112.95 5.75 14.02" stroke="#c29671" vector-effect="non-scaling-stroke"/><path d="m164.28 126.97q0.73 1.42 0.84 2.77 0.04 0.45-0.41 0.45l-40.17 0.04q-0.48 0-0.77-0.39-0.91-1.25-0.53-2.72" stroke="#a17f77" vector-effect="non-scaling-stroke"/><path d="m123.24 127.12q0.15-7.5 0.13-14.25 0-0.52-0.23-0.67-0.29-0.17-0.87-0.05" stroke="#c29671" vector-effect="non-scaling-stroke"/><path d="m123.24 127.12-46.14-0.18" stroke="#699184" vector-effect="non-scaling-stroke"/><path d="m52.18 126.75-52.18 0.08" stroke="#699184" vector-effect="non-scaling-stroke"/><path d="m213 126.98-48.72-0.01" stroke="#699184" vector-effect="non-scaling-stroke"/><path d="m59.6 141.05-59.6-0.03" stroke="#98aba5" vector-effect="non-scaling-stroke"/><path d="m213 141.02-89.62 0.13" stroke="#98aba5" vector-effect="non-scaling-stroke"/></g>
+                <path d="m0 0h213v70.9l-89.65-0.14-0.07-17.46a1.67 1.65-82 0 0-1.18-1.58c-7.56-2.23-15.5-3.2-23.18-2.28q-23.44 2.79-38.62 21.46l-60.3-0.01v-70.89z" fill="#e8dbc1"/>
+                <path d="m123.35 70.76v5.93a0.52 0.51-77.6 0 1-0.73 0.47q-15.76-7.43-32.39-1.43-7.17 2.59-12.53 9.05-4.63 5.51-6.27 14.23-1.16 6.99 0.05 13.91 1.29 8.14 5.62 14.02 5.08 7.27 12.93 10.45 14.4 5.84 28.44 0.64c1.39-0.52 2.62-1.28 4.09-1.49q0.61-0.08 0.64 0.54l0.18 4.07-0.05 17.89a1.19 1.19 0 0 1-0.84 1.14q-26.67 8.03-49.77-7.37-4.72-3.15-13.12-11.76-0.31-0.34-0.27-0.87 0.04-0.48-0.26-0.86-4.47-5.74-6.89-12.57-2.69-6.61-3.55-13.92-0.71-6.62 0.04-13.7 0.78-6.72 3.49-13.89 2.88-7.32 8.14-14.34 15.18-18.67 38.62-21.46c7.68-0.92 15.62 0.05 23.18 2.28a1.67 1.65-82 0 1 1.18 1.58l0.07 17.46z" fill="#5a5a5a"/>
+                <path d="m123.35 70.76 89.65 0.14v14.08l-48.77 0.08 1.14-3.16q0.18-0.51-0.36-0.51l-41.27-0.04a0.48 0.47 0.6 0 0-0.48 0.46l-0.08 3.73q-3.6-1.02-5.68-0.9-9.24 0.54-18.5 0.43-10.43-0.12-21.3-0.29 5.36-6.46 12.53-9.05 16.63-6 32.39 1.43a0.52 0.51-77.6 0 0 0.73-0.47v-5.93z" fill="#fa8464"/>
+                <path d="m60.3 70.9q-5.26 7.02-8.14 14.34l-52.16-0.24v-14.11l60.3 0.01z" fill="#fa8464"/>
+                <path d="m164.23 85.06-5.82 14.04-1.64 3.54q-0.23 0.49-0.76 0.49l-31.65-0.02a0.94 0.93-2 0 1-0.94-0.87l-0.24-3.3v-13.4l0.08-3.73a0.48 0.47 0.6 0 1 0.48-0.46l41.27 0.04q0.54 0 0.36 0.51l-1.14 3.16z" fill="#5a5a5a"/>
+                <path d="m77.7 84.78q10.87 0.17 21.3 0.29 9.26 0.11 18.5-0.43 2.08-0.12 5.68 0.9v13.4l-51.75 0.07q1.64-8.72 6.27-14.23z" fill="#fcb465"/>
+                <path d="m213 84.98v13.99l-46.72 0.17-7.87-0.04 5.82-14.04 48.77-0.08z" fill="#fcb465"/>
+                <path d="m0 85 52.16 0.24q-2.71 7.17-3.49 13.89l-48.67-0.17v-13.96z" fill="#fcb465"/>
+                <path d="m123.18 98.94 0.24 3.3a0.94 0.93-2 0 0 0.94 0.87l31.65 0.02q0.53 0 0.76-0.49l1.64-3.54 7.87 0.04 0.11 13.73-7.86 0.08-1.73-3.79q-0.21-0.46-0.72-0.47l-12.54-0.21q-0.16 0-0.29 0.08-0.12 0.07-0.26 0.07-8.87-0.03-18.04 0.04a2 1.98 10 0 0-1.85 1.28l-0.83 2.2q-0.52 0.25-1.16 0.3-7.16 0.57-14.36 0.5-17.46-0.17-35.27-0.03-1.21-6.92-0.05-13.91l51.75-0.07z" fill="#fede66"/>
+                <path d="m48.67 99.13q-0.75 7.08-0.04 13.7l-48.63 0.08v-13.95l48.67 0.17z" fill="#fede66"/>
+                <path d="m213 98.97v13.98l-46.61-0.08-0.11-13.73 46.72-0.17z" fill="#fede66"/>
+                <path d="m158.53 112.95 5.75 14.02q0.73 1.42 0.84 2.77 0.04 0.45-0.41 0.45l-40.17 0.04q-0.48 0-0.77-0.39-0.91-1.25-0.53-2.72 0.15-7.5 0.13-14.25 0-0.52-0.23-0.67-0.29-0.17-0.87-0.05l0.83-2.2a2 1.98 10 0 1 1.85-1.28q9.17-0.07 18.04-0.04 0.14 0 0.26-0.07 0.13-0.08 0.29-0.08l12.54 0.21q0.51 0.01 0.72 0.47l1.73 3.79z" fill="#fa8464"/>
+                <path d="m122.27 112.15q0.58-0.12 0.87 0.05 0.23 0.15 0.23 0.67 0.02 6.75-0.13 14.25l-46.14-0.18q-4.33-5.88-5.62-14.02 17.81-0.14 35.27 0.03 7.2 0.07 14.36-0.5 0.64-0.05 1.16-0.3z" fill="#8aa77e"/>
+                <path d="m48.63 112.83q0.86 7.31 3.55 13.92l-52.18 0.08v-13.92l48.63-0.08z" fill="#8aa77e"/>
+                <path d="m158.53 112.95 7.86-0.08 46.61 0.08v14.03l-48.72-0.01-5.75-14.02z" fill="#8aa77e"/>
+                <path d="m0 126.83 52.18-0.08q2.42 6.83 6.89 12.57 0.3 0.38 0.26 0.86-0.04 0.53 0.27 0.87l-59.6-0.03v-14.19z" fill="#477a89"/>
+                <path d="m123.24 127.12q-0.38 1.47 0.53 2.72 0.29 0.39 0.77 0.39l40.17-0.04q0.45 0 0.41-0.45-0.11-1.35-0.84-2.77l48.72 0.01v14.04l-89.62 0.13-0.18-4.07q-0.03-0.62-0.64-0.54c-1.47 0.21-2.7 0.97-4.09 1.49q-14.04 5.2-28.44-0.64-7.85-3.18-12.93-10.45l46.14 0.18z" fill="#477a89"/>
+                <path d="m0 141.02 59.6 0.03q8.4 8.61 13.12 11.76 23.1 15.4 49.77 7.37a1.19 1.19 0 0 0 0.84-1.14l0.05-17.89 89.62-0.13v71.98h-213v-71.98z" fill="#e8dbc1"/>
+            </svg>
+            <span class="text-nowrap" style="font-family:'C64Pro';">ULTIMATE REMOTE</span><br />
+            <span style="font-family:'C64Pro';">READY.</span>
+        </div>
+    </div>
+
+    <div id="blazor-error-ui">
+        An unhandled error has occurred.
+        <a href="" class="reload">Reload</a>
+        <a class="dismiss">🗙</a>
+    </div>
+
+    <div id="snack-container" class="toast-container toast-container position-absolute bottom-0 start-50 translate-middle-x mb-1"></div>
+
+    <script src="_framework/blazor.webview.js" autostart="false"></script>
+
+    <script type="text/javascript">
+        var currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'dark') {
+            setDarkTheme();
+        }
+        else {
+            setLightTheme();
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,98 @@
+﻿@using UltimateRemote.Models
+@inherits BaseComponent
+
+<h3 class="d-flex align-items-center justify-content-center border-bottom mb-2">
+    <span class="@(JukeboxService.HVSCImported ? "ms-auto" : null)">@Strings.Function.Names.JukeboxManager</span>
+    @if (JukeboxService.HVSCImported)
+    {
+        <i class="ph-plus-circle ph-duotone ms-auto" role="button" title="Add new playlist" @onclick="@AddPlaylist"></i>
+    }
+</h3>
+
+@if (JukeboxService.HVSCImported)
+{
+    @if (JukeboxService.Playlists.Length > 0)
+    {
+        @for (var index = 0; index < JukeboxService.Playlists.Length; index++)
+        {
+            var idx = index;
+            var playlist = JukeboxService.Playlists[idx];
+            <div class="rounded border mb-2">
+                <div class="d-flex justify-content-between">
+                    <div class="form-text fw-semibold rounded-bottom-end border-bottom border-end align-self-start m-0 p-1">
+                        <span id="playlistname-@playlist.Id" class="p-1" contenteditable="true" data-playlistid="@playlist.Id" data-playlistindex="@idx">@(playlist.Name)</span>
+                    </div>
+                    <div class="d-flex bg-light align-items-center border-start border-bottom rounded-bottom-start rounded-top-end">
+                        <ButtonInput Css="p-1 border-0 border-0 border-end rounded-0 rounded-bottom-start"
+                                     IconCss="trash ph-duotone"
+                                     ClickedEvent="@(() => RemovePlayListConfirm(idx, playlist.Name))" />
+                        <ButtonInput Label="Add Tune(s)"
+                                     Css="p-1 border-0 rounded-0 rounded-top-end h-100"
+                                     IconCss="plus-circle ph-duotone"
+                                     ClickedEvent="@(() => DisplayTuneSearchModal(idx))" />
+                    </div>
+                </div>
+
+                <ul class="list-group list-group-borderless">
+                    @for (var itemIndex = 0; itemIndex < playlist.Items.Count; itemIndex++)
+                    {
+                        var itemIdx = itemIndex;
+                        var item = playlist.Items[itemIndex];
+
+                        <li class="list-group-item list-group-item-action d-flex align-items-start justify-content-between">
+                            <a class="d-inline-flex text-body align-items-center">
+                                @if (playlist.Items.Count > 1)
+                                {
+                                    if (itemIdx > 0)
+                                    {
+                                        <i class="ph-caret-up ph-duotone me-2" role="button" @onclick="@(() => JukeboxService.MovePlaylistItemUp(idx, itemIdx))"></i>
+                                    }
+                                    if (itemIdx < playlist.Items.Count - 1)
+                                    {
+                                        <i class="ph-caret-down ph-duotone me-2" role="button" @onclick="@(() => JukeboxService.MovePlaylistItemDown(idx, itemIdx))"></i>
+                                    }
+                                }
+                                <i class="ph-wave-triangle ph-duotone me-2"></i>
+                                <label class="text-break">@item.FilePath</label>
+                            </a>
+                            <i class="ph-trash me-2" role="button" @onclick="@(() => RemoveItem(playlistIndex: idx, itemIndex: itemIdx))"></i>
+                        </li>
+                    }
+
+                    @if (playlist.Items.Count == 0)
+                    {
+                        <li class="list-group-item list-group-item-action d-flex align-items-start justify-content-between">
+                            <label>There are no tunes in this playlist.</label>
+                        </li>
+                    }
+
+                </ul>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-6 text-center">
+                @Strings.JukeboxManager.NoPlaylistsText
+                <br />
+                <ButtonInput Css="mt-2" Label="Create Playlist" ClickedEvent="@AddPlaylist" />
+            </div>
+        </div>
+    }
+}
+else
+{
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-6 text-center">
+            @Strings.JukeboxManager.NotYetImportedMessage
+            <br />
+            <ButtonInput Css="mt-2" Label="Start Import" ClickedEvent="ImportHvscPrompt"/>
+        </div>
+    </div>
+}
+
+
+
+
+

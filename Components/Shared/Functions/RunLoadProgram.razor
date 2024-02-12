@@ -1,0 +1,22 @@
+﻿@inherits BaseFileFunctionComponent
+
+<FunctionCard Title="@Strings.Function.Names.RunLoadProgram" IconClass="@Strings.Function.Icons.RunLoadProgram" InfoText="@Strings.Function.Infos.RunLoadProgram" ContainerCss="mw-19rem">
+    <FileSelector Placeholder="@Strings.Generic.PrgFileSelectorPlaceHolder"
+                  ButtonIconCss="paper-plane-tilt ph-duotone"
+                  FileTypeGroups="AllowedFileTypeGroups"
+                  ModalTitleTemplate="Search PRG files in {0}"
+                  DeviceLocations="EnabledLocations"
+                  ButtonClickedEvent="ButtonClicked">
+        <HeaderContent>
+            <DropdownList T="ActionType"
+                          ContainerCss="d-flex align-items-center m-0"
+                          Options="_actionTypes" 
+                          ButtonCss="border-0 p-1 ms-2"
+                          LabelFunc="@(actionType => actionType.GetStringValue()!)" 
+                          @bind-SelectedOption="_actionType" />
+            <RecentFilesDropdown FileTypeGroups="AllowedFileTypeGroups"
+                                 ItemSelectedEvent="HistoryItemSelected"/>
+            <ButtonInput Css="form-text border-0 m-0 p-1 mx-1" IconCss="upload ph-dutotone" ClickedEvent="UploadFile"/>
+        </HeaderContent>
+    </FileSelector>
+</FunctionCard>

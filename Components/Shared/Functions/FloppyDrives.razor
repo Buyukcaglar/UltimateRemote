@@ -1,0 +1,9 @@
+﻿@using UltimateRemote.Components.Shared.Functions.Drives
+@inherits BaseComponent
+@if (_floppyDriveInfos is {Length: > 0})
+{
+    foreach (var floppyDriveInfo in _floppyDriveInfos)
+    {
+        <FloppyDrive DriveInfo="floppyDriveInfo" DriveChangedEvent="() => OnDeviceListUpdated(null, EventArgs.Empty)" />
+    }
+}

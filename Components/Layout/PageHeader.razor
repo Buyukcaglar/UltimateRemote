@@ -1,0 +1,27 @@
+﻿@*
+<div class="page-header page-header-light shadow d-none d-sm-block">
+    
+    <div class="page-header-content d-lg-flex border-top">
+        <div class="d-flex">
+            <div class="breadcrumb py-2">
+                <a href="/" class="breadcrumb-item"><i class="ph-house me-1"></i><span class="pt-1">Home</span></a>
+                @if (BreadCrumbs.Length > 0)
+                {
+                    foreach (var breadCrumb in BreadCrumbs)
+                    {
+                        @if (breadCrumb.NavigationLink != "#")
+                        {
+                            <a href="@breadCrumb.NavigationLink" class="breadcrumb-item"><span class="pt-1">@breadCrumb.Title</span></a>
+                        }
+                        else
+                        {
+                            <span class="breadcrumb-item pt-1">@breadCrumb.Title</span>
+                        }
+                    }
+                }
+            </div>
+        </div>
+        
+    </div>
+</div>
+*@

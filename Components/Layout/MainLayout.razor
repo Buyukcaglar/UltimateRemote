@@ -1,0 +1,25 @@
+﻿@using Blazored.Toast.Configuration
+@inherits LayoutComponentBase
+<NavMenu />
+<div class="page-content user-select-none touch-callout-none">
+    @* <Sidebar /> *@
+    <div class="content-wrapper">
+        <div class="content-inner">
+            @* <PageHeader /> *@
+            <div class="content">
+                @Body
+            </div>
+            @* <PageFooter /> *@
+        </div>
+    </div>
+</div>
+
+<BlazoredToasts Position="ToastPosition.TopRight" Timeout="5"
+                SuccessIcon="@PhosphorIcon.CheckCircle.GetStringValue()"
+                InfoIcon="@PhosphorIcon.InfoCircle.GetStringValue()"
+                ErrorIcon="@PhosphorIcon.ErrorOctagon.GetStringValue()"
+                WarningIcon="@PhosphorIcon.WarningTriangle.GetStringValue()"
+                SuccessClass="@BgColorStyle.Success.GetStringValue()"
+                InfoClass="@BgColorStyle.Info.GetStringValue()"
+                ErrorClass="@BgColorStyle.Danger.GetStringValue()"
+                WarningClass="@BgColorStyle.Warning.GetStringValue()" />

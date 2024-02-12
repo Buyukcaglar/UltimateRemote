@@ -1,0 +1,62 @@
+﻿@inherits BaseComponent
+@using System.Text.Json
+@using UltimateRemote.Models.ResponseModels
+<Modal ShowFooter="false" Size="UltimateRemote.Enums.ModalSize.Large" Title="@ModalTitle" VCenter="true" Show="true" BodyCss="p-1" TitleIcon="floppy-disk ph-dutotone">
+    <Content>
+        <div class="container">
+            <div class="row">
+                @if (_settingValueItems is { Length: > 0 })
+                {
+                    foreach (var categoryItemResponse in _settingValueItems)
+                    {
+                        if (_driveRomForSettings.Contains(categoryItemResponse.Section))
+                        {
+                            <div class="col-12 col-sm-6 col-md-4">
+                                <ConfigCategoryItem T="string"
+                                                    CategoryName="@ModalTitle"
+                                                    SectionName="@categoryItemResponse.Section"
+                                                    ConfigSettings="@((ConfigCategoryItemResponse<string>)categoryItemResponse)"
+                                                    FileTypeGroups="RomFileTypeGroups"
+                                                    ConfigUpdatedEvent="OnConfigUpdate">
+                                    <DefaultValueContent>
+                                        <a href="javascript:void(0)" class="ps-2 form-text" @onclick="@(() => ResetDriveRom(categoryItemResponse.Section))">[Reset]</a>
+                                    </DefaultValueContent>
+                                </ConfigCategoryItem>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-6 col-md-4">
+                                @switch (categoryItemResponse.ValueKind)
+                                {
+                                    case JsonValueKind.String:
+                                        <ConfigCategoryItem T="string"
+                                                            CategoryName="@ModalTitle"
+                                                            SectionName="@categoryItemResponse.Section"
+                                                            ConfigSettings="@((ConfigCategoryItemResponse<string>)categoryItemResponse)"
+                                                            ConfigUpdatedEvent="OnConfigUpdate" />
+                                        break;
+                                    case JsonValueKind.Number:
+                                        <ConfigCategoryItem T="int"
+                                                            CategoryName="@ModalTitle"
+                                                            SectionName="@categoryItemResponse.Section"
+                                                            ConfigSettings="@((ConfigCategoryItemResponse<int>)categoryItemResponse)"
+                                                            ConfigUpdatedEvent="OnConfigUpdate" />
+                                        break;
+                                    default:
+                                        <ConfigCategoryItem T="object"
+                                                            CategoryName="@ModalTitle"
+                                                            SectionName="@categoryItemResponse.Section"
+                                                            ConfigSettings="@((ConfigCategoryItemResponse<object>)categoryItemResponse)"
+                                                            ConfigUpdatedEvent="OnConfigUpdate" />
+                                        break;
+                                }
+                            </div>
+                        }
+                    }
+                }
+            </div>
+        </div>
+    </Content>
+</Modal>
+

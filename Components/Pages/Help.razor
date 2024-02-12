@@ -1,0 +1,113 @@
+﻿@using UltimateRemote.Components.Pages.HelpSections
+@using UltimateRemote.Components.Pages.HelpSections.LayoutItems
+@inherits BaseComponent
+
+<div class="d-md-flex align-items-md-start">
+    <HelpMenu />
+    <div class="flex-1">
+        <div class="card">
+            <div class="card-header bg-light help-card-header p-2">
+                <div class="me-auto d-md-none">
+                    <HelpMenuMobile/>
+                </div>
+                <h5 class="mb-0 m-auto">@(Section.GetHelpTopicAttr<HelpTopicIdentifier>()!.Name)</h5>
+            </div>
+            <div class="card-body">
+                @switch (Section)
+                {
+                    case HelpTopicIdentifier.Basics:
+                        <HelpSectionBasics/>
+                        break;
+                    case HelpTopicIdentifier.UserMenu:
+                        <HelpSectionUserMenu/>
+                        break;
+                    case HelpTopicIdentifier.DeviceManager:
+                        <HelpSectionDeviceManager/>
+                        break;
+                    case HelpTopicIdentifier.StorageContentManager:
+                        <HelpSectionStorageContentManager/>
+                        break;
+                    case HelpTopicIdentifier.LayoutManager:
+                        <HelpSectionLayoutManager/>
+                        break;
+                    case HelpTopicIdentifier.ConfigurationManager:
+                        <HelpSectionConfigurationManager/>
+                        break;
+                    case HelpTopicIdentifier.BasicEditor:
+                        <HelpSectionBasicEditor/>
+                        break;
+                    case HelpTopicIdentifier.JukeboxManager:
+                        <HelpSectionJukeboxManager/>
+                        break;
+                    case HelpTopicIdentifier.Preferences:
+                        <HelpSectionPreferences/>
+                        break;
+                    @* 
+                    case HelpTopicIdentifier.LayoutItemTypes:
+                        break;
+                    case HelpTopicIdentifier.UserTypes:
+                        break;
+                     *@
+                    case HelpTopicIdentifier.StorageContentFile:
+                        <HelpSectionStorageContentFile/>
+                        break;
+                    case HelpTopicIdentifier.UploadedFile:
+                        <HelpSectionUploadedFile/>
+                        break;
+                    case HelpTopicIdentifier.HVSCSIDFile:
+                        <HelpSectionHVSCSIDFile/>
+                        break;
+                    case HelpTopicIdentifier.JukeboxPlaylist:
+                        <HelpSectionJukeboxPlaylist/>
+                        break;
+                    @* case HelpTopicIdentifier.FunctionTypes:
+                        break; *@
+                    case HelpTopicIdentifier.PlaySIDMusic:
+                        <HelpSectionPlaySIDMusic/>
+                        break;
+                    case HelpTopicIdentifier.PlayMODMusic:
+                        <HelpSectionPlayMODMusic/>
+                        break;
+                    case HelpTopicIdentifier.RunLoadProgram:
+                        <HelpSectionRunLoadProgram/>
+                        break;
+                    case HelpTopicIdentifier.RunCartridge:
+                        <HelpSectionRunCartridge/>
+                        break;
+                    case HelpTopicIdentifier.ResetMachine:
+                        <HelpSectionResetMachine/>
+                        break;
+                    case HelpTopicIdentifier.RebootMachine:
+                        <HelpSectionRebootMachine/>
+                        break;
+                    case HelpTopicIdentifier.ResetRebootStack:
+                        <HelpSectionResetRebootStack/>
+                        break;
+                    case HelpTopicIdentifier.MachineFunctions:
+                        <HelpSectionMachineFunctions/>
+                        break;
+                    case HelpTopicIdentifier.FloppyDrives:
+                        <HelpSectionFloppyDrives/>
+                        break;
+                    case HelpTopicIdentifier.NonFloppyDrives:
+                        <HelpSectionNonFloppyDrives/>
+                        break;
+                    case HelpTopicIdentifier.DriveByBusId:
+                        <HelpSectionDriveByBusId/>
+                        break;
+                    case HelpTopicIdentifier.Streams:
+                        <HelpSectionStreams/>
+                        break;
+                    case HelpTopicIdentifier.CreateDiskImage:
+                        <HelpSectionCreateDiskImage/>
+                        break;
+                    case HelpTopicIdentifier.GetFileInfo:
+                        <HelpSectionGetFileInfo/>
+                        break;
+                    default:
+                        break;
+                }
+            </div>
+        </div>
+    </div>
+</div>

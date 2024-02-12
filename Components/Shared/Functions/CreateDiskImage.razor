@@ -1,0 +1,53 @@
+﻿@using UltimateRemote.Models
+@inherits BaseComponent
+
+<FunctionCard Title="@Strings.Function.Names.CreateDiskImage"
+              IconClass="@Strings.Function.Icons.CreateDiskImage"
+              InfoText="@Strings.Function.Infos.CreateDiskImage">
+    <div class="fs-container">
+        <div class="rounded-top border border-bottom-0 border-start-0 d-flex justify-content-between">
+            <DropdownList T="ImageFileType" Options="@(ImageFileType.D64.GetEnumValues())"
+                          HeaderLabel="@Strings.DiskImage.ImageFileTypeLabel"
+                          HeaderIconCss="floppy-disk ph-duotone"
+                          ContainerCss="m-0 border-start"
+                          ButtonCss="border-0 rounded-0 rounded-top-start dropdown-toggle p-1 h-100"
+                          LabelTemplate="@Strings.DiskImage.ImageFileTypeLabelTemplate"
+                          LabelFunc="imageFileType => imageFileType.GetStringValue()!"
+                          ItemSelectedEvent="SelectedImageTypeChanged"
+                          @bind-SelectedOption="_imageFileType" />
+            <div class="d-flex align-items-center">
+                <LabelInput LabelText="@Strings.DiskImage.Tracks" Css="border-0 m-0" />
+                <TextInput NumericInputOnly="true" MaxLen="3" Css="p-1 border-0 border-start rounded-0 rounded-top-end w-3rem text-center" @bind-Value="_tracks" />
+            </div>
+        </div>
+        <CompositeTextInput Id="diskLabel"
+                            LabelCss="border border-bottom-0 p-1 m-0"
+                            InputCss="rounded-0"
+                            Label="@Strings.DiskImage.DiskNameLabel"
+                            Placeholder="@Strings.DiskImage.DiskNamePlaceholder"
+                            MaxLen="16"
+                            DisplayMaxLengthCount="false"
+                            @bind-Value="_diskLabel" />
+        <InputGroupTextButton Id="imageFilePath"
+                              Label="@ImageFilePathLabel"
+                              Placeholder="@Strings.DiskImage.ImageFilePathPlaceholder(_imageFileType)"
+                              LabelCss="border border-bottom-0 border-top-0 p-1 m-0"
+                              ButtonIconCss="paper-plane-tilt ph-duotone"
+                              MaxLen="128"
+                              DisplayMaxLengthCount="false"
+                              HideValidationMessage="true"
+                              ButtonClickedEvent="CreateImage">
+            <BeforeTextInputContent>
+                <DropdownList T="DeviceLocation" Options="@DeviceLocations"
+                              HeaderLabel="Location"
+                              HeaderIconCss="hard-drives ph-duotone"
+                              ContainerCss="m-0 d-flex"
+                              ButtonCss="dropdown-toggle p-1 rounded-top-0 rounded-end-0"
+                              NoLabel="true"
+                              LabelFunc="location => location.Name"
+                              IconFunc="@(location => location.IconCss ?? "")"
+                              @bind-SelectedOption="_deviceLocation" />
+            </BeforeTextInputContent>
+        </InputGroupTextButton>
+    </div>
+</FunctionCard>

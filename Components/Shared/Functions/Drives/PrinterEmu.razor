@@ -1,0 +1,26 @@
+﻿@inherits BaseComponent
+
+<FunctionCard Title="@CardTitle"
+              IconClass="@DriveIconClass"
+              TitleContainerCss="py-2 px-4"
+              InfoText="@Strings.Function.Infos.PrinterEmu">
+    <a href="javascript:void(0)"
+       class="text-body ph-power ph-duotone position-absolute start-0 ms-1 mt-1"
+       @onclick="TogglePower"></a>
+
+    <a href="javascript:void(0)"
+       class="text-body ph-gear ph-duotone position-absolute end-0 me-1 mt-6"
+       @onclick="DisplayConfigurationPopUp"></a>
+
+    @if (_settings is { Length: > 0 })
+    {
+        <div class="fs-container">
+            @for (var i = 0; i < _settings.Length; i++)
+            {
+                var setting = _settings[i];
+                <LabelInput Css="@($"rounded-0 m-0 {GetLabelCss(i, _settings.Length)}")"
+                            LabelHtml="@Strings.LabelInput.LabelValueHtml(setting.Key, setting.Value!.Value.ToString())" />
+            }
+        </div>
+    }
+</FunctionCard>

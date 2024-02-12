@@ -1,0 +1,66 @@
+﻿@inherits BaseFileFunctionComponent
+
+<FunctionCard Title="@Strings.Function.Names.Machine" IconClass="@Strings.Function.Icons.Machine" InfoText="@Strings.Function.Infos.Machine" ContainerCss="mw-19rem">
+    @if (CurrentDevice.Type == UltimateDeviceType.UltimateC64)
+    {
+        <a href="javascript:void(0)"
+           class="text-body ph-power ph-duotone position-absolute start-0 ms-1 mt-1"
+           @onclick="PowerOff"></a>
+    }
+    <div class="rounded border fs-container">
+        <div class="d-flex">
+            <ButtonInput IconCss="arrow-clockwise ph-duotone ms-1" Css="p-1 border-top-0 border-start-0 rounded-bottom-0 rounded-end-0 w-100" Label="Reset" ClickedEvent="Reset" />
+            <ButtonInput IconCss="arrow-counter-clockwise ph-duotone ms-1" Css="p-1 border-top-0 rounded-0 mx-n1 w-100" Label="Reboot" ClickedEvent="Reboot" />
+            <ButtonInput IconCss="pause ph-duotone ms-1" Label="Pause" Css="p-1 border-top-0 rounded-0 mx-n1 w-100" ClickedEvent="Pause" />
+            <ButtonInput IconCss="play ph-duotone ms-1" Label="Resume" Css="p-1 border-top-0 border-end-0 rounded-bottom-0 rounded-start-0 w-100" ClickedEvent="Resume" />
+        </div>
+        @if (CurrentDevice.Type == UltimateDeviceType.UltimateC64)
+        {
+            <div class="d-flex justify-content-between align-items-center form-text bg-light border-bottom m-0">
+                <div>
+                    <span class="fw-semibold text-nowrap mx-1">Debug Register (R/W)</span>
+                    <ButtonInput IconCss="book-open-text ph-duotone" Css="py-0 px-2 rounded border-0" ClickedEvent="ReadDebugReg" />
+                    <ButtonInput IconCss="pencil-simple ph-duotone" Css="py-0 px-2 rounded border-0" ClickedEvent="WriteDebugReg" />
+                </div>
+                
+                <input type="text"
+                       class="form-control border-0 border-start rounded-0 w-8rem py-1"
+                       @bind-value="@_debugReg"
+                       onkeypress="@JsFunctions.HexOnly"/>
+            </div>
+        }
+        <div class="d-flex justify-content-between align-items-center form-text bg-light border-bottom p-1 m-0">
+            <span class="fw-semibold">Memory Content (Read/Write)</span>
+            <div class="d-flex justify-content-end">
+                <ButtonInput IconCss="upload-simple ph-duotone" Css="py-0 px-2 rounded border-0" ClickedEvent="UploadFile" />
+                <ButtonInput IconCss="book-open-text ph-duotone" Css="py-0 px-2 rounded border-0" ClickedEvent="ReadMemory" />
+                <ButtonInput IconCss="pencil-simple ph-duotone" Css="py-0 px-2 rounded border-0" ClickedEvent="WriteMemory" />
+                <ButtonInput IconCss="copy ph-duotone" Css="py-0 px-2 rounded border-0" ClickedEvent="CopyToClipboard" />
+            </div>
+        </div>
+        <div class="position-relative">
+            <textarea class="form-control border-0 rounded-0"
+                      rows="8"
+                      value="@_memContent"
+                      onkeypress="@JsFunctions.HexOnly" @oninput="@OnMemContentInputChange"></textarea>
+            <div class="position-absolute end-0 bottom-0 me-2 rounded bg-light">@(_memContent?.Length ?? 0)</div>
+        </div>
+        <div class="d-flex form-text bg-light m-0 border-0 border-top rounded-bottom align-items-center">
+            <span class="fw-semibold text-nowrap mx-1 w-100">Mem Addr</span>
+            <input type="text"
+                   class="form-control border-0 border-start border-end rounded-0 w-5rem text-center py-1"
+                   maxlength="4"
+                   @bind-value="@_memAddress"
+                   onkeypress="@JsFunctions.HexOnly" />
+
+            <span class="fw-semibold text-nowrap mx-1">Read Length</span>
+            <input type="text"
+                   inputmode="numeric"
+                   pattern="@InputPatterns.Numeric"
+                   class="form-control border-0 border-start rounded-0 rounded-bottom-end w-5rem text-center py-1"
+                   maxlength="5"
+                   @bind-value="@_readLength"
+                   onkeypress="@JsFunctions.NumericOnly" />
+        </div>
+    </div>
+</FunctionCard>

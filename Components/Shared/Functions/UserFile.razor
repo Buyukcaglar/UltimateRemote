@@ -1,0 +1,90 @@
+﻿@using UltimateRemote.Models.ResponseModels
+@using UltimateRemote.Models
+@inherits BaseComponent
+
+<FunctionCard IconClass="@DefaultIconCss"
+              Title="@Item.Name"
+              InfoText="@InfoText"
+              CustomIcon="@Item.CustomIcon"
+              CustomIconType="@Item.IconType"
+              RaiseEventOnClick="true"
+              ClickedEvent="HandleClick">
+    @if (PrefsMgr.DisplayShortcutOptions)
+    {
+        @if (Item.Type == LayoutItemType.StorageContentFile)
+        {
+            <LabelInput Css="border-0 rounded-0 m-0" 
+                        LabelCss="mxw-19rem text-break" 
+                        LabelHtml="@Strings.LabelInput.LabelValueHtml("Path", Item.Path)" />
+            
+            <div class="d-flex justify-content-between">
+                <LabelInput ContainerCss="flex-fill"
+                            Css="border-0 rounded-0 rounded-bottom-start m-0" 
+                            LabelCss="mxw-19rem text-break" 
+                            LabelHtml="@Strings.LabelInput.LabelValueHtml("Location", _selectedLocation?.Path)" />
+                
+                @if (Item.Extension == "prg")
+                {
+                    <DropdownList T="ActionType"
+                                  ContainerCss="d-flex align-items-center m-0"
+                                  Options="_actionTypes"
+                                  ButtonCss="border-0 rounded-0 p-1 ms-2"
+                                  LabelFunc="@(actionType => actionType.GetStringValue()!)"
+                                  @bind-SelectedOption="_actionType"/>
+                }
+
+                <DropdownList T="DeviceLocation" Options="@EnabledLocations"
+                              HeaderLabel="Location"
+                              HeaderIconCss="hard-drives ph-duotone"
+                              ContainerCss="m-0 d-flex"
+                              ButtonCss="dropdown-toggle p-1 border-0 rounded-0 rounded-bottom-end"
+                              NoLabel="true"
+                              LabelFunc="location => location.Name" 
+                              IconFunc="@(location => location.IconCss ?? "")"
+                              @bind-SelectedOption="_selectedLocation" />
+            </div>
+        }
+
+        @if (_diskImageExtensions.Contains(Item.Extension))
+        {
+            <div class="d-flex justify-content-between border-top">
+                <DropdownList T="(string DriveId, int BusId, bool Online)"
+                              Options="_floppyDrives"
+                              HeaderLabel="Drive"
+                              ContainerCss="m-0"
+                              ButtonCss="rounded-0 rounded-bottom-start dropdown-toggle p-1 border-0"
+                              LabelFunc="@(tuple => $"Drive {tuple.BusId}")"
+                              @bind-SelectedOption="_selectedDrive" />
+                <DropdownList T="DiskMode" Options="@(DiskMode.NotSpecified.GetEnumValues())"
+                              HeaderLabel="Mount Mode"
+                              ContainerCss="m-0"
+                              ButtonCss="rounded-0 dropdown-toggle p-1 border-0"
+                              LabelTemplate="Mount Mode: {0}"
+                              LabelFunc="diskMode => diskMode.GetStringValue()!"
+                              @bind-SelectedOption="_diskMode"/>
+                <ButtonInput Css="p-1 rounded-0 rounded-bottom-end border-0"
+                             IconCss="link-break ph-duotone ms-1"
+                             Label="Unlink"
+                             ClickedEvent="@UnlinkDrive" />
+            </div>
+        }
+        
+
+        @if (Item.Extension == "sid")
+        {
+            <div class="fs-container">
+            <LabelInput LabelText="Song Number"
+                        Css="m-0 border-0 m-0 rounded-bottom-0 justify-content-center"
+                        CssPaddingOverride="p-1"
+                        LabelCss="fw-semibold"/>
+            <div class="input-group justify-content-center mt-n1">
+                <NumberInput Min="1" Max="99"
+                             MinButtonCss="rounded-0 rounded-start border-end-0"
+                             MaxButtonCss="rounded-0 rounded-end border-start-0" 
+                             @bind-Value="_songNr"/>
+            </div>
+            </div>
+        }
+    }
+
+</FunctionCard>

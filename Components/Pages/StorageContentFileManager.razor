@@ -1,0 +1,56 @@
+﻿@inherits BaseComponent
+
+<h3 class="border-bottom mb-2 text-center">@Strings.Function.Names.ContentListManager</h3>
+
+<div class="d-flex justify-content-center">
+    <FunctionCard Title="@Strings.ContentListManager.ImportStoreContentListFile"
+                  IconClass="file-arrow-down"
+                  RaiseEventOnClick="true"
+                  InfoText="@Strings.ContentListManager.Info"
+                  ClickedEvent="ImportStorageContentListFile" />
+</div>
+
+@if (_importList is { Length: > 0 })
+{
+    <div class="d-flex flex-row justify-content-center">
+        <InputGroupTextButton Label="@ListName"
+                              Placeholder="My Ultimate Files"
+                              MaxLen="20"
+                              Required="true"
+                              ButtonText="Save"
+                              ButtonClickedEvent="SaveList" />
+    </div>
+}
+
+@if (FileService.StorageFileLists is { Count: > 0 })
+{
+    <div class="table-responsive rounded">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th colspan="4" class="text-center">List of Imported Content Files</th>
+                </tr>
+                <tr>
+                    <th>List Name</th>
+                    <th class="text-center">File Count</th>
+                    <th class="text-center">Imported On</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var fileList in FileService.StorageFileLists)
+                {
+                    <tr>
+                        <td>@fileList.Name</td>
+                        <td class="text-center">@fileList.FileCount</td>
+                        <td class="text-center">@fileList.TimeStamp.Date.ToString("d")</td>
+                        <td class="text-center">
+                            <ButtonInput Css="py-1" IconCss="trash-simple ph-duotone" OnClickTaskFunc="@(() => DeleteList(fileList.Name))" />
+                            <ButtonInput Css="py-1" IconCss="info ph-duotone" OnClickTaskFunc="@(() => DisplayExtInfo(fileList.Name))" />
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

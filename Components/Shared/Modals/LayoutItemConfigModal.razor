@@ -1,0 +1,95 @@
+﻿@inherits BaseComponent
+<Modal ShowFooter="false" Size="UltimateRemote.Enums.ModalSize.Small"
+       Title="@ModalTitle" VCenter="true" Show="true" BodyCss="p-1">
+    <Content>
+        <div class="rounded border">
+            @if (Item.Type == LayoutItemType.JukeboxPlaylist)
+            {
+                <div class="d-flex flex-column list-group">
+                    @foreach (var playlist in JukeboxService.Playlists.Where(playlist => playlist.ItemCount > 0))
+                    {
+                        <div class="d-flex justify-content-between align-items-center list-group-item list-group-item-action" role="button" @onclick="@(()=>OnPlaylistSelect(playlist))">
+                            <span>@playlist.Name <small>(@playlist.ItemCount files / @playlist.TuneCount tunes)</small></span>
+                            <i class="ph-duotone ph-hand-tap me-2"></i>
+                        </div>
+                    }
+                </div>
+            }
+            else if (Item.Type == LayoutItemType.DriveByBusId)
+            {
+                <LabelInput LabelText="Drive Bus Id"
+                            Css="m-0 border-0 m-0 rounded-bottom-0 justify-content-center"
+                            CssPaddingOverride="p-1"
+                            LabelCss="fw-semibold"/>
+                <NumberInput Min="8" Max="11"
+                             MinButtonCss="rounded-0 rounded-0 rounded-bottom-start"
+                             MaxButtonCss="rounded-0 border-end-0"
+                             @bind-Value="DriveBusIdStr"/>
+            }
+            else
+            {
+                <LabelInput LabelText="Name" Css="border-0 border-bottom rounded-0 rounded-top m-0 p-1"/>
+                <div class="input-group">
+                    <TextInput Label="Name" MaxLen="60" Css="rounded-0 border-0 border-bottom" @bind-Value="Item.Name"/>
+                    @if (!string.IsNullOrWhiteSpace(Item.CustomIcon))
+                    {
+                        <img src="@Item.CustomIcon" class="bg-light border-bottom border-start w-48px px-1" title="Custom Icon" alt="Custom Icon"/>
+                    }
+                </div>
+
+                <LabelInput Css="rounded-0 m-0 border-0 border-bottom"
+                            LabelCss="mxw-19rem text-break"
+                            LabelHtml="@Strings.LabelInput.LabelValueHtml(nameof(Item.FileName), Item.FileName)"/>
+                @if (Item.Type == LayoutItemType.StorageContentFile)
+                {
+                    <LabelInput Css="rounded-0 m-0 border-0 border-bottom"
+                                LabelCss="mxw-19rem text-break"
+                                LabelHtml="@Strings.LabelInput.LabelValueHtml(nameof(Item.Location), Item.Location)"/>
+                    <LabelInput Css="rounded-0 m-0 border-0"
+                                LabelCss="mxw-19rem text-break"
+                                LabelHtml="@Strings.LabelInput.LabelValueHtml(nameof(Item.Path), Item.Path)"/>
+                    <FileSelector Placeholder="@Strings.Generic.AnyShortcutFile"
+                                  ButtonIconCss="paper-plane-tilt ph-duotone"
+                                  HeaderLabelContainerCss="m-0"
+                                  DeviceLocationButtonCss="rounded-0"
+                                  ActionButtonCss="rounded-0"
+                                  DisableDeviceRegistryCheck="true"
+                                  FileTypeGroups="@FileTypeGroups"
+                                  ModalTitleTemplate="Search Files in {0}"
+                                  DeviceLocations="EnabledLocations"
+                                  ButtonClickedEvent="OnContentFileSelect"/>
+                }
+
+                @if (Item.Type == LayoutItemType.UploadedFile)
+                {
+                    <div class="d-flex justify-content-between border-bottom">
+                        <LabelInput ContainerCss="flex-fill"
+                                    Css="rounded-0 m-0 border-0"
+                                    LabelCss="mxw-19rem text-break"
+                                    LabelHtml="@Strings.LabelInput.LabelValueHtml("File Uploaded", (Item.ContentBytes is { Length: > 0 }).ToString())"/>
+                        <ButtonInput Label="Upload File" Css="p-1 rounded-0 border-0" IconCss="upload ph-duotone" ClickedEvent="UploadFile"/>
+                    </div>
+                }
+
+                <div class="d-flex justify-content-between">
+                    <LabelInput ContainerCss="flex-fill"
+                                Css="rounded-0 rounded-bottom-start m-0 border-0"
+                                LabelCss="mxw-19rem text-break"
+                                LabelHtml="@Strings.LabelInput.LabelValueHtml("Has Icon", (!string.IsNullOrWhiteSpace(Item.CustomIcon)).ToString())"/>
+                    @if (!string.IsNullOrWhiteSpace(Item.CustomIcon))
+                    {
+                        <ButtonInput Label="Remove Icon"
+                                     Css="rounded-0 border-0 p-1"
+                                     IconCss="trash ph-duotone"
+                                     ClickedEvent="RemoveIcon"/>
+                    }
+                    <ButtonInput Label="Upload Icon"
+                                 Css="rounded-0 rounded-bottom-end border-0 p-1 "
+                                 IconCss="image ph-duotone"
+                                 ClickedEvent="UploadIcon"/>
+                </div>
+
+            }
+        </div>
+    </Content>
+</Modal>

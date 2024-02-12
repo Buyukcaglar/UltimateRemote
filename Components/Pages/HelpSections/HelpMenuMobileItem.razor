@@ -1,0 +1,67 @@
+﻿@inherits MenuItemBase
+@if (null != ItemAttribute)
+{
+    @if (ItemAttribute.HasSubTopics)
+    {
+        <div class="d-flex justify-content-between">
+
+            @if (!ItemAttribute.NonSelectable)
+            {
+                <a href="@ItemLink" class="dropdown-item">
+                    <i class="ph-@ItemAttribute.IconCss me-2"></i>
+                    @ItemAttribute.Name
+                </a>
+            }
+            else
+            {
+                <div class="dropdown-header d-flex py-0 px-2 justify-content-between">
+                    @ItemAttribute.Name
+                    @if (!string.IsNullOrWhiteSpace(ItemAttribute.IconCss))
+                    {
+                        <i class="ph-@ItemAttribute.IconCss ms-1"></i>
+                    }
+                </div>
+            }
+            <div class="dropdown-submenu">
+                <a href="@ItemLink" class="dropdown-item dropdown-toggle h-100"></a>
+                <div class="dropdown-menu dropdown-menu-scrollable">
+                    @for (var i = 0; i < ItemAttribute.SubTopics!.Length; i++)
+                    {
+                        var subItem = ItemAttribute.SubTopics![i];
+                        <HelpMenuMobileItem MenuItem="subItem" Index="i"/>
+                    }
+                </div>
+            </div>
+
+        </div>
+    }
+    else
+    {
+        if (!ItemAttribute.NonSelectable)
+        {
+            <a href="@ItemLink" class="dropdown-item">
+                <i class="ph-@ItemAttribute.IconCss me-2"></i>
+                @ItemAttribute.Name
+            </a>
+        }
+        else
+        {
+            if (Index is > 0)
+            {
+                <div class="dropdown-divider"></div>
+            }
+            <div class="dropdown-header d-flex py-0 px-2 justify-content-between">
+                @ItemAttribute.Name
+                @if (!string.IsNullOrWhiteSpace(ItemAttribute.IconCss))
+                {
+                    <i class="ph-@ItemAttribute.IconCss ms-1"></i>
+                }
+            </div>
+            if (Index is > 0)
+            {
+                <div class="dropdown-divider"></div>
+            }
+        }
+    }
+
+}

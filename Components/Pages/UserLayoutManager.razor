@@ -1,0 +1,87 @@
+﻿@using UltimateRemote.Models
+@inherits BaseComponent
+
+<h3 class="d-flex align-items-center justify-content-center border-bottom mb-2">
+    <span class="ms-auto">@Strings.Function.Names.LayoutManager</span>
+    <i class="ph-plus-circle ph-duotone ms-auto" role="button" title="Add new layout" @onclick="@(() => LayoutManager.AddLayout(new UserLayout() { Name = "Click to rename" }))"></i>
+</h3>
+
+@for (var index = 0; index < LayoutManager.Layouts.Length; index++)
+{
+    var idx = index;
+    var layout = LayoutManager.Layouts[index];
+    <div class="rounded border mb-2">
+        <div class="d-flex justify-content-between">
+            <div class="form-text fw-semibold rounded-bottom-end border-bottom border-end align-self-start m-0 p-1">
+                <span class="p-1" contenteditable="true" data-layoutindex="@idx">@(layout.Name)</span>
+            </div>
+            <div class="d-flex bg-light align-items-center border-start border-bottom rounded-bottom-start rounded-top-end">
+                @if (LayoutManager.Layouts.Length > 1)
+                {
+                    <div>
+                        @if (idx > 0)
+                        {
+                            <i class="ph-caret-up ph-duotone m-1" role="button" @onclick="@(() => LayoutManager.MoveLayoutUp(idx))"></i>
+                        }
+                        @if (idx < LayoutManager.Layouts.Length - 1)
+                        {
+                            <i class="ph-caret-down ph-duotone m-1" role="button" @onclick="@(() => LayoutManager.MoveLayoutDown(idx))"></i>
+                        }
+                    </div>
+                }
+                <ButtonInput Css="p-1 border-0 border-end border-start rounded-0"
+                             IconCss="trash ph-duotone"
+                             ClickedEvent="@(() => RemoveLayoutConfirm(idx, layout.Name))"/>
+                <DropdownList T="LayoutItemType"
+                              ContainerCss="m-0 h-100"
+                              ButtonCss="dropdown-toggle p-1 border-0 rounded-0 rounded-top-end h-100"
+                              FixedLabel="true"
+                              Label="Add Item"
+                              Scrollable="true"
+                              Options="LayoutItemType.StorageContentFile.GetEnumValues()"
+                              LabelFunc="@(item => item.GetStringValue()!)"
+                              IconFunc="@(item => GetLayoutItemIconCss(item))"
+                              ItemSelectedEvent="(selectedItem) => AddItem(selectedItem, idx)"/>
+            </div>
+        </div>
+        
+        <ul class="list-group list-group-borderless">
+            @for (var itemIndex = 0; itemIndex < layout.Items.Count; itemIndex++)
+            {
+                var itemIdx = itemIndex;
+                var item = layout.Items[itemIndex];
+
+                <li class="list-group-item list-group-item-action d-flex align-items-start justify-content-between">
+                    <a class="d-inline-flex text-body align-items-center">
+                        @if (layout.Items.Count > 1)
+                        {
+                            if (itemIdx > 0)
+                            {
+                                <i class="ph-caret-up ph-duotone me-2" role="button" @onclick="@(() => LayoutManager.MoveItemUp(idx, itemIdx))"></i>
+                            }
+                            if (itemIdx < layout.Items.Count - 1)
+                            {
+                                <i class="ph-caret-down ph-duotone me-2" role="button" @onclick="@(() => LayoutManager.MoveItemDown(idx, itemIdx))"></i>
+                            }
+                        }
+                        <i class="ph-@(GetLayoutItemIconCss(item.Type)) me-2"></i>
+                        <label class="text-break">@GetItemName(item)</label>
+                        @if (_configurableTypes.Contains(item.Type))
+                        {
+                            <i class="ph-gear-six ph-duotone mx-2" role="button" @onclick="@(() => DisplayItemConfigPopUp(item))"></i>
+                        }
+                    </a>
+                    <i class="ph-trash me-2" role="button" @onclick="@(() => RemoveItem(idx, itemIdx))"></i>
+                </li>
+            }
+
+            @if (layout.Items.Count == 0)
+            {
+                <li class="list-group-item list-group-item-action d-flex align-items-start justify-content-between">
+                    <label>No items</label>
+                </li>
+            }
+
+        </ul>
+    </div>
+}

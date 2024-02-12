@@ -1,0 +1,21 @@
+﻿@inherits BaseComponent
+
+<FunctionCard Title="@CardTitle"
+              IconClass="@DriveIconClass"
+              InfoText="@Strings.Function.Infos.IECDrive">
+             
+    <a href="javascript:void(0)"
+       class="text-body ph-power ph-duotone position-absolute start-0 ms-1 mt-1"
+       @onclick="TogglePower"></a>
+
+    <a href="javascript:void(0)"
+       class="text-body ph-gear ph-duotone position-absolute end-0 me-1 mt-6"
+       @onclick="DisplayConfigurationPopUp"></a>
+
+    <div class="fs-container">
+        <LabelInput Css="rounded-0 m-0 rounded-top" LabelCss="mxw-19rem text-break" LabelHtml="@Strings.LabelInput.LabelValueHtml("Type", DriveInfo.Value.Type)"></LabelInput>
+        <LabelInput Css="rounded-0 m-0 border-top-0" LabelCss="mxw-19rem text-break" LabelHtml="@Strings.LabelInput.LabelValueHtml("Last Error", DriveInfo.Value.LastError)"></LabelInput>
+        <LabelInput Css="rounded-0 m-0 border-top-0 rounded-bottom" LabelCss="mxw-19rem text-break" LabelHtml="@Strings.LabelInput.LabelValueHtml("Partitions", Partitions)"></LabelInput>
+    </div>
+
+</FunctionCard>

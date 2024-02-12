@@ -1,0 +1,82 @@
+﻿@typeparam T
+@inherits BaseComponent
+
+<div class="form-text border rounded my-1 w-100">
+    @switch (Mode)
+    {
+        case EditMode.FileSelector:
+            <LabelInput LabelText="@SectionName" 
+                        Css="m-0 border-0 m-0 rounded-bottom-0 justify-content-center" 
+                        CssPaddingOverride="p-1"
+                        LabelCss="fw-semibold" />
+            <FileSelector Placeholder="@Strings.Generic.DiskRomFilePlaceholder"
+                          ButtonIconCss="paper-plane-tilt ph-duotone"
+                          HeaderLabelContainerCss="m-0"
+                          DeviceLocationButtonCss="rounded-0"
+                          ActionButtonCss="rounded-0"
+                          FileTypeGroups="@FileTypeGroups"
+                          ModalTitleTemplate="Search Drive Roms in {0}"
+                          DeviceLocations="_enabledLocations"
+                          ButtonClickedEvent="OnFileSelection" />
+            break;
+        case EditMode.Dropdown:
+            <DropdownList T="T"
+                          ContainerCss="m-0"
+                          ButtonCss="dropdown-toggle p-1 w-100 border-0 border-bottom rounded-bottom-0"
+                          ButtonLabelcss="text-truncate"
+                          Label="@ConfigSettings.Section" 
+                          LabelFunc="@(item => item!.ToString()!)"
+                          LabelTemplate="@($"{ConfigSettings.Section}: {{0}}")"
+                          Options="_dropdownItems"
+                          ItemSelectedEvent="DropdownItemSelected" 
+                          @bind-SelectedOption="_selectedDropdownItem" />
+            break;
+        case EditMode.NumericInput:
+            <LabelInput LabelText="@SectionName"
+                        Css="m-0 border-0 border-bottom m-0 rounded-bottom-0 justify-content-center"
+                        CssPaddingOverride="p-1"
+                        LabelCss="fw-semibold" />
+            <div class="input-group justify-content-center mt-n1">
+                <NumberInput Min="_numericMin" Max="_numericMax" MinButtonCss="rounded-0 rounded-0 rounded-bottom-start" MaxButtonCss="rounded-0 border-end-0" @bind-Value="_numericInputVal" />
+                <ButtonInput Css="rounded-0 rounded-bottom-end px-1 px-sm-2" IconCss="paper-plane-tilt ph-duotone" ClickedEvent="OnNumericInputCommit" />
+            </div>
+            break;
+        case EditMode.TextInput:
+            <InputGroupTextButton Label="@SectionName" 
+                                  LabelCss="border-0 border-bottom rounded-top m-0 p-1 text-center"
+                                  ButtonCss="border-top-0 border-end-0"
+                                  ButtonIconCss="paper-plane-tilt ph-duotone rounded-0"
+                                  InputCss="rounded-0 border-0 border-bottom"
+                                  DisplayMaxLengthCount="false"
+                                  MaxLen="@ConfigSettings.TextInputMaxLen"
+                                  FuncValidator="@ConfigSettings.FuncValidator"
+                                  Required="true" 
+                                  ButtonClickedEvent="OnTextInputCommit" />
+            break;
+    }
+    <div class="p-1 justify-content-center d-flex flex-wrap">
+        <div>
+            <span class="fw-semibold">Default: </span>@ConfigSettings.Default
+        </div>
+        @if (_displayCurrentValue)
+        {
+            <div>
+                <span class="fw-semibold ps-1">Current: </span>@ConfigSettings.Current
+            </div>
+        }
+        @if (null != DefaultValueContent)
+        {
+            <div>
+                @DefaultValueContent
+            </div>
+        }
+        @if (Mode == EditMode.NumericInput)
+        {
+            <div>
+                <span class="fw-semibold ps-1">Min: </span>@_numericMin
+                <span class="fw-semibold ps-1">Max: </span>@_numericMax
+            </div>
+        }
+
+    </div>
+</div>

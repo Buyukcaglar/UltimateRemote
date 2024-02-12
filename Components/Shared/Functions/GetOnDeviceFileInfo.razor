@@ -1,0 +1,25 @@
+﻿@inherits BaseFileFunctionComponent
+
+<FunctionCard Title="@Strings.Function.Names.GetFileInfo" IconClass="@Strings.Function.Icons.GetFileInfo" InfoText="@Strings.Function.Infos.GetFileInfo">
+    <div class="fs-container rounded rounded-bottom-0 border p-1 mw-19rem">
+        <span class="form-text fw-semibold">File Info</span>
+        @if (null != _fileInfo)
+        {
+            <div contenteditable="true" class="form-text word-break border-top mxw-19rem">
+                @foreach(var infoKey in _fileInfo.Keys)
+                {
+                    <span class="fw-semibold">@infoKey.ToUpperFirstChar(): </span>
+                    <span class="text-break">@_fileInfo[infoKey]?.ToString()</span> <br />
+                }
+            </div>
+        }
+    </div>
+    <FileSelector Placeholder="@Strings.Generic.SidFileSelectorPlaceHolder"
+                  HeaderLabelContainerCss="rounded-0 m-0"
+                  ButtonIconCss="paper-plane-tilt ph-duotone"
+                  FileTypeGroups="AllowedFileTypeGroups"
+                  ModalTitleTemplate="Search files in {0}"
+                  DeviceLocations="EnabledLocations"
+                  ButtonClickedEvent="GetFileInfo">
+    </FileSelector>
+</FunctionCard>

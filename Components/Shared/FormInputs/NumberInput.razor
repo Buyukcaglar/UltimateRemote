@@ -1,0 +1,12 @@
+﻿<button type="button" class="btn btn-light btn-icon @MinButtonCss" @onclick="@(() => StepChange(false))">
+    <i class="ph-minus ph-sm"></i>
+</button>
+<input class="form-control form-control-number text-center px-0" 
+       type="number" 
+       name="number" 
+       style="flex:none; width:38px;"
+       @bind-value="@Value" 
+       @oninput="@OnInputChange">
+<button type="button" class="btn btn-light btn-icon @MaxButtonCss" @onclick="@(() => StepChange(true))">
+    <i class="ph-plus ph-sm"></i>
+</button>

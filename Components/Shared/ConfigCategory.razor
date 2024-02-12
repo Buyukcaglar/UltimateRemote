@@ -1,0 +1,56 @@
+﻿@inherits BaseComponent
+@using UltimateRemote.Models.ResponseModels
+@using System.Text.Json
+
+<div class="row justify-content-center">
+    @if (ConfigCategoryItems is { Length: > 0 })
+    {
+        foreach (var categoryItemResponse in ConfigCategoryItems)
+        {
+            if (_romForSettings.Contains(categoryItemResponse.Section))
+            {
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <ConfigCategoryItem T="string"
+                                        CategoryName="@CategoryName"
+                                        SectionName="@categoryItemResponse.Section"
+                                        ConfigSettings="@((ConfigCategoryItemResponse<string>)categoryItemResponse)"
+                                        FileTypeGroups="RomFileTypeGroups"
+                                        ConfigUpdatedEvent="OnConfigUpdate">
+                        <DefaultValueContent>
+                            <a href="javascript:void(0)" class="ps-2 form-text" @onclick="@(() => ResetDriveRom(categoryItemResponse.Section))">[Reset]</a>
+                        </DefaultValueContent>
+                    </ConfigCategoryItem>
+                </div>
+            }
+            else
+            {
+                <div class="col-6 col-md-3 col-lg-2">
+                    @switch (categoryItemResponse.ValueKind)
+                    {
+                        case JsonValueKind.String:
+                            <ConfigCategoryItem T="string"
+                                                CategoryName="@CategoryName"
+                                                SectionName="@categoryItemResponse.Section"
+                                                ConfigSettings="@((ConfigCategoryItemResponse<string>)categoryItemResponse)"
+                                                ConfigUpdatedEvent="OnConfigUpdate" />
+                            break;
+                        case JsonValueKind.Number:
+                            <ConfigCategoryItem T="int"
+                                                CategoryName="@CategoryName"
+                                                SectionName="@categoryItemResponse.Section"
+                                                ConfigSettings="@((ConfigCategoryItemResponse<int>)categoryItemResponse)"
+                                                ConfigUpdatedEvent="OnConfigUpdate" />
+                            break;
+                        default:
+                            <ConfigCategoryItem T="object"
+                                                CategoryName="@CategoryName"
+                                                SectionName="@categoryItemResponse.Section"
+                                                ConfigSettings="@((ConfigCategoryItemResponse<object>)categoryItemResponse)"
+                                                ConfigUpdatedEvent="OnConfigUpdate" />
+                            break;
+                    }
+                </div>
+            }
+        }
+    }
+</div>

@@ -1,0 +1,28 @@
+﻿@inherits BaseFormInput
+<div class="@ContainerCss">
+    @if (CustomLabel != null)
+    {
+        @CustomLabel
+    }
+    else if (!string.IsNullOrWhiteSpace(Label))
+    {
+        <div class="form-text fw-semibold @LabelCss">
+            @Label
+        </div>
+        
+    }
+    <input type="text"
+           class="form-control rounded-top-0 @InputCss @ValidationState.InputStyle()"
+           maxlength="@MaxLen"
+           placeholder="@Placeholder"
+           @attributes="@(Attributes)"
+           value="@Value"
+           @oninput="@OnInputChange"/>
+    <div class="d-flex flex-row">
+        <div class="d-flex me-auto @ValidationState.FeedbackStyle()">@ValidationMessage</div>
+        @if (MaxLen is > 0 && DisplayMaxLengthCount)
+        {
+            <div class="d-flex justify-content-end col-auto form-text me-1 @((Value?.Length ?? 0) == MaxLen.Value ? "text-danger" : null)">@(Value?.Length ?? 0) / @MaxLen.Value</div>
+        }
+    </div>
+</div>

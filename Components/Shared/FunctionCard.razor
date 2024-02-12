@@ -1,0 +1,32 @@
+﻿<div class="card bg-light m-2 @ContainerAlignSelfStart @ContainerCss">
+    @if (null != CustomActions)
+    {
+        @CustomActions
+    }
+    <a href="javascript:void(0)" class="text-body position-absolute end-0 p-1 ph-duotone ph-info" @onclick="() => DisplayInfoPopup()"></a>
+    <div class="d-flex card-img-actions mx-4 pt-2 justify-content-center align-items-end" role="@(!string.IsNullOrWhiteSpace(NavigationLink) || RaiseEventOnClick ? "button" : null)" @onclick="Clicked">
+        @if (string.IsNullOrWhiteSpace(CustomIcon))
+        {
+            <i class="ph-duotone ph-@(IconClass) ph-2x"></i>
+        }
+        else
+        {
+            @if (CustomIconType == CustomIconType.Svg)
+            {
+                <div class="rounded" style="width: 41px">
+                    @CustomIcon
+                </div>
+            }
+            else
+            {
+                <img class="rounded" src="@CustomIcon" style="width: 41px" alt="User File Image" />
+            }
+        }
+    </div>
+    <div class="d-flex flex-fill flex-column justify-content-center @TitleContainerCss" role="@(!string.IsNullOrWhiteSpace(NavigationLink) || RaiseEventOnClick ? "button" : null)" @onclick="Clicked">
+        <h6 class="fw-semibold m-1 text-center">
+            @((MarkupString)(Title.Replace(Environment.NewLine, "<br />")))
+        </h6>
+    </div>
+    @ChildContent
+</div>

@@ -1,0 +1,9 @@
+﻿<div class="btn-group">
+    <a href="javascript:void(0);" type="button" class="btn btn-light border-0 dropdown-toggle p-1" data-bs-toggle="dropdown"></a>
+    <div class="dropdown-menu">
+        @foreach (var helpTopicIdentifier in HelpTopicIdentifier.Basics.GetEnumValues().Where(identifier => identifier.GetHelpTopicAttr<HelpTopicIdentifier>()?.TopLevel == true))
+        {
+            <HelpMenuMobileItem MenuItem="helpTopicIdentifier" />
+        }
+    </div>
+</div>

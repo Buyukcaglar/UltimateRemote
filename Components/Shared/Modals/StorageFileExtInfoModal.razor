@@ -1,0 +1,27 @@
+﻿<Modal ShowFooter="false" Size="UltimateRemote.Enums.ModalSize.Mini" Title="@ModalTitle" VCenter="true" Show="true" BodyCss="p-0">
+    <Content>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th colspan="2" class="text-center">File Types</th>
+                </tr>
+                <tr>
+                    <th>Ext</th>
+                    <th class="text-end">Count</th>
+                </tr>
+
+                </thead>
+                <tbody>
+                @foreach (var extInfo in Extensions)
+                {
+                    <tr>
+                        <td>@extInfo.Extension</td>
+                        <td class="text-end">@extInfo.Count.ToString("N")</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </Content>
+</Modal>
