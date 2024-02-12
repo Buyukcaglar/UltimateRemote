@@ -6,13 +6,13 @@
   xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
   IgnorableNamespaces="uap rescap">
 
-  <Identity Name="maui-package-name-placeholder" Publisher="CN=OnurBuyukcaglar" Version="1.0.0.0" />
+  <Identity Name="53289OnurBuyukcaglar.927851CAFFD0" Publisher="CN=EA936354-441C-49C4-9332-B79DB938934E" Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="61E3D865-557C-4027-99C5-D42BEFCADF39" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="ed04e51a-0b36-4c79-aebb-3bce4f1f24db" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>$placeholder$</DisplayName>
-    <PublisherDisplayName>User Name</PublisherDisplayName>
+    <DisplayName>Ultimate Remote</DisplayName>
+    <PublisherDisplayName>Onur Buyukcaglar</PublisherDisplayName>
     <Logo>$placeholder$.png</Logo>
   </Properties>
 

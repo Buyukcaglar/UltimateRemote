@@ -56,8 +56,9 @@
       <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
       <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
       <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
-      <GenerateTestArtifacts>True</GenerateTestArtifacts>
+      <GenerateTestArtifacts>False</GenerateTestArtifacts>
       <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
+      <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
     </PropertyGroup>
 
     <ItemGroup>
