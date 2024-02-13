@@ -19,8 +19,11 @@ public sealed partial class StorageContentFileManager : BaseComponent
         FileService.ImportStatusChangedEvent -= BgTaskStatusChange;
         FileService.ImportStatusChangedEvent += BgTaskStatusChange;
 
+#if ANDROID
+        await CheckAndroidStoragePermissions();
+#else 
         await CheckStoragePermissions();
-
+#endif
         await base.OnInitializedAsync();
     }
 
@@ -37,6 +40,27 @@ public sealed partial class StorageContentFileManager : BaseComponent
             }
         }
     }
+
+#if ANDROID
+    private Task CheckAndroidStoragePermissions()
+    {
+        var status = AndroidX.Core.Content.ContextCompat.CheckSelfPermission(Android.App.Application.Context, Android.Manifest.Permission.ReadExternalStorage);
+        if (status != Android.Content.PM.Permission.Granted)
+        {
+            if (AndroidX.Core.App.ActivityCompat.ShouldShowRequestPermissionRationale(Platform.CurrentActivity!,
+                    Android.Manifest.Permission.ReadExternalStorage))
+            {
+                var toast = Android.Widget.Toast.MakeText(Android.App.Application.Context,
+                    "Read Storage Permission is required!", Android.Widget.ToastLength.Long);
+                if(toast != null)
+                    toast.Show();
+            }
+            AndroidX.Core.App.ActivityCompat.RequestPermissions(Platform.CurrentActivity!, new[] { Android.Manifest.Permission.ReadExternalStorage }, 0);
+        }
+
+        return Task.CompletedTask;
+    }    
+#endif
 
     protected override async void BgTaskStatusChange(object? sender, BgTaskNotification notification)
     {
@@ -144,5 +168,7 @@ public sealed partial class StorageContentFileManager : BaseComponent
 
         return Task.CompletedTask;
     }
+
+
 
 }
