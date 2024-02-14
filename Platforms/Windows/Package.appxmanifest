@@ -24,9 +24,14 @@
   <Resources>
     <Resource Language="x-generate" />
   </Resources>
-
-  <Applications>
-    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="$targetentrypoint$">
+  
+	<!-- EntryPoint="$targetentrypoint$" -->
+    <!-- EntryPoint="Windows.PartialTrustApplication" -->
+  
+	  <Applications>
+    <Application Id="App" 
+				 Executable="$targetnametoken$.exe"
+                 EntryPoint="$targetentrypoint$">
       <uap:VisualElements
         DisplayName="Ultimate Remote"
         Description="$placeholder$"
