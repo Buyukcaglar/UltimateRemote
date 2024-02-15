@@ -128,6 +128,7 @@ public sealed class StorageContentFileService : IDisposable, IAsyncDisposable
     {
         _importFileContent?.Dispose();
         _importFileContent = null;
+        GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
     }
 
     public void SaveFileList(string listName, StorageFile[] files)

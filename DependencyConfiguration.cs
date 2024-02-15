@@ -1,6 +1,7 @@
 ﻿using Blazored.Toast;
 using MonkeyCache.FileStore;
 using System.Text;
+using Microsoft.Extensions.Logging;
 using UltimateRemote.Interfaces;
 using UltimateRemote.Models;
 
