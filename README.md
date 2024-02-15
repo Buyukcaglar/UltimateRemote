@@ -21,11 +21,11 @@ With Ultimate remote;
 
 
 
-#Licence
+# Licence
 
 Ultimate Remote is licensed under [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](LICENSE).  
 
-#Attributions
+# Attributions
 
 Beautiful C64 icon by [Simon Aronsson](https://github.com/simskij).  
 C64 PRO Font by [Style64](https://style64.org/c64-truetype).  
