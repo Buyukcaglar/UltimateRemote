@@ -52,7 +52,7 @@ internal static class Strings
         public static string ToastMsgDuplicateListName(string listName) => $"Name '{listName}' already exists. List names must be unique.";
         public const string ToastTitleDuplicateListName = "Duplicate list name";
 
-        public const string ToastMsgSaveListFailed = "An error occured while saving list.";
+        public static string ToastMsgSaveListFailed(string exMsg) => $"An error occured while saving list. \r\n {exMsg}";
         public const string ToastTitleSaveListFailed = "Save list failed";
 
         public const string ToastMsgStorageReadPermissionNotGranted = "Storage read permission NOT granted, import file will likely to fail. Manually enable Storage (read) permission from O/S' permissions section.";

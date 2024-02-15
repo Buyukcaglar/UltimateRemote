@@ -90,6 +90,9 @@ public sealed class StorageContentFileService : IDisposable, IAsyncDisposable
             
             var enabledFileExtensions = _prefsMgr.EnabledFileExtensions;
 
+            GC.Collect();
+            GC.WaitForFullGCComplete(TimeSpan.FromSeconds(5));
+
             var files = fileContentString.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries)
                 .Where(line => (!line.StartsWith("._") || !ContentFileServiceParams.ExcludesContaining.Any(line.Contains)))
                 .Select(file => file.Replace("\r", "").Replace("\n", "").Replace('\\', '/'))
@@ -97,6 +100,9 @@ public sealed class StorageContentFileService : IDisposable, IAsyncDisposable
                 .Select(formatted => formatted.Substring(formatted.IndexOf('/'), formatted.Length - formatted.IndexOf('/')))
                 .ToArray();
             
+            GC.Collect();
+            GC.WaitForFullGCComplete(TimeSpan.FromSeconds(5));
+
             ImportStatusChangedEvent.SignalProgress(Strings.ContentFileService.ImportStatusSplitCompleted(files.Length));
 
             var contentFile = files.Select(file =>
@@ -105,6 +111,9 @@ public sealed class StorageContentFileService : IDisposable, IAsyncDisposable
                     SearchContent: StringSearchExtensions.ConvertToSearchableString(file),
                     FileNameSearchContent: StringSearchExtensions.ConvertToSearchableString(file.Split('/', StringSplitOptions.RemoveEmptyEntries)[^1])
                 )).ToArray();
+
+            GC.Collect();
+            GC.WaitForFullGCComplete(TimeSpan.FromSeconds(5));
 
             ImportStatusChangedEvent.SignalSuccess<StorageFile[]?>(Strings.ContentFileService.ToastMsgFileImportSuccess(contentFile?.Length ?? 0),
                 Strings.ContentFileService.ToastTitleFileImportSuccess, nameof(ImportContentFile), contentFile);
@@ -130,13 +139,24 @@ public sealed class StorageContentFileService : IDisposable, IAsyncDisposable
             .Select(grouping => new ExtensionInfo(grouping.Key, grouping.Count()))
             .OrderByDescending(extensionInfo => extensionInfo.Count)
             .ToArray();
+        
         var storageFileList = new DeviceStorageFileList(listName/*, files*/, files.Length, fileExtensionInfos, DateTime.Now);
+        
         StorageFileLists.Add(storageFileList);
 
-        foreach (var extensionInfo in fileExtensionInfos)
+        var sortedExtensionInfos = fileExtensionInfos.OrderBy(info => info.Count);
+
+        foreach (var extensionInfo in sortedExtensionInfos)
         {
-            Barrel.Current.Add<StorageFile[]>(CacheKeys.StorageContentListFiles(storageFileList.Id, extensionInfo.Extension),
-                files.Where(file => file.Extension == extensionInfo.Extension).ToArray(), TimeSpan.Zero);
+            Barrel.Current.Add<IEnumerable<StorageFile>>(CacheKeys.StorageContentListFiles(storageFileList.Id, extensionInfo.Extension),
+                files.Where(file => file.Extension == extensionInfo.Extension), TimeSpan.Zero);
+
+            //Barrel.Current.Add<StorageFile[]>(CacheKeys.StorageContentListFiles(storageFileList.Id, extensionInfo.Extension),
+            //    files.Where(file => file.Extension == extensionInfo.Extension).ToArray(), TimeSpan.Zero);
+
+            files = files.AsEnumerable().Where(file => file.Extension != extensionInfo.Extension).ToArray();
+            GC.Collect();
+            GC.WaitForFullGCComplete(TimeSpan.FromSeconds(5));
         }
 
         Barrel.Current.Add(CacheKeys.StorageContentLists, StorageFileLists, TimeSpan.Zero);

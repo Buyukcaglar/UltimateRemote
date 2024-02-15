@@ -51,7 +51,7 @@ public sealed partial class StorageContentFileManager : BaseComponent
                     Android.Manifest.Permission.ReadExternalStorage))
             {
                 var toast = Android.Widget.Toast.MakeText(Android.App.Application.Context,
-                    "Read Storage Permission is required!", Android.Widget.ToastLength.Long);
+                    "Storage Read Permission is required!", Android.Widget.ToastLength.Long);
                 if(toast != null)
                     toast.Show();
             }
@@ -138,7 +138,7 @@ public sealed partial class StorageContentFileManager : BaseComponent
                 }
                 catch (Exception ex)
                 {
-                    DisplayErrorToast(Strings.ContentListManager.ToastMsgSaveListFailed,
+                    DisplayErrorToast(Strings.ContentListManager.ToastMsgSaveListFailed(ex.Message),
                         Strings.ContentListManager.ToastTitleSaveListFailed);
                 }
                 finally
@@ -155,6 +155,7 @@ public sealed partial class StorageContentFileManager : BaseComponent
     {
         await ExecuteUiBlockingTask(Task.Run(() => FileService.DeleteFileList(listName)),
             Strings.ContentListManager.BpMsgDeletingList(listName));
+        await InvokeAsync(StateHasChanged);
     }
 
     private Task DisplayExtInfo(string listName)

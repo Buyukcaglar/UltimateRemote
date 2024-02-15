@@ -1,5 +1,4 @@
 ﻿using Blazored.Toast;
-using Microsoft.Extensions.Logging;
 using MonkeyCache.FileStore;
 using System.Text;
 using UltimateRemote.Interfaces;
