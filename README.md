@@ -14,8 +14,7 @@ With Ultimate remote;
 
 ![Desktop Screenshot](/docs/images/ss_01.png)  
 ![Desktop Screenshot Dark Mode](/docs/images/ss_04.png)  
-![Mobile Screenshot](/docs/images/IMG_7039.PNG)  
-![Mobile Screenshot Dark Mode](/docs/images/IMG_7040.PNG)  
+![Mobile Screenshot](/docs/images/IMG_7039.PNG)![Mobile Screenshot Dark Mode](/docs/images/IMG_7040.PNG)  
 
 #Licence
 
