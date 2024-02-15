@@ -12,13 +12,13 @@ With Ultimate remote;
 . Import High Voltage SID Collection, create Jukebox Lists and play them on your Commodore 64.
 . Perform any other operation that is supported by Ultimate HTTP API
 
-![Desktop Screenshot]()
+![Desktop Screenshot](/docs/images/ss_01.png)
 
-![Desktop Screenshot Dark Mode]()
+![Desktop Screenshot Dark Mode](/docs/images/ss_04.png)
 
-![Mobile Screenshot]()
+![Mobile Screenshot](/docs/images/IMG_7039.PNG)
 
-![Mobile Screenshot Dark Mode]()
+![Mobile Screenshot Dark Mode](/docs/images/IMG_7040.PNG)
 
 #Licence
 
