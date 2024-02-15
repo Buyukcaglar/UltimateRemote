@@ -90,8 +90,7 @@ public sealed class StorageContentFileService : IDisposable, IAsyncDisposable
             
             var enabledFileExtensions = _prefsMgr.EnabledFileExtensions;
 
-            GC.Collect();
-            GC.WaitForFullGCComplete(TimeSpan.FromSeconds(5));
+            GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
 
             var files = fileContentString.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries)
                 .Where(line => (!line.StartsWith("._") || !ContentFileServiceParams.ExcludesContaining.Any(line.Contains)))
@@ -100,8 +99,7 @@ public sealed class StorageContentFileService : IDisposable, IAsyncDisposable
                 .Select(formatted => formatted.Substring(formatted.IndexOf('/'), formatted.Length - formatted.IndexOf('/')))
                 .ToArray();
             
-            GC.Collect();
-            GC.WaitForFullGCComplete(TimeSpan.FromSeconds(5));
+            GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
 
             ImportStatusChangedEvent.SignalProgress(Strings.ContentFileService.ImportStatusSplitCompleted(files.Length));
 
@@ -112,8 +110,7 @@ public sealed class StorageContentFileService : IDisposable, IAsyncDisposable
                     FileNameSearchContent: StringSearchExtensions.ConvertToSearchableString(file.Split('/', StringSplitOptions.RemoveEmptyEntries)[^1])
                 )).ToArray();
 
-            GC.Collect();
-            GC.WaitForFullGCComplete(TimeSpan.FromSeconds(5));
+            GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
 
             ImportStatusChangedEvent.SignalSuccess<StorageFile[]?>(Strings.ContentFileService.ToastMsgFileImportSuccess(contentFile?.Length ?? 0),
                 Strings.ContentFileService.ToastTitleFileImportSuccess, nameof(ImportContentFile), contentFile);
@@ -155,12 +152,11 @@ public sealed class StorageContentFileService : IDisposable, IAsyncDisposable
             //    files.Where(file => file.Extension == extensionInfo.Extension).ToArray(), TimeSpan.Zero);
 
             files = files.AsEnumerable().Where(file => file.Extension != extensionInfo.Extension).ToArray();
-            GC.Collect();
-            GC.WaitForFullGCComplete(TimeSpan.FromSeconds(5));
+            GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
         }
 
         Barrel.Current.Add(CacheKeys.StorageContentLists, StorageFileLists, TimeSpan.Zero);
-
+        GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
     }
 
     public void DeleteFileList(string listName)

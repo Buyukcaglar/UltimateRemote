@@ -52,9 +52,10 @@ internal static class Strings
         public static string ToastMsgDuplicateListName(string listName) => $"Name '{listName}' already exists. List names must be unique.";
         public const string ToastTitleDuplicateListName = "Duplicate list name";
 
+        public const string ToastMsgSaveListFailedOutOfMemory = "Out of memory exception occured while saving list. Try creating multiple lists by file extensions and then import those smaller lists seperately.";
         public static string ToastMsgSaveListFailed(string exMsg) => $"An error occured while saving list. \r\n {exMsg}";
         public const string ToastTitleSaveListFailed = "Save list failed";
-
+        
         public const string ToastMsgStorageReadPermissionNotGranted = "Storage read permission NOT granted, import file will likely to fail. Manually enable Storage (read) permission from O/S' permissions section.";
         public const string ToastTitleStorageReadPermissionNotGranted = "Storage Read Permission Missing";
 

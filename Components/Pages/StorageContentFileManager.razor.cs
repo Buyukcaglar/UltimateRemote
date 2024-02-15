@@ -136,6 +136,12 @@ public sealed partial class StorageContentFileManager : BaseComponent
                 {
                     FileService.SaveFileList(listName, _importList);
                 }
+                catch (OutOfMemoryException)
+                {
+                    DisplayErrorToast(Strings.ContentListManager.ToastMsgSaveListFailedOutOfMemory,
+                        Strings.ContentListManager.ToastTitleSaveListFailed);
+                    await DeleteList(listName);
+                }
                 catch (Exception ex)
                 {
                     DisplayErrorToast(Strings.ContentListManager.ToastMsgSaveListFailed(ex.Message),
@@ -146,6 +152,7 @@ public sealed partial class StorageContentFileManager : BaseComponent
                     _importList = null;
                     await UnBlock();
                     await InvokeAsync(StateHasChanged);
+                    GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
                 }
             }
         });
