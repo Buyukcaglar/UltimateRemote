@@ -1,6 +1,6 @@
 # Ultimate Remote
 
-Ultimate Remote is free (no ads, no in-app purchases whatsoever) and open source companion application for Ultimate-II and Ultimate C64 devices that are on v3.11 firmware and higher, available on Windows, Android Phone, Tablet and Chromebook, and (hopefully) soon will be available on Apple ecosystem.  
+Ultimate Remote is open source companion application for Ultimate-II and Ultimate C64 devices that are on v3.11 firmware and higher, available on Windows, Android Phone, Tablet and Chromebook, and (hopefully) soon will be available on Apple ecosystem.  
 
 With Ultimate remote;  
 . Register Ultimate devices on local network by scanning them  
