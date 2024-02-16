@@ -21,7 +21,7 @@ With Ultimate remote;
 
 
 
-# Licence
+# License
 
 Ultimate Remote is licensed under [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](LICENSE).  
 
