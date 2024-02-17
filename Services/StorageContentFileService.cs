@@ -149,10 +149,9 @@ public sealed class StorageContentFileService : IDisposable, IAsyncDisposable
             Barrel.Current.Add<IEnumerable<StorageFile>>(CacheKeys.StorageContentListFiles(storageFileList.Id, extensionInfo.Extension),
                 files.Where(file => file.Extension == extensionInfo.Extension), TimeSpan.Zero);
 
-            //Barrel.Current.Add<StorageFile[]>(CacheKeys.StorageContentListFiles(storageFileList.Id, extensionInfo.Extension),
-            //    files.Where(file => file.Extension == extensionInfo.Extension).ToArray(), TimeSpan.Zero);
-
             files = files.AsEnumerable().Where(file => file.Extension != extensionInfo.Extension).ToArray();
+            
+            
             GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
         }
 
