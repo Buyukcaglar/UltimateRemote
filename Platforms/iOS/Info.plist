@@ -423,5 +423,16 @@
 	</array>
 	<key>CFBundleShortVersionString</key>
 	<string>1</string>
+	<key>CFBundleIconName</key>
+	<string>logo</string>
+	<dict>
+		<key>CFBundleIconFiles</key>
+		<array>
+			<string>logo_120.png</string>
+			<string>logo_152.png</string>			
+		</array>
+	</dict>
+	<key>UILaunchStoryboardName</key>
+	<string>MauiSplash</string>
 </dict>
 </plist>

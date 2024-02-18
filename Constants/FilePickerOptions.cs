@@ -9,6 +9,7 @@ internal static class FilePickerOptions
             { DevicePlatform.WinUI, new[] { ".sid" } }, // file extension
             { DevicePlatform.Tizen, new[] { "*/*" } },
             { DevicePlatform.macOS, new[] { "public.c64.sid" } }, // UTType values
+            { DevicePlatform.MacCatalyst, new[] { "public.c64.sid" } },
         });
 
     private static readonly FilePickerFileType TxtFile = new FilePickerFileType(
@@ -19,6 +20,7 @@ internal static class FilePickerOptions
             { DevicePlatform.WinUI, new[] { ".txt" } },
             { DevicePlatform.Tizen, new[] { "*/*" } },
             { DevicePlatform.macOS, new[] { "public.text" } },
+            { DevicePlatform.MacCatalyst, new[] { "public.text" } }
         });
 
     private static readonly FilePickerFileType DiskImages = new FilePickerFileType(
@@ -29,6 +31,8 @@ internal static class FilePickerOptions
             { DevicePlatform.WinUI, new[] { ".d64", ".g64", ".d71", ".d81" } },
             { DevicePlatform.Tizen, new[] { "*/*" } },
             { DevicePlatform.macOS, new[] { "public.c64.diskimage" } },
+            { DevicePlatform.MacCatalyst, new[] { "public.c64.diskimage" } },
+
         });
 
     private static readonly FilePickerFileType DiskImage1541 = new FilePickerFileType(
@@ -39,6 +43,7 @@ internal static class FilePickerOptions
             { DevicePlatform.WinUI, new[] { ".d64", ".g64"} },
             { DevicePlatform.Tizen, new[] { "*/*" } },
             { DevicePlatform.macOS, new[] { "public.c64.diskimage.1541" } },
+            { DevicePlatform.MacCatalyst, new[] { "public.c64.diskimage.1541" } },
         });
 
     private static readonly FilePickerFileType DiskImageD64 = new FilePickerFileType(
@@ -49,6 +54,7 @@ internal static class FilePickerOptions
             { DevicePlatform.WinUI, new[] { ".d64" } },
             { DevicePlatform.Tizen, new[] { "*/*" } },
             { DevicePlatform.macOS, new[] { "public.c64.diskimage.d64" } },
+            { DevicePlatform.MacCatalyst, new[] { "public.c64.diskimage.d64" } },
         });
 
     private static readonly FilePickerFileType DiskImageG64 = new FilePickerFileType(
@@ -59,6 +65,7 @@ internal static class FilePickerOptions
             { DevicePlatform.WinUI, new[] { ".g64"} },
             { DevicePlatform.Tizen, new[] { "*/*" } },
             { DevicePlatform.macOS, new[] { "public.c64.diskimage.g64" } },
+            { DevicePlatform.MacCatalyst, new[] { "public.c64.diskimage.g64" } },
         });
 
     private static readonly FilePickerFileType DiskImageD71 = new FilePickerFileType(
@@ -69,6 +76,7 @@ internal static class FilePickerOptions
             { DevicePlatform.WinUI, new[] { ".d71" } },
             { DevicePlatform.Tizen, new[] { "*/*" } },
             { DevicePlatform.macOS, new[] { "public.c64.diskimaged.d71" } },
+            { DevicePlatform.MacCatalyst, new[] { "public.c64.diskimaged.d71" } },
         });
 
     private static readonly FilePickerFileType DiskImageG71 = new FilePickerFileType(
@@ -79,6 +87,7 @@ internal static class FilePickerOptions
             { DevicePlatform.WinUI, new[] { ".g71" } },
             { DevicePlatform.Tizen, new[] { "*/*" } },
             { DevicePlatform.macOS, new[] { "public.c64.diskimaged.g71" } },
+            { DevicePlatform.MacCatalyst, new[] { "public.c64.diskimaged.g71" } },
         });
 
     private static readonly FilePickerFileType DiskImageD81 = new FilePickerFileType(
@@ -89,6 +98,7 @@ internal static class FilePickerOptions
             { DevicePlatform.WinUI, new[] { ".d81" } },
             { DevicePlatform.Tizen, new[] { "*/*" } },
             { DevicePlatform.macOS, new[] { "public.c64.diskimage.d81" } },
+            { DevicePlatform.MacCatalyst, new[] { "public.c64.diskimage.d81" } },
         });
 
     private static readonly FilePickerFileType CmdFileSystemImageDnp = new FilePickerFileType(
@@ -99,6 +109,7 @@ internal static class FilePickerOptions
             { DevicePlatform.WinUI, new[] { ".dnp" } },
             { DevicePlatform.Tizen, new[] { "*/*" } },
             { DevicePlatform.macOS, new[] { "public.cmd.filesystemimage.dnp" } },
+            { DevicePlatform.MacCatalyst, new[] { "public.cmd.filesystemimage.dnp" } },
         });
 
     private static readonly FilePickerFileType C64ProgramFile = new FilePickerFileType(
@@ -109,6 +120,7 @@ internal static class FilePickerOptions
             { DevicePlatform.WinUI, new[] { ".prg" } },
             { DevicePlatform.Tizen, new[] { "*/*" } },
             { DevicePlatform.macOS, new[] { "public.c64.program" } },
+            { DevicePlatform.MacCatalyst, new[] { "public.c64.program" } },
         });
 
     private static readonly FilePickerFileType C64TapeImageFiles = new FilePickerFileType(
@@ -119,6 +131,7 @@ internal static class FilePickerOptions
             { DevicePlatform.WinUI, new[] { ".t64", ".tap", ".p00" } },
             { DevicePlatform.Tizen, new[] { "*/*" } },
             { DevicePlatform.macOS, new[] { "public.c64.tapeimage" } },
+            { DevicePlatform.MacCatalyst, new[] { "public.c64.tapeimage" } },
         });
 
     private static readonly FilePickerFileType C64T64ImageFile = new FilePickerFileType(
@@ -129,6 +142,7 @@ internal static class FilePickerOptions
             { DevicePlatform.WinUI, new[] { ".t64" } },
             { DevicePlatform.Tizen, new[] { "*/*" } },
             { DevicePlatform.macOS, new[] { "public.c64.tapeimage.t64" } },
+            { DevicePlatform.MacCatalyst, new[] { "public.c64.tapeimage.t64" } },
         });
 
     private static readonly FilePickerFileType C64TapImageFile = new FilePickerFileType(
@@ -139,6 +153,7 @@ internal static class FilePickerOptions
             { DevicePlatform.WinUI, new[] { ".tap" } },
             { DevicePlatform.Tizen, new[] { "*/*" } },
             { DevicePlatform.macOS, new[] { "public.c64.tapeimage.tap" } },
+            { DevicePlatform.MacCatalyst, new[] { "public.c64.tapeimage.tap" } },
         });
 
     private static readonly FilePickerFileType C64P00ImageFile = new FilePickerFileType(
@@ -149,6 +164,7 @@ internal static class FilePickerOptions
             { DevicePlatform.WinUI, new[] { ".p00" } },
             { DevicePlatform.Tizen, new[] { "*/*" } },
             { DevicePlatform.macOS, new[] { "public.c64.tapeimage.p00" } },
+            { DevicePlatform.MacCatalyst, new[] { "public.c64.tapeimage.p00" } },
         });
 
     private static readonly FilePickerFileType C64BinaryFile = new FilePickerFileType(
@@ -159,6 +175,7 @@ internal static class FilePickerOptions
             { DevicePlatform.WinUI, new[] { ".bin" } },
             { DevicePlatform.Tizen, new[] { "*/*" } },
             { DevicePlatform.macOS, new[] { "public.c64.binary" } },
+            { DevicePlatform.MacCatalyst, new[] { "public.c64.binary" } },
         });
 
     private static readonly FilePickerFileType BinaryFiles = new FilePickerFileType(
@@ -169,6 +186,7 @@ internal static class FilePickerOptions
             { DevicePlatform.WinUI, new[] { "" } },
             { DevicePlatform.Tizen, new[] { "*/*" } },
             { DevicePlatform.macOS, new[] { "public.data" } },
+            { DevicePlatform.MacCatalyst, new[] { "public.data" } },
         });
 
     private static readonly FilePickerFileType C64CartridgeImage = new FilePickerFileType(
@@ -179,6 +197,7 @@ internal static class FilePickerOptions
             { DevicePlatform.WinUI, new[] { ".crt" } },
             { DevicePlatform.Tizen, new[] { "*/*" } },
             { DevicePlatform.macOS, new[] { "public.c64.catridgeimage" } },
+            { DevicePlatform.MacCatalyst, new[] { "public.c64.catridgeimage" } },
         });
 
     private static readonly FilePickerFileType C64RomFile = new FilePickerFileType(
@@ -189,6 +208,7 @@ internal static class FilePickerOptions
             { DevicePlatform.WinUI, new[] { ".rom" } },
             { DevicePlatform.Tizen, new[] { "*/*" } },
             { DevicePlatform.macOS, new[] { "public.c64.rom" } },
+            { DevicePlatform.MacCatalyst, new[] { "public.c64.rom" } },
         });
 
     private static readonly FilePickerFileType ReuImage = new FilePickerFileType(
@@ -199,6 +219,7 @@ internal static class FilePickerOptions
             { DevicePlatform.WinUI, new[] { ".reu" } },
             { DevicePlatform.Tizen, new[] { "*/*" } },
             { DevicePlatform.macOS, new[] { "public.c64.reu" } },
+            { DevicePlatform.MacCatalyst, new[] { "public.c64.reu" } },
         });
 
     private static readonly FilePickerFileType ModFile = new FilePickerFileType(
@@ -209,6 +230,7 @@ internal static class FilePickerOptions
             { DevicePlatform.WinUI, new[] { ".mod" } },
             { DevicePlatform.Tizen, new[] { "*/*" } },
             { DevicePlatform.macOS, new[] { "public.music.mod" } },
+            { DevicePlatform.MacCatalyst, new[] { "public.music.mod" } },
         });
 
     private static readonly FilePickerFileType LayoutItemIconImageFile = new FilePickerFileType(
@@ -219,6 +241,7 @@ internal static class FilePickerOptions
             { DevicePlatform.WinUI, new[] { ".png", ".webp", ".svg" } },
             { DevicePlatform.Tizen, new[] { "*/*" } },
             { DevicePlatform.macOS, new[] { "public.png", "org.webmproject.webp", "public.svg-image" } },
+            { DevicePlatform.MacCatalyst, new[] { "public.png", "org.webmproject.webp", "public.svg-image" } },
         });
 
     private static readonly FilePickerFileType LayoutItemUploadFile = new FilePickerFileType(
@@ -229,6 +252,7 @@ internal static class FilePickerOptions
             { DevicePlatform.WinUI, new[] { ".d64", ".g64", ".d71", ".g71", ".d81", ".prg", ".crt", ".sid", ".mod" } },
             { DevicePlatform.Tizen, new[] { "*/*" } },
             { DevicePlatform.macOS, new[] { "public.c64.diskimage", "public.c64.program", "public.c64.catridgeimage", "public.c64.sid", "public.music.mod" } },
+            { DevicePlatform.MacCatalyst, new[] { "public.c64.diskimage", "public.c64.program", "public.c64.catridgeimage", "public.c64.sid", "public.music.mod" } },
         });
 
     public static PickOptions SidFileOptions = new()

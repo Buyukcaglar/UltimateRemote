@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
     <PropertyGroup>
-        <TargetFrameworks>net8.0-ios;net8.0-maccatalyst;net8.0-android</TargetFrameworks>
+		<TargetFrameworks>net8.0-ios;net8.0-maccatalyst;net8.0-android</TargetFrameworks>
         <!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
         <!-- <TargetFrameworks>$(TargetFrameworks);net8.0-tizen</TargetFrameworks> -->
 
@@ -39,8 +39,6 @@
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(TargetFramework)'=='net8.0-ios'">
-      <CodesignKey>Apple Development: Created via API (6J4C523F57)</CodesignKey>
-      <CodesignProvision>VS: com.buyukcaglar.ultimateremote Development</CodesignProvision>
       <ProvisioningType>automatic</ProvisioningType>
     </PropertyGroup>
 
@@ -62,31 +60,41 @@
       <DefaultLanguage>en</DefaultLanguage>
     </PropertyGroup>
 
-    <ItemGroup>
-        <!-- App Icon -->
-        <MauiIcon Include="Resources\AppIcon\appicon.svg" Color="#F1F4F9" />
-        
-        <!-- Splash Screen -->
-        <MauiSplashScreen Include="Resources\Splash\splashicon.svg" Color="#F1F4F9" BaseSize="96,96" />
+    <PropertyGroup Condition="'$(TargetFramework)'=='net8.0-ios'">
+      <ProvisioningType>manual</ProvisioningType>
+      <CodesignKey>iPhone Distribution</CodesignKey>
+      <CodesignProvision></CodesignProvision>
+    </PropertyGroup>
 
-        <!-- Images -->
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-maccatalyst|AnyCPU'">
+		<MtouchLink>SdkOnly</MtouchLink>
+		<EnableCodeSigning>True</EnableCodeSigning>
+		<EnablePackageSigning>true</EnablePackageSigning>
+		<CreatePackage>true</CreatePackage>
+		<CodesignKey>Apple Distribution: Onur Buyukcaglar (SZ4F4WP934)</CodesignKey>
+		<CodesignProvision>Ultimate Remote Mac Distribution</CodesignProvision>
+		<CodesignEntitlements>Platforms\MacCatalyst\Entitlements.plist</CodesignEntitlements>
+		<PackageSigningKey>3rd Party Mac Developer Installer: Onur Buyukcaglar (SZ4F4WP934)</PackageSigningKey>
+	</PropertyGroup>
+    
+    <ItemGroup>
+        <MauiIcon Include="Resources\AppIcon\appicon.svg" Color="#F1F4F9" />
+        <MauiSplashScreen Include="Resources\Splash\splashicon.svg" Color="#F1F4F9" BaseSize="96,96" />
         <MauiImage Include="Resources\Images\*" />
         <MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
-
-        <!-- Custom Fonts -->
         <MauiFont Include="Resources\Fonts\*" />
-
-        <!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
+        <!--
         <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+		-->
     </ItemGroup>
-
+	<!--
     <ItemGroup>
       <Content Include="Resources\AppIcon\appicon.svg">
         <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
         <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       </Content>
     </ItemGroup>
-
+	-->
     <ItemGroup>
         <PackageReference Include="Blazored.Modal" Version="7.1.0" />
         <PackageReference Include="Blazored.Toast" Version="4.1.0" />
@@ -101,6 +109,12 @@
 
     <ItemGroup>
       <Folder Include="Models\RequestModels\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Platforms\MacCatalyst\Services\IpAddressService.cs">
+        <ExcludeFromCurrentConfiguration>false</ExcludeFromCurrentConfiguration>
+      </Compile>
     </ItemGroup>
 
 </Project>
