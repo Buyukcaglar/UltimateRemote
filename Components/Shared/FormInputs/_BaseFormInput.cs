@@ -36,8 +36,13 @@ public abstract class BaseFormInput : ComponentBase
         if (NumericInputOnly)
         {
             retVal.Add("onkeypress", JsFunctions.NumericOnly);
-            retVal.Add("pattern", InputPatterns.Numeric);
-            retVal.Add("inputmode", "numeric");
+
+            //retVal.Add("pattern", InputPatterns.Numeric);
+            
+            if (!PlatformDependent.IsApple)
+            {
+                retVal.Add("inputmode", "numeric");
+            }
         }
 
         if (!NumericInputOnly && !string.IsNullOrWhiteSpace(CustomInputFunction))

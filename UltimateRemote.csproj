@@ -38,9 +38,7 @@
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
     </PropertyGroup>
 
-    <PropertyGroup Condition="'$(TargetFramework)'=='net8.0-ios'">
-      <ProvisioningType>automatic</ProvisioningType>
-    </PropertyGroup>
+    <PropertyGroup Condition="'$(TargetFramework)'=='net8.0-ios'" />
 
     <PropertyGroup>
       <Title>Ultimate Remote</Title>

@@ -14,7 +14,8 @@ internal static class JsFunctions
 
 internal static class InputPatterns
 {
-    public const string Numeric = "\\d{10}";
+    //public const string Numeric = "\\d*";
+    public const string Numeric = "[0-9]*";
 }
 
 internal static class RegexPatterns
