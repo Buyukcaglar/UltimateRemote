@@ -55,10 +55,11 @@ public class UserPreferences
 
     public List<DeviceLocation> DeviceLocations = new List<DeviceLocation>(new[]
     {
-        new DeviceLocation(Name: "Usb0", Path: "/Usb0", IconCss: "usb ph-duotone", BuiltIn: true) {Enabled = true, Default = true, Selected = true },
-        new DeviceLocation(Name: "Usb1", Path: "/Usb1", IconCss: "usb ph-duotone", BuiltIn: true) {Enabled = true, Default = false },
-        new DeviceLocation(Name: "Temp", Path: "/Temp", IconCss: "trash ph-duotone", BuiltIn: true) {Enabled = true, Default = false },
-        new DeviceLocation(Name: "Flash", Path: "/Flash", IconCss: "lightning ph-duotone", BuiltIn: true) {Enabled = true, Default = false },
+        new DeviceLocation(Name: "Usb0", Path: "/Usb0", IconCss: "usb ph-duotone", BuiltIn: true) { Enabled = true, Default = true, Selected = true },
+        new DeviceLocation(Name: "Usb1", Path: "/Usb1", IconCss: "usb ph-duotone", BuiltIn: true) { Enabled = true, Default = false },
+        new DeviceLocation(Name: "Usb2", Path: "/Usb2", IconCss: "usb ph-duotone", BuiltIn: true) { Enabled = true, Default = false },
+        new DeviceLocation(Name: "Temp", Path: "/Temp", IconCss: "trash ph-duotone", BuiltIn: true) { Enabled = true, Default = false },
+        new DeviceLocation(Name: "Flash", Path: "/Flash", IconCss: "lightning ph-duotone", BuiltIn: true) { Enabled = true, Default = false },
     });
 
 }

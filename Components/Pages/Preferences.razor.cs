@@ -6,6 +6,10 @@ namespace UltimateRemote.Components.Pages;
 [Route(Blazor.RouteTemplates.Preferences)]
 public sealed partial class Preferences : BaseComponent
 {
+
+    private const string PrefItemCss = "col-12 col-md-4 col-lg-3 p-1";
+    private const string PrefItemDescCss = "form-text text-break mx-1";
+
     private string HistorySize
     {
         get => PrefsMgr.UserPrefs.HistorySize.ToString();
@@ -55,8 +59,11 @@ public sealed partial class Preferences : BaseComponent
         }
     }
 
-    private const string PrefItemCss = "col-12 col-md-4 col-lg-3 p-1";
-    private const string PrefItemDescCss = "form-text text-break mx-1";
+    private async Task ResetSettings()
+    {
+        PrefsMgr.Reset();
+        await InvokeAsync(StateHasChanged);
+    }
 
     private Task SaveChanges()
     {

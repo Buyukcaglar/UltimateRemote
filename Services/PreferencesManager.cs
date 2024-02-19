@@ -4,7 +4,7 @@ using UltimateRemote.Models;
 namespace UltimateRemote.Services;
 public class PreferencesManager
 {
-    public UserPreferences UserPrefs { get; } =
+    public UserPreferences UserPrefs { get; private set; } =
         Barrel.Current.Get<UserPreferences>(CacheKeys.Preferences) ?? new UserPreferences();
 
     private void SavePreferences() =>
@@ -78,4 +78,9 @@ public class PreferencesManager
     public void PersistPreferences()
         => this.SavePreferences();
 
+    public void Reset()
+    {
+        Barrel.Current.Empty(CacheKeys.Preferences);
+        UserPrefs = new UserPreferences();
+    }
 }
