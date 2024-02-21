@@ -28,7 +28,7 @@ internal static class FilePickerOptions
         {
             { DevicePlatform.iOS, new[] { "public.c64.diskimage" } },
             { DevicePlatform.Android, new[] { "application/octet-stream" } },
-            { DevicePlatform.WinUI, new[] { ".d64", ".g64", ".d71", ".d81" } },
+            { DevicePlatform.WinUI, new[] { ".d64", ".g64", ".d71", ".g71", ".d81" } },
             { DevicePlatform.Tizen, new[] { "*/*" } },
             { DevicePlatform.macOS, new[] { "public.c64.diskimage" } },
             { DevicePlatform.MacCatalyst, new[] { "public.c64.diskimage" } },
