@@ -1,4 +1,5 @@
-﻿using MonkeyCache.FileStore;
+﻿using LukeMauiFilePicker;
+using MonkeyCache.FileStore;
 using UltimateRemote.Models;
 
 namespace UltimateRemote.Services;
@@ -9,8 +10,17 @@ public sealed class StorageContentFileService : IDisposable, IAsyncDisposable
     public List<DeviceStorageFileList> StorageFileLists = new List<DeviceStorageFileList>();
     private Stream? _importFileContent;
     private readonly PreferencesManager _prefsMgr;
+
+#if MACCATALYST
+    private readonly IFilePickerService _filePicker;
+    public StorageContentFileService(PreferencesManager prefsMgr, IFilePickerService filePicker)
+    {
+        _filePicker = filePicker;
+#endif
+#if !MACCATALYST
     public StorageContentFileService(PreferencesManager prefsMgr)
     {
+#endif
         _prefsMgr = prefsMgr;
         GetCachedLists();
     }
@@ -48,6 +58,8 @@ public sealed class StorageContentFileService : IDisposable, IAsyncDisposable
         var retVal = new FilePickResult();
         try
         {
+
+#if !MACCATALYST
             var pickResult = await FilePicker.PickAsync(FilePickerOptions.TextFileOptions);
             if (pickResult != null)
             {
@@ -57,6 +69,19 @@ public sealed class StorageContentFileService : IDisposable, IAsyncDisposable
                 retVal.FullPath = pickResult.FullPath;
                 retVal.FileStream = _importFileContent;
             }
+#endif
+#if MACCATALYST
+            var pickerOptions = FilePickerOptions.GetFileTypes(FilePickerOptions.TextFileOptions);
+            var pickResult = await _filePicker.PickFileAsync(pickerOptions.Title, pickerOptions.FileTypes);
+            if (pickResult?.FileResult != null)
+            {
+                _importFileContent = await pickResult.OpenReadAsync();
+                retVal.FileName = pickResult.FileName;
+                retVal.ContentType = pickResult.FileResult.ContentType;
+                retVal.FullPath = pickResult.FileResult.FullPath;
+                retVal.FileStream = _importFileContent;
+            }
+#endif
         }
         catch (Exception ex)
         {

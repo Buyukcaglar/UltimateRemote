@@ -69,6 +69,10 @@ internal static class DependencyConfiguration
         services.AddBlazoredModal();
         services.AddBlazoredToast();
 
+#if MACCATALYST
+        services.AddFilePicker();
+#endif
+
         return services;
     }
 

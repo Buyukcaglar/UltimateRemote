@@ -1,14 +1,22 @@
 ﻿using Blazored.Toast.Services;
+using LukeMauiFilePicker;
 using UltimateRemote.Models;
 
 namespace UltimateRemote.Services;
+
+#if MACCATALYST
+public sealed class FilePickerService(IFilePickerService filePicker)
+#endif
+#if !MACCATALYST
 public sealed class FilePickerService
+#endif
 {
     public async Task<FilePickResult> PickFile(PickOptions pickOptions)
     {
         var retVal = new FilePickResult();
         try
         {
+#if !MACCATALYST
             var pickResult = await FilePicker.PickAsync(pickOptions);
             if (pickResult != null)
             {
@@ -18,6 +26,19 @@ public sealed class FilePickerService
                 retVal.FullPath = pickResult.FullPath;
                 retVal.FileStream = fileStream;
             }
+#endif
+#if MACCATALYST
+            var pickerOptions = FilePickerOptions.GetFileTypes(pickOptions);
+            var pickResult = await filePicker.PickFileAsync(pickerOptions.Title, pickerOptions.FileTypes);
+            if (pickResult?.FileResult != null)
+            {
+                var fileStream = await pickResult.OpenReadAsync();
+                retVal.FileName = pickResult.FileName;
+                retVal.ContentType = pickResult.FileResult.ContentType;
+                retVal.FullPath = pickResult.FileResult.FullPath;
+                retVal.FileStream = fileStream;
+            }
+#endif
         }
         catch (Exception ex)
         {

@@ -89,6 +89,7 @@
 					<string>d64</string>
 					<string>g64</string>
 					<string>d71</string>
+					<string>g71</string>
 					<string>d81</string>
 				</array>
 				<key>public.mime-type</key>
