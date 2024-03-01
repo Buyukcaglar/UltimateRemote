@@ -65,6 +65,7 @@ internal static class DependencyConfiguration
         services.AddSingleton<LayoutManager>();
         services.AddSingleton<JukeboxService>();
         services.AddSingleton<EventService>();
+        services.AddSingleton<FtpClient>();
 
         services.AddBlazoredModal();
         services.AddBlazoredToast();

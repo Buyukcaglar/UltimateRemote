@@ -417,6 +417,12 @@ internal static class Strings
 
         public const string MountDiskImage = "Mount Disk Image";
 
+        public static string ListDiskContents(KeyValuePair<string, DriveInfoResponse> driveInfo) => $"Send LOAD\"$\",{driveInfo.Value.BusId} and then LIST commands";
+
+        public static string SendLoadFirstFileCommand(KeyValuePair<string, DriveInfoResponse> driveInfo) => $"Send LOAD\"*\",{driveInfo.Value.BusId},1 command";
+        
+        public const string SendRunCommand = "Send RUN command";
+
         public static string ToastMsgSuccessfulMountResult(MountImageResponse response) =>
             $"<b>SubSys:</b>{response.SubSys}<br/><b>FileType:</b>{response.FileType}<br/><b>Command:</b>{response.Command}<br><b>File:</b>{response.FilePath}";
         public const string ToastTitleSuccessfulMountResult = "Mount Image Success";

@@ -3,10 +3,13 @@ using UltimateRemote.Components.Shared.FormInputs;
 using UltimateRemote.Components.Shared.Modals;
 using UltimateRemote.Models;
 using UltimateRemote.Models.ResponseModels;
+using UltimateRemote.Services.D64Reader;
 
 namespace UltimateRemote.Components.Shared.Functions.Drives;
 public sealed partial class FloppyDrive : BaseFileFunctionComponent
 {
+    [Inject] private FtpClient FtpClient { get; set; }
+
     [Parameter, EditorRequired] public KeyValuePair<string, DriveInfoResponse> DriveInfo { get; set; } = default!;
 
     [Parameter] public EventCallback DriveChangedEvent { get; set; }
@@ -18,9 +21,7 @@ public sealed partial class FloppyDrive : BaseFileFunctionComponent
         new[] { PrefsMgr.GetFileTypeGroup(FileTypeGroupNames.DiskImages)! };
 
     private enum DriveTask { Reset, Remove, Unlink, TurnOn, TurnOff, SetMode }
-
     
-
     private string CardTitle => $"Drive {DriveInfo.Value.BusId}";
 
     private string MountedImageFile => !string.IsNullOrWhiteSpace(DriveInfo.Value.ImageFile)
@@ -37,6 +38,10 @@ public sealed partial class FloppyDrive : BaseFileFunctionComponent
 
     private string DriveIconClass =>
         $"floppy-disk {(DriveInfo.Value.Enabled ? "indicate-online" : "indicate-offline")}";
+
+    private string DisplayCommands => MountedImageFile != "none" ? "position-absolute" : "d-none";
+
+    private D64Reader? _d64Reader;
 
     private DiskImageType _imageType;
     private DiskMode _diskMode;
@@ -90,6 +95,9 @@ public sealed partial class FloppyDrive : BaseFileFunctionComponent
         }
     }
 
+    private Task ExecKeyboardBuffer(MachineCommand command)
+        => CurrentDevice.ExecuteKeyboardBuffer(command.CommandFunc.Invoke(DriveInfo.Value.BusId));
+
     private async Task DisplayConfigurationPopUp()
     {
         var driveId = DriveInfo.Key.ToUpperInvariant();
@@ -129,6 +137,17 @@ public sealed partial class FloppyDrive : BaseFileFunctionComponent
                 DisplaySuccessToast(message: Strings.FloppyDrive.ToastMsgSuccessfulMountResult(mountImageResponse),
                     Strings.FloppyDrive.ToastTitleSuccessfulMountResult);
                 await DriveChangedEvent.InvokeAsync();
+
+                var selectedDiskImage = await FtpClient.GetFile($"ftp://{CurrentDevice.IpAddress}{selectedFile.LocationPath}");
+                System.Diagnostics.Debug.WriteLine($"Selected Disk Image File Size: {selectedDiskImage.Length}");
+
+
+                var d64Reader = new D64Reader(selectedDiskImage);
+                foreach (var d64ReaderDirectoryItem in d64Reader.DirectoryItems)
+                {
+                    System.Diagnostics.Debug.WriteLine(d64ReaderDirectoryItem.Name);
+                }
+
             });
 
     private async Task MountUploadedImage()

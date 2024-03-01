@@ -62,6 +62,15 @@ public class UserPreferences
         new DeviceLocation(Name: "Flash", Path: "/Flash", IconCss: "lightning ph-duotone", BuiltIn: true) { Enabled = true, Default = false },
     });
 
+    public MachineCommand[] FloppyDriveCommands = [
+        new MachineCommand(Name: "Load First File And Run", IconClass: "play", CommandFunc: MachineCommands.LoadFirstFileAndRun),
+        new MachineCommand(Name: "Load Directory & List", IconClass: "currency-dollar-simple ph-list-bullets", CommandFunc: MachineCommands.ListDirectoryAndList),
+        new MachineCommand(Name: "Load First File",  IconClass: "asterisk", CommandFunc: MachineCommands.LoadFirstFile),
+        new MachineCommand(Name: "Load Directory", IconClass: "currency-dollar-simple", CommandFunc: MachineCommands.LoadDirectory),
+        new MachineCommand(Name: "List", IconClass: "list-bullets", CommandFunc: (_) => MachineCommands.List),
+        new MachineCommand(Name: "Run", IconClass: "play", CommandFunc: (_) => MachineCommands.Run),
+    ];
+
 }
 
 public sealed record FileTypeGroup(string Name, string[] Extensions, bool Enabled, bool BuiltIn, [property: JsonIgnore] PickOptions FilePickerOptions);
@@ -72,3 +81,5 @@ public sealed record DeviceLocation(string Name, string Path, string? IconCss, b
     public bool Default { get; set; }
     [JsonIgnore] public bool Selected { get; set; }
 };
+
+public sealed record MachineCommand(string Name, string IconClass, Func<int, string> CommandFunc);

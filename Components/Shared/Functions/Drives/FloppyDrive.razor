@@ -1,4 +1,5 @@
-﻿@inherits BaseFileFunctionComponent
+﻿@using UltimateRemote.Models
+@inherits BaseFileFunctionComponent
 
 <FunctionCard Title="@CardTitle" 
               IconClass="@DriveIconClass"
@@ -7,7 +8,19 @@
     <a href="javascript:void(0)"
        class="text-body ph-power ph-duotone position-absolute start-0 ms-1 mt-1"
        @onclick="TogglePower"></a>
-       
+    
+    <div class="@DisplayCommands start-0 ms-1 mt-6">
+        <DropdownList T="MachineCommand" 
+                      NoLabel="true"
+                      ContainerCss="border-0 m-0"
+                      ButtonCss="ph-asterisk border-0 p-0 px-1"
+                      Options="@PrefsMgr.UserPrefs.FloppyDriveCommands"
+                      IconFunc="command => command.IconClass"
+                      LabelFunc="command => command.Name"
+                      ItemSelectedEvent="ExecKeyboardBuffer" />
+
+    </div>
+
     <a href="javascript:void(0)"
        class="text-body ph-gear ph-duotone position-absolute end-0 me-1 mt-6"
        @onclick="DisplayConfigurationPopUp"></a>
