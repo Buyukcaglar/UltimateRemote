@@ -23,4 +23,8 @@ public static class MachineCommands
 
     public static string ListDirectoryAndList(int busId) => $"{LoadDirectory(busId)}{List}";
 
+    public static string LoadFile(int busId, string fileName) => $"LO~\"{fileName}\",{busId},1\r";
+
+    public static string LoadFileAndRun(int busId, string fileName) => $"{LoadFile(busId, fileName)}{Run}";
+
 }

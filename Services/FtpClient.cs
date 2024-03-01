@@ -3,16 +3,13 @@
 namespace UltimateRemote.Services;
 public class FtpClient
 {
-    public async Task<byte[]> GetFile(string filePath)
+    public async Task<byte[]> GetFile(Uri requestUri)
     {
         var retVal = Array.Empty<byte>();
 
         try
         {
-            var request = (FtpWebRequest)WebRequest.Create(filePath);
-            request.Method = WebRequestMethods.Ftp.DownloadFile;
-            request.Credentials = new NetworkCredential("anonymous", "");
-
+            var request = GetRequest(requestUri, WebRequestMethods.Ftp.DownloadFile);
             var response = (FtpWebResponse)request.GetResponse();
 
             await using var responseStream = response.GetResponseStream();
@@ -21,11 +18,22 @@ public class FtpClient
             await responseStream.CopyToAsync(memoryStream);
 
             retVal = memoryStream.ToArray();
-
+            
+            responseStream.Close();
             response.Close();
+
         }
         catch { }
 
         return retVal;
     }
+
+    private static FtpWebRequest GetRequest(Uri requestUri, string method)
+    {
+        var request = (FtpWebRequest)WebRequest.Create(requestUri);
+        request.Method = method;
+        request.Credentials = new NetworkCredential("anonymous", "");
+        return request;
+    }
+
 }

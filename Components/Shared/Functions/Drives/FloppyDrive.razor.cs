@@ -8,8 +8,6 @@ using UltimateRemote.Services.D64Reader;
 namespace UltimateRemote.Components.Shared.Functions.Drives;
 public sealed partial class FloppyDrive : BaseFileFunctionComponent
 {
-    [Inject] private FtpClient FtpClient { get; set; }
-
     [Parameter, EditorRequired] public KeyValuePair<string, DriveInfoResponse> DriveInfo { get; set; } = default!;
 
     [Parameter] public EventCallback DriveChangedEvent { get; set; }
@@ -21,7 +19,7 @@ public sealed partial class FloppyDrive : BaseFileFunctionComponent
         new[] { PrefsMgr.GetFileTypeGroup(FileTypeGroupNames.DiskImages)! };
 
     private enum DriveTask { Reset, Remove, Unlink, TurnOn, TurnOff, SetMode }
-    
+
     private string CardTitle => $"Drive {DriveInfo.Value.BusId}";
 
     private string MountedImageFile => !string.IsNullOrWhiteSpace(DriveInfo.Value.ImageFile)
@@ -41,13 +39,16 @@ public sealed partial class FloppyDrive : BaseFileFunctionComponent
 
     private string DisplayCommands => MountedImageFile != "none" ? "position-absolute" : "d-none";
 
+    private string DisplayDirectory => _d64Reader?.DirectoryItems is { Count: > 0 } ? "position-absolute" : "d-none";
+
     private D64Reader? _d64Reader;
 
     private DiskImageType _imageType;
     private DiskMode _diskMode;
-    
+
     // <Not cool ...>
     private DriveMode _driveMode;
+
     private DriveMode DriveMode
     {
         get
@@ -60,6 +61,14 @@ public sealed partial class FloppyDrive : BaseFileFunctionComponent
     }
     // </Not cool ...>
 
+    protected override async Task OnInitializedAsync()
+    {
+        if (MountedImageFile != "none")
+            await TrySetD64Reader(MountedImageFile);
+        
+        await base.OnInitializedAsync();
+    }
+
     private Task OnDriveModeSelect(DriveMode mode)
     {
         _driveMode = mode;
@@ -71,7 +80,12 @@ public sealed partial class FloppyDrive : BaseFileFunctionComponent
         Task<ApiResponse?> task = driveTask switch
         {
             DriveTask.Reset => CurrentDevice.ResetDrive(DriveInfo.Key),
-            DriveTask.Remove => CurrentDevice.RemoveDrive(DriveInfo.Key),
+            DriveTask.Remove => CurrentDevice.RemoveDrive(DriveInfo.Key)
+                .ExecOnSuccess2(() =>
+                    {
+                        _d64Reader = null;
+                        return Task.CompletedTask;
+                    }),
             DriveTask.Unlink => CurrentDevice.UnlinkDrive(DriveInfo.Key),
             DriveTask.TurnOn => CurrentDevice.TurnOnDrive(DriveInfo.Key),
             DriveTask.TurnOff => CurrentDevice.TurnOffDrive(DriveInfo.Key),
@@ -95,6 +109,38 @@ public sealed partial class FloppyDrive : BaseFileFunctionComponent
         }
     }
 
+    private async Task DisplayDiskDirectory()
+    {
+        if (_d64Reader?.DirectoryItems is not { Count: > 0 })
+            return;
+
+        var modalParams = new ModalParameters()
+        {
+            {nameof(DiskDirectoryModal.ModalTitle), "Disk Directory"},
+            {nameof(DiskDirectoryModal.D64Reader), _d64Reader!}
+        };
+
+        var diskDirectoryModal = ModalService.Show<DiskDirectoryModal>(title: "", modalParams);
+
+        modalParams.Add(nameof(DiskDirectoryModal.Self), diskDirectoryModal);
+
+        var result = await diskDirectoryModal.Result;
+
+        if (result is { Confirmed: true, Data: not null })
+        {
+            var fileResult = result.GetModalData<(string FileName, bool Run)?>();
+            //if (fileResult.HasValue)
+            //    await CurrentDevice.ExecuteKeyboardBuffer(fileResult.Value.Run
+            //        ? MachineCommands.LoadFileAndRun(DriveInfo.Value.BusId, fileResult.Value.FileName)
+            //        : MachineCommands.LoadFile(DriveInfo.Value.BusId, fileResult.Value.FileName));
+            foreach (char c in fileResult.Value!.FileName)
+            {
+                System.Diagnostics.Debug.WriteLine($"'{c}': '{(int)c}'");
+            }
+        }
+
+    }
+
     private Task ExecKeyboardBuffer(MachineCommand command)
         => CurrentDevice.ExecuteKeyboardBuffer(command.CommandFunc.Invoke(DriveInfo.Value.BusId));
 
@@ -105,8 +151,8 @@ public sealed partial class FloppyDrive : BaseFileFunctionComponent
 
         var driveConfig = await CurrentDevice.GetConfigCategory<ConfigCategoryResponse>(slug);
         var driveSettings = driveConfig?.GetValue<Dictionary<string, System.Text.Json.JsonElement?>>(slug);
-        
-        if(driveSettings == null)
+
+        if (driveSettings == null)
             return;
 
         var driveSettingValues = driveSettings.Keys.Where(key => driveSettings[key].HasValue)
@@ -123,7 +169,7 @@ public sealed partial class FloppyDrive : BaseFileFunctionComponent
         var searchFileListModal = ModalService.Show<FloppyDriveSettingsModal>(title: "", modalParams);
 
         modalParams.Add(nameof(FloppyDriveSettingsModal.Self), searchFileListModal);
-        
+
         await searchFileListModal.Result;
 
         await DriveChangedEvent.InvokeAsync();
@@ -136,17 +182,10 @@ public sealed partial class FloppyDrive : BaseFileFunctionComponent
                 HistoryManager.Add(selectedFile.Path);
                 DisplaySuccessToast(message: Strings.FloppyDrive.ToastMsgSuccessfulMountResult(mountImageResponse),
                     Strings.FloppyDrive.ToastTitleSuccessfulMountResult);
+
                 await DriveChangedEvent.InvokeAsync();
 
-                var selectedDiskImage = await FtpClient.GetFile($"ftp://{CurrentDevice.IpAddress}{selectedFile.LocationPath}");
-                System.Diagnostics.Debug.WriteLine($"Selected Disk Image File Size: {selectedDiskImage.Length}");
-
-
-                var d64Reader = new D64Reader(selectedDiskImage);
-                foreach (var d64ReaderDirectoryItem in d64Reader.DirectoryItems)
-                {
-                    System.Diagnostics.Debug.WriteLine(d64ReaderDirectoryItem.Name);
-                }
+                await TrySetD64Reader(selectedFile.LocationPath);
 
             });
 
@@ -157,38 +196,54 @@ public sealed partial class FloppyDrive : BaseFileFunctionComponent
 
         if (fileContent is { ContentBytes.Length: > 0 })
         {
-            await CurrentDevice.MountUploadedImage(DriveInfo.Key, fileContent.ContentBytes, fileContent.FileName,_imageType, _diskMode)
+            await CurrentDevice.MountUploadedImage(DriveInfo.Key, fileContent.ContentBytes, fileContent.FileName, _imageType, _diskMode)
                 .ExecOnSuccess(async (mountImageResponse) =>
                 {
                     HistoryManager.Add(fileContent.FileName, fileContent.ContentBytes);
                     DisplaySuccessToast(message: Strings.FloppyDrive.ToastMsgSuccessfulMountResult(mountImageResponse),
                         Strings.FloppyDrive.ToastTitleSuccessfulMountResult);
                     await DriveChangedEvent.InvokeAsync();
+
+                    if (fileContent.FileName.EndsWith(".d64", StringComparison.InvariantCultureIgnoreCase))
+                        TrySetD64Reader(fileContent.ContentBytes);
+
                 });
         }
     }
 
     private Task DiskImageHistoryItemSelected(HistoryItem item)
-        => item.Type switch
+    {
+        var task = item.Type switch
         {
             HistoryItemType.StorageContentFile => CurrentDevice.MountOnDeviceImage(DriveInfo.Key, GetPath(item.Path!), _imageType, _diskMode)
-                .ExecOnSuccess(async (mountImageResponse) =>
+                .ExecOnSuccess2(async (mountImageResponse) =>
                 {
-                    HistoryManager.Add(item.Path!); 
+                    HistoryManager.Add(item.Path!);
                     DisplaySuccessToast(message: Strings.FloppyDrive.ToastMsgSuccessfulMountResult(mountImageResponse),
                         Strings.FloppyDrive.ToastTitleSuccessfulMountResult);
                     await DriveChangedEvent.InvokeAsync();
                 }),
-            HistoryItemType.UploadedFile => CurrentDevice.MountUploadedImage(DriveInfo.Key, item.ContentBytes!, item.FileName,_imageType, _diskMode)
-                .ExecOnSuccess(async (mountImageResponse) =>
+            HistoryItemType.UploadedFile => CurrentDevice.MountUploadedImage(DriveInfo.Key, item.ContentBytes!, item.FileName, _imageType, _diskMode)
+                .ExecOnSuccess2(async (mountImageResponse) =>
                 {
-                    HistoryManager.Add(item.FileName, item.ContentBytes!); 
+                    HistoryManager.Add(item.FileName, item.ContentBytes!);
                     DisplaySuccessToast(message: Strings.FloppyDrive.ToastMsgSuccessfulMountResult(mountImageResponse),
                         Strings.FloppyDrive.ToastTitleSuccessfulMountResult);
+
                     await DriveChangedEvent.InvokeAsync();
                 }),
-            _ => Task.CompletedTask
+            _ => Task.FromResult(default(MountImageResponse?))
         };
+
+        return task.ExecOnSuccess(() =>
+        {
+            if (item.Extension == "d64")
+                TrySetD64Reader(item.ContentBytes!);
+            return Task.CompletedTask;
+        });
+    }
+
+    #region DriveRom
 
     private Task LoadOnDeviceRom(FileSelectorModel selectedFile)
         => CurrentDevice.LoadOnDeviceDriveRom(DriveInfo.Key, selectedFile.LocationPath)
@@ -223,4 +278,28 @@ public sealed partial class FloppyDrive : BaseFileFunctionComponent
                 .ExecOnSuccess(async () => { HistoryManager.Add(item.FileName, item.ContentBytes!); await DriveChangedEvent.InvokeAsync(); }),
             _ => Task.CompletedTask
         };
+
+    #endregion
+
+    private async Task TrySetD64Reader(string filePath)
+    {
+        if (!filePath.EndsWith(".d64", StringComparison.InvariantCultureIgnoreCase))
+            return;
+
+        var diskImageBytes = await CurrentDevice.GetFile(filePath);
+
+        TrySetD64Reader(diskImageBytes);
+    }
+
+    private void TrySetD64Reader(byte[] diskImageBytes)
+    {
+        if (diskImageBytes.Length == 0)
+            return;
+
+        try
+        {
+            _d64Reader = new D64Reader(diskImageBytes);
+        }
+        catch { }
+    }
 }

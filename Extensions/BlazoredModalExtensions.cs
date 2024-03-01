@@ -19,4 +19,21 @@ internal static class BlazoredModalExtensions
 
         modalParameters.Add("Self", modal);
     }
+
+    public static T? GetModalData<T>(this ModalResult modalResult)
+    {
+        if (null == modalResult.Data)
+            return default(T?);
+        
+        if (modalResult.Data is T data)
+            return data;
+        try
+        {
+            return (T)Convert.ChangeType(modalResult.Data, typeof(T));
+        }
+        catch (InvalidCastException)
+        {
+            return default(T?);
+        }
+    }
 }

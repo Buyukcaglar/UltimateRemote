@@ -62,5 +62,11 @@ public interface IUltimateDevice
     Task<T?> UpdateConfigCategorySectionValue<T>(string category, string section, string value) where T : IApiResponse;
     Task<ApiResponse?> UpdateConfig<TConfig>(string category, string section, TConfig config) where TConfig : class;
     Task<ApiResponse?> ConfigurationOperation(ConfigOp operation);
+    
+    #region FtpMethods
+
+    Task<byte[]> GetFile(string filePath);
+
+    #endregion
     void Dispose();
 }

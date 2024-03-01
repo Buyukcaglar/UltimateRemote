@@ -9,6 +9,10 @@
        class="text-body ph-power ph-duotone position-absolute start-0 ms-1 mt-1"
        @onclick="TogglePower"></a>
     
+    <a href="javascript:void(0)"
+       class="text-body ph-currency-dollar-simple @DisplayDirectory start-0 ms-1 mt-45"
+       @onclick="DisplayDiskDirectory" title="@Strings.FloppyDrive.DisplayDiskDirectory"></a>
+
     <div class="@DisplayCommands start-0 ms-1 mt-6">
         <DropdownList T="MachineCommand" 
                       NoLabel="true"

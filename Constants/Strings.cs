@@ -421,7 +421,7 @@ internal static class Strings
 
         public static string SendLoadFirstFileCommand(KeyValuePair<string, DriveInfoResponse> driveInfo) => $"Send LOAD\"*\",{driveInfo.Value.BusId},1 command";
         
-        public const string SendRunCommand = "Send RUN command";
+        public const string DisplayDiskDirectory = "Display Disk Directory";
 
         public static string ToastMsgSuccessfulMountResult(MountImageResponse response) =>
             $"<b>SubSys:</b>{response.SubSys}<br/><b>FileType:</b>{response.FileType}<br/><b>Command:</b>{response.Command}<br><b>File:</b>{response.FilePath}";

@@ -175,6 +175,8 @@ internal class DummyDevice : IUltimateDevice
     public Task<ApiResponse?> ConfigurationOperation(ConfigOp operation)
         => NoDeviceResponse<ApiResponse>();
 
+    public Task<byte[]> GetFile(string filePath) => Task.FromResult(Array.Empty<byte>());
+
     private Task<T?> NoDeviceResponse<T>() where T : ApiResponse, new()
     {
         var retVal = new T() { Errors = new[] { Strings.WarningMessages.NoRegisteredDeviceFound } };

@@ -4,7 +4,6 @@
 namespace UltimateRemote.Models;
 
 // https://sta.c64.org/cbm64petkey.html
-// https://sta.c64.org/cbm64scr.html
 public static class PETSCIICodes
 {
     public static PETSCIICode[] Codes = [
