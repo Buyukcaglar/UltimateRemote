@@ -128,15 +128,11 @@ public sealed partial class FloppyDrive : BaseFileFunctionComponent
 
         if (result is { Confirmed: true, Data: not null })
         {
-            var fileResult = result.GetModalData<(string FileName, bool Run)?>();
-            //if (fileResult.HasValue)
-            //    await CurrentDevice.ExecuteKeyboardBuffer(fileResult.Value.Run
-            //        ? MachineCommands.LoadFileAndRun(DriveInfo.Value.BusId, fileResult.Value.FileName)
-            //        : MachineCommands.LoadFile(DriveInfo.Value.BusId, fileResult.Value.FileName));
-            foreach (char c in fileResult.Value!.FileName)
-            {
-                System.Diagnostics.Debug.WriteLine($"'{c}': '{(int)c}'");
-            }
+            var modalResult = result.GetModalData<(DirectoryItem DirItem, bool Run)?>();
+            if (modalResult.HasValue)
+                await CurrentDevice.ExecuteKeyboardBuffer(modalResult.Value.Run
+                    ? MachineCommands.LoadFileAndRun(DriveInfo.Value.BusId, modalResult.Value.DirItem.Name!)
+                    : MachineCommands.LoadFile(DriveInfo.Value.BusId, modalResult.Value.DirItem.Name!));
         }
 
     }

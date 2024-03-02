@@ -93,7 +93,7 @@ public enum PhosphorIcon
 
 public enum ModalSize
 {
-    [StringValue("")]
+    [StringValue("-md")]
     Default = 0,
     [StringValue("-lg")]
     Large = 1,
