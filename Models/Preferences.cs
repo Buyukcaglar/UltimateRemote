@@ -63,7 +63,7 @@ public class UserPreferences
     });
 
     public MachineCommand[] FloppyDriveCommands = [
-        new MachineCommand(Name: "Load First File And Run", IconClass: "play", CommandFunc: MachineCommands.LoadFirstFileAndRun),
+        new MachineCommand(Name: "Load First File & Run", IconClass: "play", CommandFunc: MachineCommands.LoadFirstFileAndRun),
         new MachineCommand(Name: "Load Directory & List", IconClass: "currency-dollar-simple ph-list-bullets", CommandFunc: MachineCommands.ListDirectoryAndList),
         new MachineCommand(Name: "Load First File",  IconClass: "asterisk", CommandFunc: MachineCommands.LoadFirstFile),
         new MachineCommand(Name: "Load Directory", IconClass: "currency-dollar-simple", CommandFunc: MachineCommands.LoadDirectory),

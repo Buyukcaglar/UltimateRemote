@@ -1,0 +1,53 @@
+﻿@typeparam T
+@if (Options is { Length: > 0 })
+{
+    <div class="form-text @ContainerCss">
+        <button type="button" class="btn btn-light btn-icon @ButtonCss" data-bs-toggle="dropdown">
+            @if (!string.IsNullOrWhiteSpace(_label))
+            {
+                <span class="form-text fw-semibold m-0 pt-2px @ButtonLabelCss">@_label</span>
+            }
+        </button>
+        <div class="dropdown-menu @(_scrollable) @(_alignMenuStart)" style="min-width: 8rem;">
+            @if (!string.IsNullOrWhiteSpace(HeaderLabel))
+            {
+                <div class="dropdown-header d-flex py-0 px-2 justify-content-between">
+                    @HeaderLabel
+                    @if (!string.IsNullOrWhiteSpace(HeaderIconCss))
+                    {
+                        <i class="ph-@(HeaderIconCss) ms-1"></i>
+                    }
+                </div>
+                <div class="dropdown-divider"></div>
+            }
+            @if (SearchEnabled)
+            {
+                <div class="dropdown-header">
+                    
+                    <div class="form-control-feedback form-control-feedback-end">
+                        <input type="text" class="form-control" placeholder="Search..." @oninput="@OnSearchPhraseChange">
+                        <div class="form-control-feedback-icon">
+                            <i class="ph-magnifying-glass"></i>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="dropdown-divider"></div>
+            }
+            @foreach (var option in Items)
+            {
+                <a href="javascript:void(0);" class="dropdown-item" @onclick="(async () => { await ItemSelected(option); await SelectedOptionChanged.InvokeAsync(option); })">
+                    @if (null != IconFunc && !string.IsNullOrWhiteSpace(IconFunc(option)))
+                    {
+                        <i class="ph-@(IconFunc(option)) me-2"></i>
+                        <span class="px-1 pt-1">@LabelFunc(option)</span>
+                    }
+                    else
+                    {
+                        @LabelFunc(option)
+                    }
+                </a>
+            }
+        </div>
+    </div>
+}

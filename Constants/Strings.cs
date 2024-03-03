@@ -190,25 +190,20 @@ internal static class Strings
             public const string PrinterEmu = "Displays Printer Emulation Information.";
             
             public const string ListDrives = "Retrieves information about all (internal) drives on the IEC bus. In addition to the presence of devices, it also shows the image files and paths of the mounted disks or referenced paths.";
-
-            public const string FloppyDrive = $"""
-                                                <h6 class="text-center">Floppy drive functions</h6>
-                                                <div class="form-text m-0 p-1 mb-2 overflow-auto" style="max-height:30rem;max-width:57rem;">
-                                                    {FloppyDriveHelp}
-                                                </div>
-                                                """;
-
-            public const string FloppyDriveHelp = $"""
+            
+            public static string FloppyDriveHelp = $"""
                                                      <span class="fw-semibold"><i class="ph-arrow-clockwise ph-duotone me-1"></i> Reset Drive: </span> {ResetDrive}<br/>
                                                      <span class="fw-semibold"><i class="ph-eject ph-duotone me-1"></i> Remove Image: </span> {RemoveImage}<br/>
-                                                     <span class="fw-semibold"><i class="ph-link-break ph-duotone me-1 "></i> Unlink Image: </span> {UnlinkDrive}<br/>
-                                                     <span class="fw-semibold"><i class="ph-power ph-duotone me-1 "></i> Drive Power: </span> {ToggleDrive}<br/>
-                                                     <span class="fw-semibold"><i class="ph-caret-down me-1 "></i> Drive Mode: </span> {SetDriveMode}<br/>
-                                                     <span class="fw-semibold"><i class="ph-upload-simple ph-duotone me-1 "></i> Upload and Mount: </span> {MountUploadedImage}<br/>
-                                                     <span class="fw-semibold"><i class="ph-paper-plane-tilt ph-duotone me-1 "></i> Mount on device Image: </span> {MountImageOnDevice}<br/>
-                                                     <span class="fw-semibold"><i class="ph-upload-simple ph-duotone me-1 "></i> Upload and Set ROM: </span> {UploadAndLoadDriveRom}<br/>
-                                                     <span class="fw-semibold"><i class="ph-paper-plane-tilt ph-duotone me-1 "></i> Mount on device ROM: </span> {LoadDriveRomOnDevice}<br/>
-                                                     <span class="fw-semibold"><i class="ph-gear ph-duotone me-1 "></i> Configuration Settings: </span> {ConfigSettings}<br/>
+                                                     <span class="fw-semibold"><i class="ph-link-break ph-duotone me-1"></i> Unlink Image: </span> {UnlinkDrive}<br/>
+                                                     <span class="fw-semibold"><i class="ph-caret-down me-1"></i> Drive Mode: </span> {SetDriveMode}<br/>
+                                                     <span class="fw-semibold"><i class="ph-upload-simple ph-duotone me-1"></i> Upload and Mount: </span> {MountUploadedImage}<br/>
+                                                     <span class="fw-semibold"><i class="ph-paper-plane-tilt ph-duotone me-1"></i> Mount on device Image: </span> {MountImageOnDevice}<br/>
+                                                     <span class="fw-semibold"><i class="ph-upload-simple ph-duotone me-1"></i> Upload and Set ROM: </span> {UploadAndLoadDriveRom}<br/>
+                                                     <span class="fw-semibold"><i class="ph-paper-plane-tilt ph-duotone me-1"></i> Mount on device ROM: </span> {LoadDriveRomOnDevice}<br/>
+                                                     <span class="fw-semibold"><i class="ph-currency-dollar-simple me-1"></i> Disk Directory: </span> {DiskDirectory}<br/>
+                                                     <span class="fw-semibold"><i class="ph-asterisk me-1"></i> Drive Commands: </span> {DriveCommands}<br/>
+                                                     <span class="fw-semibold"><i class="ph-power ph-duotone me-1"></i> Drive Power: </span> {ToggleDrive}<br/>
+                                                     <span class="fw-semibold"><i class="ph-gear ph-duotone me-1"></i> Configuration Settings: </span> {ConfigSettings}<br/>
                                                      """;
 
             public const string MountImageOnDevice = "Mounts specified disk image file on the Ultimate device file system. The optional <span class=\"fw-semibold\">Type</span> argument specifies the type of the image, and could be one of the following: <span class=\"fw-semibold\">d64, g64, d71, g71 or d81</span>. If this argument is omitted, Ultimate device will use the file extension of the file specified to determine the correct image type. The optional <span class=\"fw-semibold\">Mode</span> argument can be one of the following: <span class=\"fw-semibold\">readwrite, readonly or unlinked</span>. In <span class=\"fw-semibold\">readwrite mode</span>, the drive can write to the image file; in <span class=\"fw-semibold\">readonly mode</span> the disk is write protected and in <span class=\"fw-semibold\">unlinked mode</span> the disk is not write protected, but the changes are not written back to the disk image.";
@@ -226,6 +221,29 @@ internal static class Strings
             public const string SetDriveMode = "Changes selected disk drive mode between available modes which are <span class=\"fw-semibold\">1541, 1571 and 1581</span>. This function will also cause Ultimate device to load the appropriate default drive ROM. Any previous ROM that was loaded with one of <span class=\"fw-semibold\">Load Rom functions</span> will be overwritten.";
 
             public const string ConfigSettings = "Displays configuration settings popup for drive. Note that changes reflected automatically but not persisted until permanently saved to flash from Configuration Manager.";
+
+            public static string DiskDirectory => $"Opens popup window to display mounted <span class=\"fw-semibold\">D64 image file</span> directory contents. Any <span class=\"fw-semibold\">PRG file</span> can be loaded and run automatically by double {PlatformDependent.ClickingTapping} on it. Ultimate Remote tries to parse uploaded <span class=\"fw-semibold\">D64 disk images</span> after successful mount request. If succeeds then displays disk directory icon (dollar-sign). Likewise for files residing on device, Ultimate Remote tries to access file path via <span class=\"fw-semibold\">FTP</span> in order to retrieve relevant file and parse contents. For this feature to work properly <span class=\"fw-semibold\">anonymous FTP access</span> must be enabled over the Ultimate Device's IP address.";
+
+            public const string DriveCommands = """
+                                                Displays the following BASIC commands list for loading and running files in the mounted disk image;<br>
+                                                
+                                                <span class="fw-semibold ms-4">Note: # is the drive number of the mounted image.</span><br>
+                                                
+                                                <span class="fw-semibold ms-4">Load First File & Run:</span> sends <span class="fw-semibold">LOAD":*",#,1</span> to machine, followed by <span class="fw-semibold">RUN</span> command.<br>
+                                                <span class="fw-semibold ms-4">Load Directory & List:</span> sends <span class="fw-semibold">LOAD"$",#</span> to machine, followed by <span class="fw-semibold">LIST</span> command.<br>
+                                                <span class="fw-semibold ms-4">Load First File:</span> sends <span class="fw-semibold">LOAD":*",#,1</span> to machine.<br>
+                                                <span class="fw-semibold ms-4">Load Directory:</span> sends <span class="fw-semibold">LOAD"$",#</span> to machine.<br>
+                                                <span class="fw-semibold ms-4">List:</span> sends <span class="fw-semibold">LIST</span> to machine.<br>
+                                                <span class="fw-semibold ms-4">Run:</span> sends <span class="fw-semibold">RUN</span> to machine.
+                                                """;
+            
+            // it is important to put this one here ...
+            public static string FloppyDrive = $"""
+                                                <h6 class="text-center">Floppy drive functions</h6>
+                                                <div class="form-text m-0 p-1 mb-2 overflow-auto" style="max-height:30rem;max-width:57rem;">
+                                                    {FloppyDriveHelp}
+                                                </div>
+                                                """;
 
             // Data Streams
             public const string StartStream = "Starts the selected type of stream on Ultimate 64 device. IP number parameter is required for the U64 to know where to send the stream to. The default port number that the data stream is sent to is 11000 for the video stream, 11001 for the audio stream and 11002 for the debug stream. A custom port number can be added to the IP address, after a colon separator; e.g. 192.168.178.224:6789 . Note that turning on the video stream will automatically turn off the debug stream.";

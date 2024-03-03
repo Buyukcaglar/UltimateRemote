@@ -2,12 +2,13 @@
        Size="UltimateRemote.Enums.ModalSize.Small" 
        Title="@ModalTitle" VCenter="true" Show="true" BodyCss="p-1">
     <Content>
+@* 
         <ul class="list-group list-group-borderless" style="font-family: 'C64Pro'; font-size: 1rem; line-height: 1; letter-spacing:-1px;">
             @foreach (var dirItem in D64Reader.DirectoryItems)
             {
                 @if (dirItem.Type == "PRG")
                 {
-                    <li class="list-gorup-item list-group-item-action d-flex align-items-center justify-content-between" role="button" @ondblclick="@(()=>ItemSelected(dirItem, true))">
+                    <li class="list-gorup-item list-group-item-action d-flex align-items-center justify-content-between" role="button" @ondblclick="@(() => ItemSelected(dirItem, true))">
                         <span class="me-1" style="min-width:53px;">@dirItem.Blocks</span>
                         <span class="flex-grow-1 text-center">@((MarkupString)dirItem.NameHtmlCodeString)</span>
                         <span>@dirItem.Type</span>
@@ -21,26 +22,43 @@
                         <span>@dirItem.Type</span>
                     </li>
                 }
-
-                @* <li class="list-gorup-item list-group-item-action d-flex align-items-center justify-content-between">
-                    <span class="me-1" style="min-width:53px;">@dirItem.Blocks</span>
-                    <span class="flex-grow-1 text-center">@((MarkupString)dirItem.NameHtmlCodeString)</span>
-                    <span>@dirItem.Type</span>
-                    @if (dirItem.Type == "PRG")
-                    {
-                        <i class="ph-file-arrow-up mx-1" role="button" @onclick="@(()=>ItemSelected(dirItem, false))"></i>
-                        <i class="ph-play mx-1" role="button" @onclick="@(()=>ItemSelected(dirItem, true))"></i>
-                    }
-                    else
-                    {
-                        <span class="mx-1">&nbsp;</span>
-                        <span class="mx-1">&nbsp;</span>
-                    }
-                </li> *@
             }
         </ul>
+ *@
+
+<table id="dirContentsTable" class="table table-borderless table-hover" style="font-family: 'C64Pro'; font-size: 1rem; line-height: 1; letter-spacing:-1px;">
+    <tbody>
+    @foreach (var dirItem in D64Reader.DirectoryItems)
+    {
+
+        @if (dirItem.Type == "PRG")
+        {
+            <tr role="button" @ondblclick="@(() => ItemSelected(dirItem, true))">
+                <td>@dirItem.Blocks</td>
+                <td class="text-center">@((MarkupString)dirItem.NameHtmlCodeString)</td>
+                <td>@dirItem.Type</td>
+            </tr>
+        }
+        else
+        {
+            <tr>
+                <td>@dirItem.Blocks</td>
+                <td class="text-center">@((MarkupString)dirItem.NameHtmlCodeString)</td>
+                <td>@dirItem.Type</td>
+            </tr>
+        }
+    }
+    </tbody>
+</table>
+
     </Content>
     <FooterContent>
-        <span class="form-text">Double @(PlatformDependent.ClickTap) to select</span>
+        <span class="text-body">Double @(PlatformDependent.ClickTap) to select</span>
     </FooterContent>
 </Modal>
+
+<style>
+    #dirContentsTable tbody, td {
+        padding: 0 !important;
+    }
+</style>

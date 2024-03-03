@@ -32,15 +32,16 @@
         </div>
         @if (_tracks.Length > 1)
         {
-            <DropdownList T="SidFileInfo"
-                          ContainerCss=""
-                          ButtonCss="dropdown-toggle p-1 rounded-0 rounded-bottom border-0 border-top w-100"
-                          Options="_tracks" 
-                          FixedLabel="true" 
-                          Scrollable="true"
-                          Label="@_tracksLabel"
-                          LabelFunc="sidFileInfo => sidFileInfo.FormattedFileName!"
-                          IconFunc="IconCssFunc" ItemSelectedEvent="PlaySelected" />
+            <DropdownListSearchable T="SidFileInfo"
+                                    ContainerCss=""
+                                    ButtonCss="dropdown-toggle p-1 rounded-0 rounded-bottom border-0 border-top w-100"
+                                    Options="_tracks" 
+                                    FixedLabel="true" 
+                                    Scrollable="true"
+                                    SearchEnabled="@_searchEnabled"
+                                    Label="@_tracksLabel"
+                                    LabelFunc="sidFileInfo => sidFileInfo.FormattedFileName!"
+                                    IconFunc="IconCssFunc" ItemSelectedEvent="PlaySelected" />
         }
     </FunctionCard>
 }

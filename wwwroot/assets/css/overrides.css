@@ -284,6 +284,8 @@ i.ph-megaphone {
 .pt-1px { padding-top: 1px; }
 .pt-2px { padding-top: 1px; }
 
+.ps-05 {padding-left: 0.1265rem !important;}
+
 .indicate-online { border-bottom: 4px solid green; }
 .indicate-offline { border-bottom: 4px solid red; }
 .indicate-unknown { border-bottom: 4px solid orange; }

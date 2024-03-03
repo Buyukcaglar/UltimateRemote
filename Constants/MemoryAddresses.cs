@@ -15,7 +15,7 @@ public static class MachineCommands
     
     public const string Run = $"RU~\r";
 
-    public static string LoadFirstFile(int busId) => $"LO~\"*\",{busId},1\r";
+    public static string LoadFirstFile(int busId) => $"LO~\":*\",{busId},1\r";
     
     public static string LoadFirstFileAndRun(int busId) => $"{LoadFirstFile(busId)}{Run}";
 
