@@ -79,4 +79,11 @@ public static class PETSCIICodeExtensions
             ? petsciiCodes.First(code => code.ReverseCmdrDecimalCode == decimalCode).ReverseCmdrHtmlCode
             : string.Empty;
     }
+
+    public static string GetShiftHtml(this PETSCIICode[] petsciiCodes, char chr)
+        => petsciiCodes.FirstOrDefault(code => code.DecimalCode == chr)?.ShiftHtmlCode ?? "";
+
+    public static string GetCmdrHtml(this PETSCIICode[] petsciiCodes, char chr)
+        => petsciiCodes.FirstOrDefault(code => code.DecimalCode == chr)?.CmdrHtmlCode ?? "";
+
 }

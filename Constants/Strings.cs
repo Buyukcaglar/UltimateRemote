@@ -140,6 +140,8 @@ internal static class Strings
             public const string ScanIp = "Scan Specific IP Range";
             public const string ManualRegister = "Manual Register";
 
+            public const string KeyMacros = "Keyboard Macros";
+
             public const string Help = nameof(Help);
 
         }
@@ -260,6 +262,7 @@ internal static class Strings
             public static string ScanDevice = $"Scans network for Ultimate devices. This function tries to obtain current local IP address of your {PlatformDependent.DeviceName} then scans the network subnet for any Ultimate devices. For example if your {PlatformDependent.DeviceName}'s IP Address is 192.168.1.10, app scans 192.168.1.0 - 192.168.1.255 address range for any online Ultimate device to be found. For automatic scan to work your Ultimate devices must be online and on the same network and subnet as your {PlatformDependent.DeviceName}.";
             public const string ScanIp = "Scans network for Ultimate devices using the provided IP address by sweeping its subnet. This function tries to scans the network subnet for the given IP address for any Ultimate devices. For example if the provided IP address is 192.168.10.1, app scans 192.168.10.0 - 192.168.10.255 address range for any online Ultimate device to be found. For automatic scan to work your Ultimate devices must be online and on the same network and subnet as with provided IP address.";
             public const string ManualRegister = "Ultimate devices can be manually registered from here. In order to complete registration, Ultimate device should be up and running and have the IP address provided for API version querying.";
+            public const string KeyMacros = "Create arbitrary keystroke lists and send them to machine as if user typing on physical keyboard. Use <span class=\"fw-semibold\">lowercase</span> or <span class=\"fw-semibold\">UPPERCASE</span> followed by <span class=\"fw-semibold\">'~' (tilde)</span> for <span class=\"fw-semibold\">SHIFT</span> key pressed variants of characters. Use <span class=\"fw-semibold\">UPPERCASE followed by '|' (pipe)</span> for <span class=\"fw-semibold\">C= (Commodore)</span> key pressed variants.";
         }
 
         public static class Icons
@@ -279,6 +282,7 @@ internal static class Strings
             public const string Streams = "flow-arrow";
             public const string CreateDiskImage = "disc";
             public const string GetFileInfo = "file-search";
+            public const string KeyMacros = "keyboard";
         }
 
     }
@@ -626,6 +630,15 @@ internal static class Strings
         public const string ToastTitlePreferencesSaved = "Preferences Saved";
         public const string SaveChangesDescription = "Changes reflected automatically for current session, but not preserved permanently until specifically saved using <i class=\"ph-floppy-disk ph-duotone\"></i>.";
 
+    }
+
+    public static class KeyMacros
+    {
+        public const string ToastMsgMacroEmpty = "Macro can not be empty";
+        public const string ToastTitleMacroEmpty= "Macro Empty";
+
+        public const string ToastMsgNameMacroEmpty = "Macro name can not be empty";
+        public const string ToastTitleMacroNameEmpty = "Macro NAme Empty";
     }
 
 }

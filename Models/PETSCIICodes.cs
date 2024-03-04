@@ -179,10 +179,39 @@ public static class PETSCIICodes
         {
             var htmlCode = Codes.GetHtmlCode(decimalCode);
             if (!string.IsNullOrWhiteSpace(htmlCode))
-                retVal += $"&#x0e{htmlCode};";
+                retVal += htmlCode.Length == 3 ? $"&#x0e{htmlCode};" : htmlCode;
         }
         return retVal;
     }
+
+    // // ShiftVariant: ~, C=Variant: |, CtrlVariant: ¨
+    public static string GetHtmlCodesString(string str)
+    {
+        var retVal = string.Empty;
+        var controlChars = "~|\u00a8";
+
+        for (int i = 0; i < str.Length; i++)
+        {
+            if(controlChars.Contains(str[i])) continue;
+            
+            var htmlCode = "";
+            
+            if (i + 1 < str.Length && str[i + 1] == '~')
+                htmlCode = Codes.GetShiftHtml(str[i]);
+
+            if (i + 1 < str.Length && str[i + 1] == '|')
+                htmlCode = Codes.GetCmdrHtml(str[i]);
+            
+            if(string.IsNullOrWhiteSpace(htmlCode))
+                htmlCode = Codes.GetHtmlCode(str[i]);
+            
+            if(!string.IsNullOrWhiteSpace(htmlCode))
+                retVal += htmlCode.Length == 3 ? $"&#x0e{htmlCode};" : htmlCode;
+        }
+
+        return retVal;
+    }
+
 }
 
 public record PETSCIICode(

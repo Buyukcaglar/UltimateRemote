@@ -81,6 +81,7 @@ internal static class DependencyConfiguration
         //Barrel.Current.Empty(CacheKeys.UserLayouts);
         //Barrel.Current.Empty(CacheKeys.StorageContentLists);
         //Barrel.Current.Empty(CacheKeys.Preferences);
+        //Barrel.Current.Empty(CacheKeys.KeyMacros);
         Task.Run(async () =>
         {
             // For string search functions

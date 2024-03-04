@@ -65,6 +65,7 @@ public sealed record LayoutItem(LayoutItemType Type)
         LayoutItemType.Streams => true,
         LayoutItemType.CreateDiskImage => true,
         LayoutItemType.GetOnDeviceFileInfo => true,
+        LayoutItemType.KeyMacros => true,
         _ => false
     };
 

@@ -21,7 +21,9 @@ public enum LayoutItemType
     [StringValue("Drive by BusId")] DriveByBusId,
     [StringValue("Streams")] Streams,
     [StringValue("Create Disk Image")] CreateDiskImage,
-    [StringValue("Get File Info")] GetOnDeviceFileInfo
+    [StringValue("Get File Info")] GetOnDeviceFileInfo,
+    [StringValue("Keyboard Macros")] KeyMacros,
+    [StringValue("Power Off Machine")] PowerOffMachine,
 }
 
 public enum CustomIconType

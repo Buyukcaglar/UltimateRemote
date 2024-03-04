@@ -43,7 +43,7 @@ public sealed partial class UltimateDeviceList
         {
             UltimateDeviceType.None => "N/A",
             UltimateDeviceType.Ultimate1541 => "UII",
-            UltimateDeviceType.UltimateC64 => "UC64",
+            UltimateDeviceType.UltimateC64 => "U64",
             _ => "???"
         };
 }

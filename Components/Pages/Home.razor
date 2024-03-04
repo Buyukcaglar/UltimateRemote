@@ -35,6 +35,12 @@
                 case LayoutItemType.RebootMachine:
                     <BasicFunction FuncType="@item.Type" />
                     break;
+                case LayoutItemType.PowerOffMachine:
+                    @if (DeviceManager.GetCurrentDevice(ToastService).Type == UltimateDeviceType.UltimateC64)
+                    {
+                        <BasicFunction FuncType="@item.Type" />
+                    }
+                    break;
                 case LayoutItemType.ResetRebootStack:
                     <ResetRebootStack />
                     break;
@@ -58,6 +64,9 @@
                     break;
                 case LayoutItemType.GetOnDeviceFileInfo:
                     <GetOnDeviceFileInfo />
+                    break;
+                case LayoutItemType.KeyMacros:
+                    <KeyMacross />
                     break;
             }
         }

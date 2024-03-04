@@ -180,7 +180,6 @@ public sealed partial class FloppyDrive : BaseFileFunctionComponent
                     Strings.FloppyDrive.ToastTitleSuccessfulMountResult);
 
                 await DriveChangedEvent.InvokeAsync();
-
                 await TrySetD64Reader(selectedFile.LocationPath);
 
             });
@@ -202,6 +201,8 @@ public sealed partial class FloppyDrive : BaseFileFunctionComponent
 
                     if (fileContent.FileName.EndsWith(".d64", StringComparison.InvariantCultureIgnoreCase))
                         TrySetD64Reader(fileContent.ContentBytes);
+                    else
+                        _d64Reader = null;
 
                 });
         }
@@ -235,6 +236,8 @@ public sealed partial class FloppyDrive : BaseFileFunctionComponent
         {
             if (item.Extension == "d64")
                 TrySetD64Reader(item.ContentBytes!);
+            else
+                _d64Reader = null;
             return Task.CompletedTask;
         });
     }
@@ -280,7 +283,10 @@ public sealed partial class FloppyDrive : BaseFileFunctionComponent
     private async Task TrySetD64Reader(string filePath)
     {
         if (!filePath.EndsWith(".d64", StringComparison.InvariantCultureIgnoreCase))
+        {
+            _d64Reader = null;
             return;
+        }
 
         var diskImageBytes = await CurrentDevice.GetFile(filePath);
 
@@ -291,11 +297,18 @@ public sealed partial class FloppyDrive : BaseFileFunctionComponent
     {
         if (diskImageBytes.Length == 0)
             return;
-
+        
+        var readerSet = false;
+        
         try
         {
             _d64Reader = new D64Reader(diskImageBytes);
+            readerSet = true;
         }
-        catch { }
+        finally
+        {
+            if (!readerSet && _d64Reader != null)
+                _d64Reader = null;
+        }
     }
 }
