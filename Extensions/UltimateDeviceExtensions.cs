@@ -19,7 +19,7 @@ internal static class UltimateDeviceExtensions
         };
 
     public static List<UltimateDeviceInfo> ToDeviceInfoList(this List<IUltimateDevice> devices)
-=> devices.Select(ToDeviceInfo).ToList();
+        => devices.Select(ToDeviceInfo).ToList();
 
     #region Device Config Extensions
     // Bugged (returns 404)
@@ -121,6 +121,71 @@ internal static class UltimateDeviceExtensions
             .ToArray();
 
         return drives;
+    }
+
+    // Bad shenanigans ...
+    public static async Task ExecuteKeyboardBuffer(this IUltimateDevice currentDevice, string keystrokes)
+    {
+        // Split by return chars if any
+        var splitKeystrokeCommands = keystrokes.Split('\r', StringSplitOptions.RemoveEmptyEntries)
+            .Select(ks => keystrokes.Contains('\r') ? $"{ks}\r" : ks)
+            .ToList();
+
+        var keystrokeCommands = new List<string>();
+
+        // Check any split has more than 10 chars if yes then split them by 10 chars ...
+        if (splitKeystrokeCommands.Any(command => command.Count(ks => ks != '~') > 10))
+        {
+            foreach (var keystrokeCommand in splitKeystrokeCommands)
+            {
+                var commandLength = keystrokeCommand.Count(ks => ks != '~');
+                if (commandLength > 10)
+                {
+                    var count = 0;
+                    var kStrokes = string.Empty;
+                    foreach (var keystroke in keystrokes)
+                    {
+                        if (keystroke != '~') count++;
+                        kStrokes = $"{kStrokes}{keystroke}";
+                        if (count > 9)
+                        {
+                            keystrokeCommands.Add(kStrokes);
+                            kStrokes = string.Empty;
+                            count = 0;
+                        }
+                    }
+
+                    if(kStrokes.Length > 0)
+                        keystrokeCommands.Add(kStrokes);
+                }
+                else
+                {
+                    keystrokeCommands.Add(keystrokeCommand);
+                }
+            }
+        }
+        else
+        {
+            keystrokeCommands = splitKeystrokeCommands;
+        }
+        
+        foreach (var keystrokeCommand in keystrokeCommands)
+        {
+            await ExecuteKeyboardBufferInternal(currentDevice, keystrokeCommand);
+        }
+    }
+
+    private static Task ExecuteKeyboardBufferInternal(IUltimateDevice currentDevice, string keystrokes)
+    {
+        var keyStrokeCount = keystrokes.Count(ks => ks != '~');
+        var hexValue = PETSCIICodes.GetHexValue(keystrokes);
+
+        var resultTask = currentDevice.WriteMemory(MemoryAddresses.KeyboardBuffer, hexValue)
+            .ExecOnSuccess(() =>
+                currentDevice.WriteMemory(MemoryAddresses.ExecKeyBuffer, keyStrokeCount.ToString("X2"))
+            );
+
+        return resultTask;
     }
 
 }

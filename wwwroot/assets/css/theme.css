@@ -3130,6 +3130,8 @@ textarea.form-control-lg { --input-height: calc(calc(var(--input-line-height) * 
 
 .mt-4 { margin-top: 1.875rem !important }
 
+.mt-45 { margin-top: 2.7rem !important }
+
 .mt-5 { margin-top: 3.75rem !important }
 
 .mt-auto { margin-top: auto !important }

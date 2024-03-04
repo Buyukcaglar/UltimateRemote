@@ -1,0 +1,38 @@
+﻿@inherits BaseComponent
+
+<FunctionCard Title="@Strings.Function.Names.KeyMacros"
+              IconClass="@Strings.Function.Icons.KeyMacros"
+              InfoText="@Strings.Function.Infos.KeyMacros">
+    <div class="fs-container">
+        <div class="text-wrap p-1" style="font-family: 'C64Pro'; font-size: 1rem; overflow-y:scroll; width:19rem; max-height: 5.125rem;">
+            @((MarkupString)_macroHtml)
+        </div>
+        <textarea class="form-control rounded-bottom-0 border-bottom-0 p-1 mb-1px" rows="3" @oninput="@OnInputChange" @bind="@_macroString"></textarea>
+        <div class="input-group">
+            @if (_macros.Length > 0)
+            {
+                <div class="form-text m-0 d-flex">
+                    <button type="button" class="btn btn-light btn-icon dropdown-toggle p-1 rounded-top-0 rounded-end-0" data-bs-toggle="dropdown"></button>
+                    <div class="dropdown-menu dropdown-menu-scrollable" style="min-width: 8rem;">
+                        @for (var i = 0; i < _macros.Length; i++)
+                        {
+                            var idx = i;
+                            var macro = _macros[i];
+                            <div class="dropdown-item">
+                                <a href="javascript:void(0);" class="text-body flex-grow-1 mt-4px" @onclick="@(() => OnItemSelected(macro))">
+                                    @macro.Name
+                                </a>
+                                <a href="javascript:void(0);" class="text-body" @onclick="@(() => Remove(idx))">
+                                    <i class="ph-trash ph-duotone ps-2"></i>
+                                </a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+            <input type="text" class="@NameInputCss" maxlength="25" placeholder="Macro name" @bind-value="@_macroName" />
+            <button type="button" class="btn btn-light btn-icon ph-floppy-disk ph-duotone" @onclick="@AddEdit"></button>
+            <button type="button" class="btn btn-light btn-icon ph-paper-plane-tilt ph-duotone rounded-top-end-0" @onclick="@ExecuteMacro"></button>
+        </div>
+    </div>
+</FunctionCard>

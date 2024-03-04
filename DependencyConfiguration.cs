@@ -65,6 +65,7 @@ internal static class DependencyConfiguration
         services.AddSingleton<LayoutManager>();
         services.AddSingleton<JukeboxService>();
         services.AddSingleton<EventService>();
+        services.AddSingleton<FtpClient>();
 
         services.AddBlazoredModal();
         services.AddBlazoredToast();
@@ -84,6 +85,7 @@ internal static class DependencyConfiguration
         //Barrel.Current.Empty(CacheKeys.UserLayouts);
         //Barrel.Current.Empty(CacheKeys.StorageContentLists);
         //Barrel.Current.Empty(CacheKeys.Preferences);
+        //Barrel.Current.Empty(CacheKeys.KeyMacros);
         Task.Run(async () =>
         {
             // For string search functions

@@ -54,4 +54,31 @@ internal static class ApiResponseExtensions
         }
     }
 
+    public static async Task<TApiResponse?> ExecOnSuccess2<TApiResponse>(
+        this Task<TApiResponse?> apiTask, 
+        Func<Task> successTaskFunc)
+        where TApiResponse : IApiResponse
+    {
+        var taskResult = await apiTask;
+        if (taskResult.Success())
+        {
+            await successTaskFunc();
+        }
+        return taskResult;
+    }
+
+
+    public static async Task<TApiResponse?> ExecOnSuccess2<TApiResponse>(
+        this Task<TApiResponse?> apiTask,
+        Func<TApiResponse, Task> successTaskFunc)
+        where TApiResponse : IApiResponse
+    {
+        var taskResult = await apiTask;
+        if (taskResult.Success())
+        {
+            await successTaskFunc(taskResult!);
+        }
+        return taskResult;
+    }
+
 }

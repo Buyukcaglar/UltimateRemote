@@ -94,7 +94,7 @@ public sealed class LayoutManager
         => new[] {
             new UserLayout() { Name = "Run/Load", Items = [new LayoutItem(LayoutItemType.RunLoadProgram), new LayoutItem(LayoutItemType.RunCartridge)] },
             new UserLayout() { Name = "Play Music", Items = [new LayoutItem(LayoutItemType.PlaySidMusic), new LayoutItem(LayoutItemType.PlayModMusic)] },
-            new UserLayout() { Name = "Machine", Items = [new LayoutItem(LayoutItemType.ResetRebootStack), new LayoutItem(LayoutItemType.MachineFunctions)] },
+            new UserLayout() { Name = "Machine", Items = [new LayoutItem(LayoutItemType.ResetRebootStack), new LayoutItem(LayoutItemType.MachineFunctions), new LayoutItem(LayoutItemType.KeyMacros)] },
             new UserLayout() { Name = "Floppy Drives", Items = [new LayoutItem(LayoutItemType.FloppyDrives)] },
             new UserLayout() { Name = "Non-Floppy Drives", Items = [new LayoutItem(LayoutItemType.NonFloppyDrives)] },
             //new UserLayout() { Name = "Streams", Items = [new LayoutItem(LayoutItemType.Streams)] },

@@ -20,6 +20,7 @@ public sealed partial class BasicFunction : BaseComponent
     {
         LayoutItemType.ResetMachine => "arrow-clockwise",
         LayoutItemType.RebootMachine => "arrow-counter-clockwise",
+        LayoutItemType.PowerOffMachine => "power",
         _ => ""
     };
 
@@ -27,6 +28,7 @@ public sealed partial class BasicFunction : BaseComponent
     {
         LayoutItemType.ResetMachine => Strings.Function.Infos.ResetMachine,
         LayoutItemType.RebootMachine => Strings.Function.Infos.RebootMachine,
+        LayoutItemType.PowerOffMachine => Strings.Function.Infos.PowerOffMachine,
         _ => ""
     };
 
@@ -35,6 +37,7 @@ public sealed partial class BasicFunction : BaseComponent
         {
             LayoutItemType.ResetMachine => "reset",
             LayoutItemType.RebootMachine => "reboot",
+            LayoutItemType.PowerOffMachine => "power off",
             _ => ""
         })} your C64. Do you want to continue?", nameof(PerformAction), _dotNetRef!, true);
 
@@ -43,6 +46,7 @@ public sealed partial class BasicFunction : BaseComponent
     {
         LayoutItemType.ResetMachine => CurrentDevice.ResetMachine(),
         LayoutItemType.RebootMachine => CurrentDevice.RebootMachine(),
+        LayoutItemType.PowerOffMachine => CurrentDevice.PowerOffMachine(),
         _ => Task.CompletedTask
     };
 

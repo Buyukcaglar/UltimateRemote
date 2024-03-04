@@ -3,7 +3,7 @@ using System.Timers;
 using UltimateRemote.Models;
 
 namespace UltimateRemote.Components.Shared.Functions;
-public sealed partial class Jukebox : BaseComponent, IDisposable
+public sealed partial class Jukebox : BaseComponent
 {
     [Inject] private JukeboxService JukeboxService { get; set; } = default!;
 
@@ -16,6 +16,7 @@ public sealed partial class Jukebox : BaseComponent, IDisposable
     private System.Timers.Timer _timer = default!;
     private const double TimerIntervalInMs = 500;
 
+    private bool _searchEnabled;
     private bool _repeat;
     private bool _shuffle;
     private bool _playing;
@@ -78,6 +79,7 @@ public sealed partial class Jukebox : BaseComponent, IDisposable
                     BuildTrackList(playlist);
                     _infoText = Strings.Jukebox.InfoPlaylist(playlist.Name, playlist.ItemCount, _tracks.Length);
                     _tracksLabel = Strings.Jukebox.TracksLabelPlaylist(playlist.Name, playlist.ItemCount, _tracks.Length);
+                    _searchEnabled = playlist.Items.Count > 10;
                 }
             }
         }

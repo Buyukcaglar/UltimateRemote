@@ -25,4 +25,33 @@ internal static class StringSearchExtensions
         return singleSpacedString;
     }
 
+    public static T[]? GetSearchResults<T>(T[]? itemSet, Func<T, string> searchProp, string? searchPhrase)
+    {
+        if (string.IsNullOrWhiteSpace(searchPhrase))
+            return itemSet;
+
+        if (itemSet is not { Length: > 0 })
+            return itemSet;
+        var interMediateResults = new List<T>();
+        var phrase = ConvertToSearchableString(searchPhrase);
+        var phraseSplits = phrase.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+        for (int i = 0; i < phraseSplits.Length; i++)
+        {
+            if (interMediateResults.Count == 0)
+            {
+                interMediateResults = itemSet.Where(item =>
+                        ConvertToSearchableString(searchProp.Invoke(item)).Contains(phraseSplits[i]))
+                    .ToList();
+                continue;
+            }
+
+            interMediateResults = interMediateResults.Where(item =>
+                    ConvertToSearchableString(searchProp.Invoke(item)).Contains(phraseSplits[i]))
+                .ToList();
+        }
+
+        return interMediateResults.ToArray();
+    }
+
 }

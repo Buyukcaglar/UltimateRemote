@@ -157,6 +157,8 @@ public sealed partial class UserLayoutManager : BaseComponent, IDisposable
             LayoutItemType.Streams => "flow-arrow ph-duotone",
             LayoutItemType.CreateDiskImage => "disc ph-duotone",
             LayoutItemType.GetOnDeviceFileInfo => "file-search ph-duotone",
+            LayoutItemType.KeyMacros => "keyboard ph-duotone",
+            LayoutItemType.PowerOffMachine => "power ph-duotone",
             _ => ""
         };
 

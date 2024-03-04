@@ -3,7 +3,7 @@ using UltimateRemote.Interfaces;
 
 namespace UltimateRemote.ApiClients;
 
-public sealed partial class UltimateDevice(IHttpClientFactory httpClientFactory) : IUltimateDevice, IDisposable
+public sealed partial class UltimateDevice(IHttpClientFactory httpClientFactory, FtpClient ftpClient) : IUltimateDevice, IDisposable
 {
     public event EventHandler? DeviceChangedEvent;
 

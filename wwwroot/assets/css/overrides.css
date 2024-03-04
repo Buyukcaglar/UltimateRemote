@@ -277,12 +277,15 @@ i.ph-megaphone {
 .mt-n1 { margin-top: -1px; }
 
 .ms-2px { margin-left: 2px; }
+.mt-4px { margin-top: 4px;}
 
 .mb-1px { margin-bottom: 1px; }
 .mb-2px { margin-bottom: 2px; }
 
 .pt-1px { padding-top: 1px; }
 .pt-2px { padding-top: 1px; }
+
+.ps-05 {padding-left: 0.1265rem !important;}
 
 .indicate-online { border-bottom: 4px solid green; }
 .indicate-offline { border-bottom: 4px solid red; }
