@@ -30,6 +30,13 @@
 	<string>Assets.xcassets/appicon.appiconset</string>
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>In order to communicate with your Ultimate Device, Local Network permission is required. In case of not granting this permission, you have to manually enable it from Settings.</string>
+	<key>NSBonjourServices</key>
+	<array>
+		<string>_http._tcp</string>
+		<string>_https._tcp</string>
+		<string>_ftp._tcp</string>
+		<string>_smb._tcp</string>
+	</array>
 	<key>UTExportedTypeDeclarations</key>
 	<array>
 		<dict>

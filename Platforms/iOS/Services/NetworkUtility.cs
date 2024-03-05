@@ -5,18 +5,6 @@ namespace UltimateRemote.Platforms.iOS.Services;
 
 public static class NetworkUtility
 {
-    //[StructLayout(LayoutKind.Sequential)]
-    //public struct ifaddrs
-    //{
-    //    public IntPtr ifa_next;
-    //    public string ifa_name;
-    //    public uint ifa_flags;
-    //    public IntPtr ifa_addr;
-    //    public IntPtr ifa_netmask;
-    //    public IntPtr ifa_dstaddr;
-    //    public IntPtr ifa_data;
-    //}
-
     [DllImport("libc")]
     public static extern int getifaddrs(ref IntPtr ifap);
 

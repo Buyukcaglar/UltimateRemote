@@ -35,6 +35,11 @@ public sealed partial class UltimateDeviceManager : BaseComponent
 
         DeviceManager.DeviceListUpdatedEvent -= OnDeviceListUpdated;
         DeviceManager.DeviceListUpdatedEvent += OnDeviceListUpdated;
+
+#if IOS || MACCATALYST
+        IpAddressService.TriggerLocalNetworkPermissionDialog();
+#endif
+
     }
 
     private Task Scan()

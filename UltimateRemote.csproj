@@ -60,8 +60,8 @@
 
     <PropertyGroup Condition="'$(TargetFramework)'=='net8.0-ios'">
       <ProvisioningType>automatic</ProvisioningType>
-      <CodesignKey>iPhone Distribution</CodesignKey>
-      <CodesignProvision></CodesignProvision>
+      <CodesignKey>Apple Development: Created via API (6J4C523F57)</CodesignKey>
+      <CodesignProvision>VS: com.buyukcaglar.ultimateremote Development</CodesignProvision>
     </PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-maccatalyst|AnyCPU'">
