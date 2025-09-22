@@ -28,6 +28,8 @@
 	</array>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/appicon.appiconset</string>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>In order to communicate with your Ultimate Device, Local Network permission is required. In case of not granting this permission, you have to manually enable it from Settings.</string>
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>In order to communicate with your Ultimate Device, Local Network permission is required. In case of not granting this permission, you have to manually enable it from Settings.</string>
 	<key>NSBonjourServices</key>
@@ -430,10 +432,8 @@
 		</dict>
 	</array>
 	<key>CFBundleShortVersionString</key>
-	<string>1.3</string>
-	<key>CFBundleVersion</key>
-	<string>2</string>
+	<string>1.4</string>
 	<key>LSMinimumSystemVersion</key>
-	<string>12.3.0</string>	
+	<string>12.3.0</string>
 </dict>
 </plist>

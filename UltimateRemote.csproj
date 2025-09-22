@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
     <PropertyGroup>
-		<TargetFrameworks>net8.0-ios;net8.0-maccatalyst;net8.0-android</TargetFrameworks>
+		<TargetFrameworks>net9.0-ios;net9.0-maccatalyst;net9.0-android</TargetFrameworks>
         <!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
-        <!-- <TargetFrameworks>$(TargetFrameworks);net8.0-tizen</TargetFrameworks> -->
+        <!-- <TargetFrameworks>$(TargetFrameworks);net9.0-tizen</TargetFrameworks> -->
 
         <!-- Note for MacCatalyst:
             The default runtime is maccatalyst-x64, except in Release config, in which case the default is maccatalyst-x64;maccatalyst-arm64.
@@ -38,14 +38,14 @@
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
     </PropertyGroup>
 
-    <PropertyGroup Condition="'$(TargetFramework)'=='net8.0-ios'" />
+    <PropertyGroup Condition="'$(TargetFramework)'=='net9.0-ios'" />
 
     <PropertyGroup>
       <Title>Ultimate Remote</Title>
     </PropertyGroup>
 
     <PropertyGroup>
-      <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
+      <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net9.0-windows10.0.19041.0</TargetFrameworks>
       <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
       <AppxPackageSigningEnabled>False</AppxPackageSigningEnabled>
       <PackageCertificateThumbprint>2F86242F5DD84D0180767B5E29DC99794855E8D6</PackageCertificateThumbprint>
@@ -58,13 +58,13 @@
       <DefaultLanguage>en</DefaultLanguage>
     </PropertyGroup>
 
-    <PropertyGroup Condition="'$(TargetFramework)'=='net8.0-ios'">
+    <PropertyGroup Condition="'$(TargetFramework)'=='net9.0-ios'">
       <ProvisioningType>automatic</ProvisioningType>
-      <CodesignKey>Apple Development: Created via API (6J4C523F57)</CodesignKey>
+      <CodesignKey>Apple Development: Created via API (9NG8G97RC5)</CodesignKey>
       <CodesignProvision>VS: com.buyukcaglar.ultimateremote Development</CodesignProvision>
     </PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-maccatalyst|AnyCPU'">
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-maccatalyst|AnyCPU'">
 		<MtouchLink>SdkOnly</MtouchLink>
 		<EnableCodeSigning>True</EnableCodeSigning>
 		<EnablePackageSigning>true</EnablePackageSigning>
@@ -73,6 +73,14 @@
 		<CodesignProvision>Ultimate Remote Mac Distribution</CodesignProvision>
 		<CodesignEntitlements>Platforms\MacCatalyst\Entitlements.plist</CodesignEntitlements>
 		<PackageSigningKey>3rd Party Mac Developer Installer: Onur Buyukcaglar (SZ4F4WP934)</PackageSigningKey>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-ios|AnyCPU'">
+	  <BuildIpa>False</BuildIpa>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-ios|AnyCPU'">
+	  <BuildIpa>False</BuildIpa>
 	</PropertyGroup>
     
     <ItemGroup>
@@ -94,15 +102,17 @@
     </ItemGroup>
 	-->
     <ItemGroup>
-        <PackageReference Include="Blazored.Modal" Version="7.3.1" />
-        <PackageReference Include="Blazored.Toast" Version="4.2.0" />
-        <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
-        <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.7" />
-        <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.7" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="8.0.7" />
-        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
-        <PackageReference Include="MonkeyCache.FileStore" Version="2.0.1" />
-        <PackageReference Include="SharpCompress" Version="0.36.0" />
+        <PackageReference Include="blazored.modal" Version="7.3.1" />
+        <PackageReference Include="Blazored.Toast" Version="4.2.1" />
+        <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.9" />
+        <PackageReference Include="Microsoft.JSInterop.WebAssembly" Version="9.0.9" />
+        <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.110" />
+        <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="9.0.110" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="9.0.110" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.9" />
+        <PackageReference Include="MonkeyCache" Version="3.0.0-beta" />
+        <PackageReference Include="MonkeyCache.FileStore" Version="3.0.0-beta" />
+        <PackageReference Include="SharpCompress" Version="0.40.0" />
     </ItemGroup>
 
     <ItemGroup>

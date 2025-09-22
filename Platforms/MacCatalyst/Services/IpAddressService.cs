@@ -35,7 +35,7 @@ public sealed class IpAddressService : IIpAddressService
         var retVal = default(string?);
 
         IntPtr addrList = IntPtr.Zero;
-        
+
         if (getifaddrs(ref addrList) == 0)
         {
             if (addrList != IntPtr.Zero)
@@ -50,13 +50,13 @@ public sealed class IpAddressService : IIpAddressService
                         var hostname = new byte[NI_MAXHOST];
                         if (Marshal.ReadIntPtr(cursor, 24) != IntPtr.Zero)
                         {
-                            if (getnameinfo(sa: Marshal.ReadIntPtr(cursor, ofs: 24), 
-                                    salen: (uint)Marshal.ReadIntPtr(cursor, ofs: 24 + IntPtr.Size), 
-                                    node: hostname, 
-                                    nodelen: (uint)hostname.Length, 
-                                    service: Array.Empty<byte>(), 
-                                    servicelen: 0, 
-                                    flags:NI_NUMERICHOST) == 0 && hostname[0] != 0)
+                            if (getnameinfo(sa: Marshal.ReadIntPtr(cursor, ofs: 24),
+                                    salen: (uint)Marshal.ReadIntPtr(cursor, ofs: 24 + IntPtr.Size),
+                                    node: hostname,
+                                    nodelen: (uint)hostname.Length,
+                                    service: Array.Empty<byte>(),
+                                    servicelen: 0,
+                                    flags: NI_NUMERICHOST) == 0 && hostname[0] != 0)
                             {
                                 addrStr = Encoding.ASCII.GetString(hostname);
                                 if (interfaceName == "en0")
@@ -77,4 +77,18 @@ public sealed class IpAddressService : IIpAddressService
             : null;
     }
 
+    public IEnumerable<string> GetLocalIPv4Addresses()
+    {
+        throw new NotImplementedException();
+    }
+
+    public string? GetIPv4AddressForInterface(string interfaceName)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void TriggerLocalNetworkPermissionDialog()
+    {
+        throw new NotImplementedException();
+    }
 }
