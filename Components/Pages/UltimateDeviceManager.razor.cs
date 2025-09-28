@@ -69,10 +69,13 @@ public sealed partial class UltimateDeviceManager : BaseComponent
 
         var scanResult = await ExecuteUiBlockingTask(task: DeviceScanner.ScanDevices(ipAddress),
             blockingMessage: Strings.DeviceManager.ScanningDevices(ipAddress));
-
-        if (scanResult is { Found: false })
+        
+        if (scanResult is not { Found: true })
         {
-            DisplayWarningToast(message: scanResult.Message!, title: Strings.DeviceManager.ToastTitleDeviceScanFail);
+            var message = !string.IsNullOrWhiteSpace(scanResult?.Message)
+                ? scanResult.Message
+                : Strings.DeviceManager.ToastMessageDeviceScanResultEmpty;
+            DisplayWarningToast(message, title: Strings.DeviceManager.ToastTitleDeviceScanFail);
             return;
         }
 

@@ -23,7 +23,7 @@ public class UserPreferences
 
     public bool DisplayShortcutOptions { get; set; }
 
-    public string HVSCArchiveLocation { get; set; } = "https://hvsc.brona.dk/HVSC/HVSC_80-all-of-them.rar";
+    public string HVSCArchiveLocation { get; set; } = "https://hvsc.brona.dk/HVSC/HVSC_83-all-of-them.rar";
 
     public string SongLengthDbFileLocation { get; set; } = "https://www.hvsc.c64.org/download/C64Music/DOCUMENTS/Songlengths.md5";
 

@@ -1,8 +1,10 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Net;
+using System.Net.Sockets;
+using System.Runtime.InteropServices;
 using System.Text;
 using UltimateRemote.Interfaces;
 
-namespace UltimateRemote.Platforms.iOS.Services;
+namespace UltimateRemote.Platforms.MacCatalyst.Services;
 
 public sealed class IpAddressService : IIpAddressService
 {
@@ -21,6 +23,7 @@ public sealed class IpAddressService : IIpAddressService
     //    public IntPtr ifa_data;
     //}
 
+    /*
     [DllImport("libc", EntryPoint = "getnameinfo")]
     private static extern int getnameinfo(IntPtr sa, uint salen, byte[] node, uint nodelen, byte[] service, uint servicelen, int flags);
 
@@ -76,19 +79,39 @@ public sealed class IpAddressService : IIpAddressService
             ? string.Concat(retVal.Where(c => c == '.' || char.IsDigit(c)))
             : null;
     }
+    */
 
-    public IEnumerable<string> GetLocalIPv4Addresses()
-    {
-        throw new NotImplementedException();
-    }
-
-    public string? GetIPv4AddressForInterface(string interfaceName)
-    {
-        throw new NotImplementedException();
-    }
+    public string? GetIpAddress()
+        => Dns.GetHostEntry(Dns.GetHostName())
+            .AddressList.FirstOrDefault(x => x.AddressFamily == AddressFamily.InterNetwork && x.ToString() != "127.0.0.1")?
+            .ToString();
 
     public void TriggerLocalNetworkPermissionDialog()
     {
-        throw new NotImplementedException();
+        const int port = 12345;
+
+        var socket = default(Socket?);
+        var en0IpAddress = GetIpAddress();
+
+        if (string.IsNullOrWhiteSpace(en0IpAddress))
+            return;
+
+        try
+        {
+            socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            socket.Connect(en0IpAddress, port);
+
+            // Sending a dummy message to trigger the local network permission dialog on iOS
+            byte[] message = System.Text.Encoding.UTF8.GetBytes("Hello Cruel World!");
+            socket.Send(message);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Failed to connect or send data: {ex.Message}");
+        }
+        finally
+        {
+            socket?.Close();
+        }
     }
 }

@@ -46,8 +46,12 @@ internal static class DependencyConfiguration
         services.AddScoped<IIpAddressService, Platforms.Android.Services.IpAddressService>();
 #endif
 
-#if IOS || MACCATALYST
+#if IOS
         services.AddScoped<IIpAddressService, Platforms.iOS.Services.IpAddressService>();
+#endif
+
+#if MACCATALYST
+        services.AddScoped<IIpAddressService, Platforms.MacCatalyst.Services.IpAddressService>();
 #endif
         return services;
     }
