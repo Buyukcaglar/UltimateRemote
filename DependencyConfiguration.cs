@@ -74,6 +74,12 @@ internal static class DependencyConfiguration
         services.AddBlazoredModal();
         services.AddBlazoredToast();
 
+#if MACCATALYST
+        // Add IFilePickerService service to your DI
+        // LukeFilePickerService
+        services.AddFilePicker();
+#endif
+
         return services;
     }
 

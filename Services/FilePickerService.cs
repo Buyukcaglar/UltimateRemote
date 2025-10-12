@@ -1,8 +1,14 @@
 ﻿using Blazored.Toast.Services;
+using LukeMauiFilePicker;
 using UltimateRemote.Models;
 
 namespace UltimateRemote.Services;
-public sealed class FilePickerService
+
+#if MACCATALYST
+public sealed class FilePickerService(IFilePickerService lukeFilePickerService)
+#else
+public sealed class FilePickerService        
+#endif
 {
     public async Task<FilePickResult> PickFile(PickOptions pickOptions)
     {
@@ -26,10 +32,46 @@ public sealed class FilePickerService
         return retVal;
     }
 
+#if MACCATALYST
+    public async Task<FilePickResult> PickFileLuke(PickOptions pickOptions)
+    {
+        var retVal = new FilePickResult();
+        try
+        {
+
+            var pickResult = await lukeFilePickerService.PickFileAsync(pickOptions.PickerTitle!,
+                new Dictionary<DevicePlatform, IEnumerable<string>>(
+                    [new KeyValuePair<DevicePlatform, IEnumerable<string>>(DevicePlatform.MacCatalyst, pickOptions.FileTypes!.Value)]
+                    
+                    ));
+            if (pickResult?.FileResult != null)
+            {
+                var fileStream = await pickResult.OpenReadAsync();
+                retVal.FileName = pickResult.FileName;
+                retVal.ContentType = pickResult.FileResult.ContentType;
+                retVal.FullPath = pickResult.FileResult.FullPath;
+                retVal.FileStream = fileStream;
+            }
+        }
+        catch (Exception ex)
+        {
+            retVal.Exception = ex;
+        }
+        return retVal;
+    }
+#endif
+    
     public async Task<(string FileName, byte[]? ContentBytes)> GetFileContentBytes(PickOptions pickOptions, IToastService? toastService = null)
     {
         var retVal = default((string FileName, byte[]? ContentBytes));
-        var pickResult = await PickFile(pickOptions);
+        Task<FilePickResult> pickResultTask;
+
+#if MACCATALYST
+        pickResultTask = PickFileLuke(pickOptions);
+#else
+        pickResultTask = PickFile(pickOptions);
+#endif
+        var pickResult = await pickResultTask;
         
         if (!pickResult.Success)
         {

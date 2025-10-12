@@ -25,6 +25,23 @@ namespace UltimateRemote.Extensions
                 });
         }
 
+        public static void DisplayInfoToast(this IToastService toastService, string message, string title, int timeOut)
+        {
+            var toastParameters = new ToastParameters()
+                .Add(nameof(Toast.HeaderColor), BgColorStyle.Info)
+                .Add(nameof(Toast.Icon), PhosphorIcon.InfoCircle)
+                .Add(nameof(Toast.Title), title)
+                .Add(nameof(Toast.Message), message);
+
+            toastService.ShowToast<Toast>(
+                toastParameters,
+                settings =>
+                {
+                    settings.Timeout = timeOut;
+                    settings.ShowProgressBar = true;
+                });
+        }
+
         public static void DisplaySuccessToast(this IToastService toastService, string message, string title)
         {
             var toastParameters = new ToastParameters()

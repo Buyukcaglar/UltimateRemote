@@ -77,6 +77,7 @@ public abstract class BaseComponent : ComponentBase, IDisposable, IAsyncDisposab
         }
         catch (Exception ex)
         {
+            Console.WriteLine(ex);
             System.Diagnostics.Debug.WriteLine(ex);
         }
         
