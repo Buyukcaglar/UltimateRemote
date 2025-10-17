@@ -82,6 +82,10 @@
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-ios|AnyCPU'">
 	  <BuildIpa>False</BuildIpa>
 	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-android|AnyCPU'">
+	  <AndroidPackageFormat>apk</AndroidPackageFormat>
+	</PropertyGroup>
     
     <ItemGroup>
         <MauiIcon Include="Resources\AppIcon\appicon.svg" Color="#F1F4F9" />
@@ -105,15 +109,15 @@
         <PackageReference Include="blazored.modal" Version="7.3.1" />
         <PackageReference Include="Blazored.Toast" Version="4.2.1" />
         <PackageReference Include="LukeMauiFilePicker" Version="1.2.0" />
-        <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.9" />
-        <PackageReference Include="Microsoft.JSInterop.WebAssembly" Version="9.0.9" />
-        <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.110" />
-        <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="9.0.110" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="9.0.110" />
-        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.9" />
+        <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.10" />
+        <PackageReference Include="Microsoft.JSInterop.WebAssembly" Version="9.0.10" />
+        <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.120" />
+        <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="9.0.120" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="9.0.120" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.10" />
         <PackageReference Include="MonkeyCache" Version="3.0.0-beta" />
         <PackageReference Include="MonkeyCache.FileStore" Version="3.0.0-beta" />
-        <PackageReference Include="SharpCompress" Version="0.40.0" />
+        <PackageReference Include="SharpCompress" Version="0.41.0" />
     </ItemGroup>
 
     <ItemGroup>

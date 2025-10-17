@@ -1,4 +1,4 @@
-﻿using Blazored.Toast.Services;
+﻿ using Blazored.Toast.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 

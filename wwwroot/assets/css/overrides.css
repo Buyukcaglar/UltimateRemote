@@ -200,8 +200,8 @@ i.ph-megaphone {
 
 @media(max-width:479px){
 
-    .position-topright[b-y65zu6vhcs] { bottom: 0 !important; top: auto !important; width: 100% !important; }
-    .blazored-toast {margin:0 !important; border-radius: 0 !important; width: 100% !important;}
+    .position-topright[b-y65zu6vhcs] { right: 0 !important; bottom: 0 !important; top: auto !important; width: 100% !important; }
+    .blazored-toast {margin:auto !important; border-radius: 0 !important; width: calc(100vw - 0.8rem) !important;}
     .toast { border-radius: 0 !important; width: 100% !important; }
     .toast-header { border-radius: 0 !important; }
 }
