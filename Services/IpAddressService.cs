@@ -1,17 +1,14 @@
 ﻿using System.Net;
 using System.Net.Sockets;
-using System.Runtime.InteropServices;
-using System.Text;
-using UltimateRemote.Interfaces;
 
-namespace UltimateRemote.Platforms.MacCatalyst.Services;
+namespace UltimateRemote.Services;
 
-public sealed class IpAddressService : IIpAddressService
+public sealed class IpAddressService
 {
     public string? GetIpAddress()
-        => Dns.GetHostEntry(Dns.GetHostName())
-            .AddressList.FirstOrDefault(x => x.AddressFamily == AddressFamily.InterNetwork && x.ToString() != "127.0.0.1")?
-            .ToString();
+    => Dns.GetHostEntry(Dns.GetHostName())
+        .AddressList.FirstOrDefault(x => x.AddressFamily == AddressFamily.InterNetwork & !x.ToString().Contains("127.0.0.1"))?
+        .ToString();
 
     public void TriggerLocalNetworkPermissionDialog()
     {
@@ -41,4 +38,5 @@ public sealed class IpAddressService : IIpAddressService
             socket?.Close();
         }
     }
+
 }

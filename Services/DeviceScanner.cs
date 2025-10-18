@@ -16,6 +16,8 @@ public sealed class DeviceScanner(HttpClient httpClient)
         var ipParts = ipAddress.Split('.', StringSplitOptions.RemoveEmptyEntries);
         var partialIp = string.Join(".", ipParts[..^1]);
         var rnd = new Random(DateTime.Now.Millisecond);
+
+#if !ANDROID
         var localNetAccess = await CheckLocalNetworkAccess($"{partialIp}.{rnd.Next(1, 255)}");
 
         if (!localNetAccess)
@@ -25,7 +27,7 @@ public sealed class DeviceScanner(HttpClient httpClient)
                 Message = Strings.ErrorMessages.CouldNotAccessLocalNetwork
             };
         }
-
+#endif
         var scanTasks = Enumerable.Range(0, 255).Select(rng => ScanIp2($"{partialIp}.{rng}"));
 
         var scanResults = await Task.WhenAll(scanTasks).ConfigureAwait(false);
