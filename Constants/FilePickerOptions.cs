@@ -192,12 +192,12 @@ internal static class FilePickerOptions
     private static readonly FilePickerFileType C64CartridgeImage = new FilePickerFileType(
         new Dictionary<DevicePlatform, IEnumerable<string>>
         {
-            { DevicePlatform.iOS, new[] { "public.c64.catridgeimage" } },
+            { DevicePlatform.iOS, new[] { "public.c64.crt" } },
             { DevicePlatform.Android, new[] { "application/octet-stream" } },
             { DevicePlatform.WinUI, new[] { ".crt" } },
             { DevicePlatform.Tizen, new[] { "*/*" } },
-            { DevicePlatform.macOS, new[] { "public.c64.catridgeimage" } },
-            { DevicePlatform.MacCatalyst, new[] { "public.c64.catridgeimage" } },
+            { DevicePlatform.macOS, new[] { "public.c64.crt" } },
+            { DevicePlatform.MacCatalyst, new[] { "public.c64.crt" } },
         });
 
     private static readonly FilePickerFileType C64RomFile = new FilePickerFileType(

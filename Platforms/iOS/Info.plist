@@ -67,6 +67,27 @@
 		</dict>
 		<dict>
 			<key>UTTypeIdentifier</key>
+			<string>public.c64.crt</string>
+			<key>UTTypeReferenceURL</key>
+			<string>http://unusedino.de/ec64/technical/formats/crt.html</string>
+			<key>UTTypeDescription</key>
+			<string>Commodore 64 Cartridge Image File</string>			
+			<key>UTTypeConformsTo</key>
+			<array>				
+				<string>public.data</string>
+			</array>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>crt</string>
+				</array>
+				<key>public.mime-type</key>
+				<string>application/octet-stream</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeIdentifier</key>
 			<string>public.c64.diskimage</string>
 			<key>UTTypeReferenceURL</key>
 			<string>https://www.c64-wiki.com/wiki/Disk_Image</string>
@@ -432,7 +453,7 @@
 		</dict>
 	</array>
 	<key>CFBundleShortVersionString</key>
-	<string>1.4</string>
+	<string>1.5</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>12.3.0</string>
 </dict>

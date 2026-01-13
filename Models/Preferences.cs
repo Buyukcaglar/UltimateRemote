@@ -23,7 +23,7 @@ public class UserPreferences
 
     public bool DisplayShortcutOptions { get; set; }
 
-    public string HVSCArchiveLocation { get; set; } = "https://hvsc.brona.dk/HVSC/HVSC_83-all-of-them.rar";
+    public string HVSCArchiveLocation { get; set; } = "https://hvsc.brona.dk/HVSC/HVSC_84-all-of-them.rar";
 
     public string SongLengthDbFileLocation { get; set; } = "https://www.hvsc.c64.org/download/C64Music/DOCUMENTS/Songlengths.md5";
 
@@ -58,6 +58,7 @@ public class UserPreferences
         new DeviceLocation(Name: "Usb0", Path: "/Usb0", IconCss: "usb ph-duotone", BuiltIn: true) { Enabled = true, Default = true, Selected = true },
         new DeviceLocation(Name: "Usb1", Path: "/Usb1", IconCss: "usb ph-duotone", BuiltIn: true) { Enabled = true, Default = false },
         new DeviceLocation(Name: "Usb2", Path: "/Usb2", IconCss: "usb ph-duotone", BuiltIn: true) { Enabled = true, Default = false },
+        new DeviceLocation(Name: "SD", Path: "/SD", IconCss: "sim-card ph-duotone", BuiltIn: true) { Enabled = true, Default = false },
         new DeviceLocation(Name: "Temp", Path: "/Temp", IconCss: "trash ph-duotone", BuiltIn: true) { Enabled = true, Default = false },
         new DeviceLocation(Name: "Flash", Path: "/Flash", IconCss: "lightning ph-duotone", BuiltIn: true) { Enabled = true, Default = false },
     });

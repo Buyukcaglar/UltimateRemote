@@ -69,12 +69,12 @@
     
     <PrefItem Label="HVSC Download Address" Css="@PrefItemCss">
         <TextInput @bind-Value="@PrefsMgr.UserPrefs.HVSCArchiveLocation" />
-        <div class="@PrefItemDescCss">Download path for High Voltage SID Collection RAR archive. <span class="fw-semibold">Default:</span> https://hvsc.brona.dk/HVSC/HVSC_83-all-of-them.rar</div>
+        <div class="@PrefItemDescCss">Download path for High Voltage SID Collection RAR archive. <span class="fw-semibold">Default:</span> @PrefsMgr.HVSCArchiveLocation</div>
     </PrefItem>
     
     <PrefItem Label="SongLengths Download Address" Css="@PrefItemCss">
         <TextInput @bind-Value="@PrefsMgr.UserPrefs.SongLengthDbFileLocation" />
-        <div class="@PrefItemDescCss">Download path for HVSC Songlengths.md5 file. <span class="fw-semibold">Default:</span> https://www.hvsc.c64.org/download/C64Music/DOCUMENTS/Songlengths.md5</div>
+        <div class="@PrefItemDescCss">Download path for HVSC Songlengths.md5 file. <span class="fw-semibold">Default:</span> @PrefsMgr.SongLengthDbFileLocation</div>
     </PrefItem>
     
     <PrefItem Label="Display file path on HVSC SID Play" Css="@PrefItemCss">

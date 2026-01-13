@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.buyukcaglar.ultimateremote.android" android:versionCode="7">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.buyukcaglar.ultimateremote.android" android:versionCode="8">
 	<application android:allowBackup="true" android:usesCleartextTraffic="true" android:icon="@mipmap/appicon" android:supportsRtl="true" android:requestLegacyExternalStorage="true" android:label="Ultimate Remote"></application>
 	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-	<uses-permission android:name="android.permission.INTERNET" />	
+	<uses-permission android:name="android.permission.INTERNET" />
 </manifest>

@@ -94,18 +94,18 @@ public sealed class JukeboxService(HttpClient httpClient, PreferencesManager pre
             using var rarArchive = RarArchive.Open(archiveStream);
 
             var sidFileEntries = rarArchive.Entries
-                .Where(entry => !entry.IsDirectory && entry.Key.EndsWith(".sid"))
+                .Where(entry => !string.IsNullOrWhiteSpace(entry.Key) && !entry.IsDirectory && entry.Key.EndsWith(".sid"))
                 .ToArray();
 
             var soFar = 0;
-            var taskGroupSize = 100;
-            var sidFileEntryGroups = sidFileEntries.ToList().Partition(100).ToList();
+            const int taskGroupSize = 500;
+            var sidFileEntryGroups = sidFileEntries.ToList().Partition(taskGroupSize).ToList();
             var sidFileEntryTaskGroups =
                 sidFileEntryGroups.Select(list => ExtractFilesBatch(list, songLengthDict, jukeboxIndex));
 
             foreach (var taskGroup in sidFileEntryTaskGroups)
             {
-                await Task.WhenAll(taskGroup);
+                await taskGroup;
                 soFar += taskGroupSize;
                 ImportStatusChangedEvent.SignalProgress(Strings.JukeboxManager.ExtractingFiles(fileInfoArchive.Name, sidFileEntries.Length, soFar));
             }
@@ -131,14 +131,14 @@ public sealed class JukeboxService(HttpClient httpClient, PreferencesManager pre
     {
         foreach (var sidFileEntry in sidFileEntries)
         {
-            var sidFileName = sidFileEntry.Key
+            var sidFileName = sidFileEntry.Key!
                 .Replace("C64Music", "")
                 .Replace("\\", "/");
 
             if (!songLengthDict.TryGetValue(sidFileName, out var sidInfo))
                 continue;
 
-            await using var entryStream = sidFileEntry.OpenEntryStream();
+            await using var entryStream = await sidFileEntry.OpenEntryStreamAsync();
             await using var memoryStream = new MemoryStream();
             await entryStream.CopyToAsync(memoryStream);
 

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
     <PropertyGroup>
-		<TargetFrameworks>net9.0-ios;net9.0-maccatalyst;net9.0-android</TargetFrameworks>
+		<TargetFrameworks>net10.0-ios;net10.0-maccatalyst;net10.0-android</TargetFrameworks>
         <!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
         <!-- <TargetFrameworks>$(TargetFrameworks);net9.0-tizen</TargetFrameworks> -->
 
@@ -19,7 +19,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <EnableDefaultCssItems>false</EnableDefaultCssItems>
         <Nullable>enable</Nullable>
-
+		
         <!-- Display name -->
         <ApplicationTitle>Ultimate Remote</ApplicationTitle>
 
@@ -45,7 +45,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-      <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net9.0-windows10.0.19041.0</TargetFrameworks>
+      <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net10.0-windows10.0.19041.0</TargetFrameworks>
       <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
       <AppxPackageSigningEnabled>False</AppxPackageSigningEnabled>
       <PackageCertificateThumbprint>2F86242F5DD84D0180767B5E29DC99794855E8D6</PackageCertificateThumbprint>
@@ -94,6 +94,11 @@
 	  <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
 	  <AndroidPackageFormat>aab</AndroidPackageFormat>
 	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(TargetFramework)'=='net10.0-ios'">
+	  <CodesignKey>Apple Development: Created via API (N9F8T4J3SF)</CodesignKey>
+	  <CodesignProvision>VS: com.buyukcaglar.ultimateremote Development</CodesignProvision>
+	</PropertyGroup>
     
     <ItemGroup>
         <MauiIcon Include="Resources\AppIcon\appicon.svg" Color="#F1F4F9" />
@@ -117,15 +122,15 @@
         <PackageReference Include="blazored.modal" Version="7.3.1" />
         <PackageReference Include="Blazored.Toast" Version="4.2.1" />
         <PackageReference Include="LukeMauiFilePicker" Version="1.2.0" />
-        <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.10" />
-        <PackageReference Include="Microsoft.JSInterop.WebAssembly" Version="9.0.10" />
-        <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.120" />
-        <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="9.0.120" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="9.0.120" />
-        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.10" />
+        <PackageReference Include="Microsoft.Extensions.Http" Version="10.0.1" />
+        <PackageReference Include="Microsoft.JSInterop.WebAssembly" Version="10.0.1" />
+        <PackageReference Include="Microsoft.Maui.Controls" Version="10.0.20" />
+        <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="10.0.20" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="10.0.20" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.1" />
         <PackageReference Include="MonkeyCache" Version="3.0.0-beta" />
         <PackageReference Include="MonkeyCache.FileStore" Version="3.0.0-beta" />
-        <PackageReference Include="SharpCompress" Version="0.41.0" />
+        <PackageReference Include="SharpCompress" Version="0.44.0" />
     </ItemGroup>
 
     <ItemGroup>
