@@ -12,10 +12,14 @@ public sealed class FilePickerService
 {
     public async Task<FilePickResult> PickFile(PickOptions pickOptions)
     {
+#if ANDROID
+        await Permissions.RequestAsync<Permissions.StorageRead>();
+#endif
+
         var retVal = new FilePickResult();
         try
         {
-            var pickResult = await FilePicker.PickAsync(pickOptions);
+            var pickResult = await FilePicker.Default.PickAsync(pickOptions);
             if (pickResult != null)
             {
                 var fileStream = await pickResult.OpenReadAsync();

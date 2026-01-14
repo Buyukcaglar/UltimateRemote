@@ -5,11 +5,50 @@ internal static class FilePickerOptions
         new Dictionary<DevicePlatform, IEnumerable<string>>
         {
             { DevicePlatform.iOS, new[] { "public.c64.sid" } }, // UTType values
-            { DevicePlatform.Android, new[] { "application/octet-stream" } }, // MIME type
+            { DevicePlatform.Android, new[]
+            {
+                //"application/octet-stream",
+                "audio/x-sid",
+                "audio/x-psid",
+                "audio/prs.sid",
+                "audio/psid",
+            } }, // MIME type
             { DevicePlatform.WinUI, new[] { ".sid" } }, // file extension
             { DevicePlatform.Tizen, new[] { "*/*" } },
             { DevicePlatform.macOS, new[] { "public.c64.sid" } }, // UTType values
             { DevicePlatform.MacCatalyst, new[] { "public.c64.sid" } },
+        });
+
+    private static readonly FilePickerFileType C64CartridgeImage = new FilePickerFileType(
+        new Dictionary<DevicePlatform, IEnumerable<string>>
+        {
+            { DevicePlatform.iOS, new[] { "public.c64.crt", "public.x509-certificate" } },
+            { DevicePlatform.Android, new[]
+            {
+                "application/x-c64-cartridge",
+                "application/pkix-cert",
+                "application/x-x509-ca-cert",
+                "application/x-x509-user-cert"
+            } },
+            { DevicePlatform.WinUI, new[] { ".crt" } },
+            { DevicePlatform.Tizen, new[] { "*/*" } },
+            { DevicePlatform.macOS, new[] { "public.c64.crt", "public.x509-certificate" } },
+            { DevicePlatform.MacCatalyst, new[] { "public.c64.crt", "public.x509-certificate" } },
+        });
+
+    private static readonly FilePickerFileType C64ProgramFile = new FilePickerFileType(
+        new Dictionary<DevicePlatform, IEnumerable<string>>
+        {
+            { DevicePlatform.iOS, new[] { "public.c64.program" } },
+            { DevicePlatform.Android, new[]
+            {
+                "application/octet-stream",
+                "application/x-c64-program"
+            } },
+            { DevicePlatform.WinUI, new[] { ".prg" } },
+            { DevicePlatform.Tizen, new[] { "*/*" } },
+            { DevicePlatform.macOS, new[] { "public.c64.program" } },
+            { DevicePlatform.MacCatalyst, new[] { "public.c64.program" } },
         });
 
     private static readonly FilePickerFileType TxtFile = new FilePickerFileType(
@@ -112,17 +151,6 @@ internal static class FilePickerOptions
             { DevicePlatform.MacCatalyst, new[] { "public.cmd.filesystemimage.dnp" } },
         });
 
-    private static readonly FilePickerFileType C64ProgramFile = new FilePickerFileType(
-        new Dictionary<DevicePlatform, IEnumerable<string>>
-        {
-            { DevicePlatform.iOS, new[] { "public.c64.program" } },
-            { DevicePlatform.Android, new[] { "application/octet-stream" } },
-            { DevicePlatform.WinUI, new[] { ".prg" } },
-            { DevicePlatform.Tizen, new[] { "*/*" } },
-            { DevicePlatform.macOS, new[] { "public.c64.program" } },
-            { DevicePlatform.MacCatalyst, new[] { "public.c64.program" } },
-        });
-
     private static readonly FilePickerFileType C64TapeImageFiles = new FilePickerFileType(
         new Dictionary<DevicePlatform, IEnumerable<string>>
         {
@@ -189,17 +217,6 @@ internal static class FilePickerOptions
             { DevicePlatform.MacCatalyst, new[] { "public.data" } },
         });
 
-    private static readonly FilePickerFileType C64CartridgeImage = new FilePickerFileType(
-        new Dictionary<DevicePlatform, IEnumerable<string>>
-        {
-            { DevicePlatform.iOS, new[] { "public.c64.crt" } },
-            { DevicePlatform.Android, new[] { "application/octet-stream" } },
-            { DevicePlatform.WinUI, new[] { ".crt" } },
-            { DevicePlatform.Tizen, new[] { "*/*" } },
-            { DevicePlatform.macOS, new[] { "public.c64.crt" } },
-            { DevicePlatform.MacCatalyst, new[] { "public.c64.crt" } },
-        });
-
     private static readonly FilePickerFileType C64RomFile = new FilePickerFileType(
         new Dictionary<DevicePlatform, IEnumerable<string>>
         {
@@ -226,7 +243,12 @@ internal static class FilePickerOptions
         new Dictionary<DevicePlatform, IEnumerable<string>>
         {
             { DevicePlatform.iOS, new[] { "public.music.mod" } },
-            { DevicePlatform.Android, new[] { "application/octet-stream" } },
+            { DevicePlatform.Android, new[]
+            {
+                "audio/mod",
+                "audio/x-mod",
+                "application/octet-stream"
+            } },
             { DevicePlatform.WinUI, new[] { ".mod" } },
             { DevicePlatform.Tizen, new[] { "*/*" } },
             { DevicePlatform.macOS, new[] { "public.music.mod" } },

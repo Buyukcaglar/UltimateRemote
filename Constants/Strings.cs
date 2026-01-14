@@ -372,6 +372,7 @@ internal static class Strings
 
         public const string ToastTitleCouldNotObtainLocalIp = "Local device IP";
         public const string ToastTitleDeviceScanFail = "Device Scan Failed";
+        public const string ToastTitlePermissionNotGranted = "Permission NOT Granted";
 
         public const string ToastMessageDeviceScanResultEmpty =
             "Device scan result came up empty, please check that local network access permission is granted accordingly.";

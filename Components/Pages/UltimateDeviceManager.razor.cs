@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Components;
 using System.Net;
 using UltimateRemote.Components.Shared;
+using UltimateRemote.Enums;
 using UltimateRemote.Interfaces;
 using UltimateRemote.Models;
+using static Microsoft.Maui.ApplicationModel.Permissions;
 
 namespace UltimateRemote.Components.Pages;
 
@@ -22,6 +24,22 @@ public sealed partial class UltimateDeviceManager : BaseComponent
 
     private UltimateDeviceInfo _manualRegisterDevice = new ();
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+#if IOS || MACCATALYST
+            var status = await Permissions.RequestAsync<LocalNetworkPermission>();
+            if (status != PermissionStatus.Granted)
+            {
+                DisplayWarningToast(Strings.ErrorMessages.CouldNotAccessLocalNetwork, title: Strings.DeviceManager.ToastTitlePermissionNotGranted);
+            }
+#endif
+        }
+
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
     protected override void OnInitialized()
     {
         SetUpEvents();
@@ -36,9 +54,9 @@ public sealed partial class UltimateDeviceManager : BaseComponent
         DeviceManager.DeviceListUpdatedEvent -= OnDeviceListUpdated;
         DeviceManager.DeviceListUpdatedEvent += OnDeviceListUpdated;
 
-#if IOS || MACCATALYST
-        IpAddressService.TriggerLocalNetworkPermissionDialog();
-#endif
+//#if IOS || MACCATALYST
+//        IpAddressService.TriggerLocalNetworkPermissionDialog();
+//#endif
 
     }
 
