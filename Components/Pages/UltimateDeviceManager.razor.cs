@@ -28,7 +28,7 @@ public sealed partial class UltimateDeviceManager : BaseComponent
     {
         if (firstRender)
         {
-#if IOS || MACCATALYST
+#if IOS
             var status = await Permissions.RequestAsync<LocalNetworkPermission>();
             if (status != PermissionStatus.Granted)
             {
@@ -54,9 +54,9 @@ public sealed partial class UltimateDeviceManager : BaseComponent
         DeviceManager.DeviceListUpdatedEvent -= OnDeviceListUpdated;
         DeviceManager.DeviceListUpdatedEvent += OnDeviceListUpdated;
 
-//#if IOS || MACCATALYST
-//        IpAddressService.TriggerLocalNetworkPermissionDialog();
-//#endif
+#if MACCATALYST
+        IpAddressService.TriggerLocalNetworkPermissionDialog();
+#endif
 
     }
 
