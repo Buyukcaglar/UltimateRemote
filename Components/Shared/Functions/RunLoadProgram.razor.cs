@@ -5,7 +5,7 @@ namespace UltimateRemote.Components.Shared.Functions;
 public sealed partial class RunLoadProgram : BaseFileFunctionComponent
 {
     protected override FileTypeGroup[] AllowedFileTypeGroups =>
-        new[] { PrefsMgr.GetFileTypeGroup(FileTypeGroupNames.Program)! };
+        [PrefsMgr.GetFileTypeGroup(FileTypeGroupNames.Program)!];
 
     private ActionType _actionType;
     private readonly ActionType[] _actionTypes = ActionType.Run.GetEnumValues();

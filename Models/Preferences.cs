@@ -76,9 +76,9 @@ public class UserPreferences
 
 public sealed record FileTypeGroup(string Name, string[] Extensions, bool Enabled, bool BuiltIn, [property: JsonIgnore] PickOptions FilePickerOptions);
 
-public sealed record DeviceLocation(string Name, string Path, string? IconCss, bool BuiltIn)
+public sealed record DeviceLocation(string Name, string Path, string? IconCss, bool BuiltIn, bool Enabled = false)
 {
-    public bool Enabled { get; set; }
+    public bool Enabled { get; set; } = Enabled;
     public bool Default { get; set; }
     [JsonIgnore] public bool Selected { get; set; }
 };

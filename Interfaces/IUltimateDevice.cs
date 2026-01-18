@@ -66,7 +66,8 @@ public interface IUltimateDevice
     #region FtpMethods
 
     Task<byte[]> GetFile(string filePath);
-
+    Task<string> GetStorageTargets();
     #endregion
+
     void Dispose();
 }

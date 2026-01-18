@@ -12,11 +12,18 @@ public sealed class DeviceManager
     
     private readonly List<IUltimateDevice> _devices;
     private readonly DeviceProvider _deviceProvider;
-    private readonly IUltimateDevice _dummyDevice;
+    private readonly PreferencesManager _prefsMgr;
+    private readonly EventService _eventService;
 
-    public DeviceManager(DeviceProvider deviceProvider, [FromKeyedServices(ServiceKeys.DummyDevice)] IUltimateDevice dummyDevice)
+    public DeviceManager(
+        DeviceProvider deviceProvider,
+        PreferencesManager prefsMgr,
+        EventService eventService,
+        [FromKeyedServices(ServiceKeys.DummyDevice)] IUltimateDevice dummyDevice)
     {
-        _dummyDevice = dummyDevice;
+        CurrentDevice = dummyDevice;
+        _eventService = eventService;
+        _prefsMgr = prefsMgr;
         _deviceProvider = deviceProvider;
         var deviceInfos = Barrel.Current.Get<UltimateDeviceInfo[]>(CacheKeys.MyDevices) ??
                           Array.Empty<UltimateDeviceInfo>();
@@ -24,7 +31,7 @@ public sealed class DeviceManager
     }
 
     private IUltimateDevice CurrentDevice =>
-         _devices.FirstOrDefault(device => device.Current) ?? _devices.FirstOrDefault() ?? _dummyDevice;
+         _devices.FirstOrDefault(device => device.Current) ?? _devices.FirstOrDefault() ?? field;
 
     public IUltimateDevice GetCurrentDevice(IToastService toastService)
     {
@@ -111,16 +118,37 @@ public sealed class DeviceManager
         DeviceListUpdatedEvent?.Invoke(this, EventArgs.Empty);
     }
 
-    public void SelectDevice(string ipAddress)
+    public Task SelectDevice(string ipAddress)
     {
         var selectedDevice = GetDevice(ipAddress);
-        
-        if (selectedDevice is not { Current: false }) 
-            return;
-        
+
+        if (selectedDevice is not { Current: false })
+            return Task.CompletedTask;
+
         _devices.SetValue(device => device.UnSelectDevice());
         selectedDevice.SelectDevice();
+
+        return selectedDevice.Online ? SetCurrentDeviceLocations(selectedDevice) : Task.CompletedTask;
     }
+    private async Task SetCurrentDeviceLocations(IUltimateDevice device)
+    {
+        var storageTargets = await device.GetStorageTargets();
+        var targets = storageTargets
+            .Split("\r\n", StringSplitOptions.RemoveEmptyEntries)
+            .Select(target => new DeviceLocation(target, $"/{target}", GetDeviceLocationCss(target), BuiltIn: true, Enabled: true));
+        _prefsMgr.SetDeviceLocations(targets.ToArray());
+        _eventService.SignalDeviceListUpdate(this);
+    }
+
+    private static string GetDeviceLocationCss(string location)
+        => location switch
+        {
+            not null when location.Contains("usb", StringComparison.InvariantCultureIgnoreCase) => "usb ph-duotone",
+            not null when location.Contains("sd", StringComparison.InvariantCultureIgnoreCase) => "sim-card ph-duotone",
+            not null when location.Contains("temp", StringComparison.InvariantCultureIgnoreCase) => "trash ph-duotone",
+            not null when location.Contains("flash", StringComparison.InvariantCultureIgnoreCase) => "lightning ph-duotone",
+            _ => "question-mark"
+        };
 
     /// <summary>
     /// Returns IUltimateDevice for Manual registering.
@@ -137,10 +165,14 @@ public sealed class DeviceManager
 
     public void InvokeDeviceListUpdatedEvent()
         => DeviceListUpdatedEvent?.Invoke(this, EventArgs.Empty);
-    private void OnDeviceChanged(object? sender, EventArgs eventArgs)
+    
+    private async void OnDeviceChanged(object? sender, EventArgs eventArgs)
     {
         PersistDeviceList(_devices.ToDeviceInfoList());
         DeviceListUpdatedEvent?.Invoke(this, EventArgs.Empty);
+        
+        if (CurrentDevice.Type != UltimateDeviceType.None && CurrentDevice.Online)
+            await SetCurrentDeviceLocations(CurrentDevice);
     }
 
     public void StopConnectivityCheck()

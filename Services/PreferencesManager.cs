@@ -29,6 +29,9 @@ public class PreferencesManager
     private DeviceLocation? GetDeviceLocation(string locationName) =>
         UserPrefs.DeviceLocations.FirstOrDefault(location => location.Name == locationName);
 
+    public void SetDeviceLocations(DeviceLocation[] deviceLocations)
+        => UserPrefs.DeviceLocations = deviceLocations.ToList();
+
     public string[] EnabledFileExtensions =>
         EnabledFileTypeGroups.SelectMany(fileGroup => fileGroup.Extensions).Distinct().ToArray();
 

@@ -1,6 +1,7 @@
 ﻿using Blazored.Toast.Services;
 using UltimateRemote.Interfaces;
 
+// ReSharper disable once CheckNamespace
 namespace UltimateRemote.ApiClients;
 
 public sealed partial class UltimateDevice(IHttpClientFactory httpClientFactory, FtpClient ftpClient) : IUltimateDevice, IDisposable
@@ -81,4 +82,5 @@ public sealed partial class UltimateDevice(IHttpClientFactory httpClientFactory,
         _heartBeatHttpClient.Dispose();
         _httpClient.Dispose();
     }
+    
 }

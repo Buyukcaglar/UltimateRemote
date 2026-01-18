@@ -176,6 +176,7 @@ internal class DummyDevice : IUltimateDevice
         => NoDeviceResponse<ApiResponse>();
 
     public Task<byte[]> GetFile(string filePath) => Task.FromResult(Array.Empty<byte>());
+    public Task<string> GetStorageTargets() => Task.FromResult(string.Empty);
 
     private Task<T?> NoDeviceResponse<T>() where T : ApiResponse, new()
     {

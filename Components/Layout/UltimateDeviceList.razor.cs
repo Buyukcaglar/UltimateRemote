@@ -31,12 +31,11 @@ public sealed partial class UltimateDeviceList
 
     private Task OnDeviceSelect(UltimateDeviceInfo selectedDevice)
     {
-        DeviceManager.SelectDevice(selectedDevice.IpAddress);
-        return Task.CompletedTask;
+        return DeviceManager.SelectDevice(selectedDevice.IpAddress);
     }
 
     private async void OnDeviceListUpdated(object? sender, EventArgs eventArgs)
-        => await InvokeAsync(StateHasChanged);
+        => await base.InvokeAsync(StateHasChanged);
 
     private static string GetShortDeviceName(UltimateDeviceType deviceType)
         => deviceType switch
