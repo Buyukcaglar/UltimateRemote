@@ -1,4 +1,5 @@
 ﻿using Blazored.Toast.Services;
+using UltimateRemote.Models;
 using UltimateRemote.Models.ResponseModels;
 
 namespace UltimateRemote.Interfaces;
@@ -67,6 +68,7 @@ public interface IUltimateDevice
 
     Task<byte[]> GetFile(string filePath);
     Task<string> GetStorageTargets();
+    Task<FtpListItem[]> ListFolder(string path);
     #endregion
 
     void Dispose();

@@ -5,7 +5,7 @@ namespace UltimateRemote.Models;
 
 public sealed class UserLayout
 {
-    [JsonInclude] public string Id { get; private set; } = Guid.NewGuid().ToString();
+    [JsonInclude] public string Id { get; private set; } = Guid.CreateVersion7(DateTimeOffset.Now).ToString();
     
     public required string Name { get; set; }
 
@@ -17,7 +17,7 @@ public sealed class UserLayout
 
 public sealed record LayoutItem(LayoutItemType Type)
 {
-    [JsonInclude] public string Id { get; private set; } = Guid.NewGuid().ToString();
+    [JsonInclude] public string Id { get; private set; } = Guid.CreateVersion7(DateTimeOffset.Now).ToString();
     
     public string? Name { get; set; }
 

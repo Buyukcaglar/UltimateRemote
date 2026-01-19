@@ -110,6 +110,14 @@
         <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 		-->
     </ItemGroup>
+    
+    <ItemGroup>
+      <Compile Remove="Models\RequestModels\**" />
+      <Content Remove="Models\RequestModels\**" />
+      <EmbeddedResource Remove="Models\RequestModels\**" />
+      <MauiXaml Remove="Models\RequestModels\**" />
+      <None Remove="Models\RequestModels\**" />
+    </ItemGroup>
 	<!--
     <ItemGroup>
       <Content Include="Resources\AppIcon\appicon.svg">
@@ -131,10 +139,6 @@
         <PackageReference Include="MonkeyCache" Version="3.0.0-beta" />
         <PackageReference Include="MonkeyCache.FileStore" Version="3.0.0-beta" />
         <PackageReference Include="SharpCompress" Version="0.44.0" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Models\RequestModels\" />
     </ItemGroup>
 
     <ItemGroup>

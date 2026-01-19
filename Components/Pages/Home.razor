@@ -1,6 +1,10 @@
 ﻿@using UltimateRemote.Components.Shared.Functions
 @using UltimateRemote.Components.Shared.Functions.Drives
 
+<Card Title="File Browser">
+    <FileBrowser />
+</Card>
+
 @foreach (var layout in LayoutManager.Layouts)
 {
     <Card Title="@(layout.Name)">

@@ -41,7 +41,7 @@ public sealed partial class ConfigurationManager : BaseComponent, IDisposable
             await UnBlock();
             return;
         }
-            
+        
         var configCategoryList = new List<(string CategoryName, IConfigCategoryItemResponse[] CategoryItems)>();
         
         foreach (var configCategory in configResponse.Categories)

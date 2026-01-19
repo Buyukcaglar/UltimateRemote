@@ -57,7 +57,7 @@ public sealed partial class UserFile : BaseComponent
     {
         if (Item.Type == LayoutItemType.StorageContentFile)
         {
-            _selectedLocation = EnabledLocations.First(location => location.Path == Item.Location);
+            _selectedLocation = EnabledLocations.FirstOrDefault(location => location.Path == Item.Location);
         }
     }
 
