@@ -4,6 +4,7 @@
 
 public enum LayoutItemType
 {
+    [StringValue("File Browser")] FileBrowser,
     [StringValue("Storage Content File")] StorageContentFile,
     [StringValue("Uploaded File")] UploadedFile,
     [StringValue("HVSC SID File")] HVSCSIDFile,

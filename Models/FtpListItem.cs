@@ -4,7 +4,7 @@ public sealed record FtpListItem(string Name, string RelativePath, long Size, Da
 {
     private static readonly string[] DiskImageExtensions = ["d64", "g64", "d71", "g71", "d81"];
 
-    public string Path => $"{RelativePath}{Name}";
+    public string Path => !IsDirectory ? $"{RelativePath}{Name}" : $"{RelativePath}/{Name}";
 
     public string Extension => System.IO.Path.GetExtension(Name).TrimStart('.').ToLowerInvariant();
 
@@ -13,7 +13,7 @@ public sealed record FtpListItem(string Name, string RelativePath, long Size, Da
         { } when Path.Equals("/SD") => "sim-card ph-duotone",
         { } when Path.Equals("/Temp") => "trash ph-duotone",
         { } when Path.Equals("/Flash") => "lightning ph-duotone",
-        { } when System.Text.RegularExpressions.Regex.IsMatch(input: Path, pattern: "/Usb\\d{1,2}") => "usb ph-duotone",
+        { } when System.Text.RegularExpressions.Regex.IsMatch(input: Path, pattern: "/Usb\\d{1,2}$") => "usb ph-duotone",
         
         (_, IsDirectory: true, _) => "folder ph-duotone",
         

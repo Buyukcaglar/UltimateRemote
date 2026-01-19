@@ -1,0 +1,6 @@
+﻿@inherits BaseComponent
+
+<div class="d-flex flex-column btn btn-outline-light border-transparent rounded align-items-center p-1 mx-1" @onclick="@(() => ClickedEvent.InvokeAsync(Item))">
+    <i class="ph-@Item.Icon ph-2x"></i>
+    <div>@Item.Name</div>
+</div>

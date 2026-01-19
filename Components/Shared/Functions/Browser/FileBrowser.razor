@@ -1,0 +1,9 @@
+﻿@inherits BaseComponent
+
+@if (_files.Length > 0)
+{
+    foreach (var ftpListItem in _files)
+    {
+        <FtpFileItem Item="ftpListItem" ClickedEvent="OnItemClick"/>
+    }
+}
