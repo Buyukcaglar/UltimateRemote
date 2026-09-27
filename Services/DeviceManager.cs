@@ -49,11 +49,13 @@ public sealed class DeviceManager
     {
         foreach (var device in devices)
         {
-            AddDevice(device.Name, device.IpAddress, device.Version, device.Type);
+            AddDevice(device.Name, device.IpAddress, device.ApiVersion, device.ProductName, device.FirmwareVersion,
+                device.FpgaVersion, device.CoreVersion, device.Hostname, device.UniqueId, device.Type);
         }
     }
 
-    public void AddDevice(string? name, string ipAddress, string version, UltimateDeviceType type)
+    public void AddDevice(string? name, string ipAddress, string apiVersion, string productName, string firmwareVersion, 
+        string fpgaVersion, string? coreVersion, string hostName, string? uniqueId, UltimateDeviceType type)
     {
         name = string.IsNullOrWhiteSpace(name) ? Strings.Generic.DefaultDeviceName : name;
 
@@ -64,7 +66,7 @@ public sealed class DeviceManager
         if (device == null)
         {
             var newDeviceInfo = new UltimateDeviceInfo
-                { Name = name, IpAddress = ipAddress, Type = type, Version = version };
+                { Name = name, IpAddress = ipAddress, Type = type, ApiVersion = apiVersion };
             
             deviceInfoList.Add(newDeviceInfo);
 
@@ -77,13 +79,13 @@ public sealed class DeviceManager
         else
         {
             device.Name = name;
-            device.Version = version;
+            device.ApiVersion = apiVersion;
             device.Type = type;
 
             if (deviceInfo != null)
             {
                 deviceInfo.Name = name;
-                deviceInfo.Version = version;
+                deviceInfo.ApiVersion = apiVersion;
                 deviceInfo.Type = type;
             }
         }

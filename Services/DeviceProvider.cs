@@ -11,8 +11,16 @@ public sealed class DeviceProvider(IServiceProvider serviceProvider)
 
         device.Name = deviceInfo.Name;
         device.IpAddress = deviceInfo.IpAddress;
+        device.ApiVersion = deviceInfo.ApiVersion;
+        device.ProductName = deviceInfo.ProductName;
+        device.FirmwareVersion = deviceInfo.FirmwareVersion;
+        device.FpgaVersion = deviceInfo.FpgaVersion;
+        device.CoreVersion = deviceInfo.CoreVersion;
+        device.Hostname = deviceInfo.Hostname;
+        device.UniqueId = deviceInfo.UniqueId;
         device.Type = deviceInfo.Type;
-        device.Version = deviceInfo.Version;
+
+
         device.SetHeartbeatInterval(prefsMgr.ConnectivityCheckInterval);
         device.SetDefaultApiClientTimeout(prefsMgr.ApiClientTimeout);
         

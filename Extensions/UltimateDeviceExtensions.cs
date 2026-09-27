@@ -14,7 +14,7 @@ internal static class UltimateDeviceExtensions
             Online = device.Online,
             Name = device.Name,
             IpAddress = device.IpAddress,
-            Version = device.Version,
+            ApiVersion = device.ApiVersion,
             Type = device.Type,
         };
 

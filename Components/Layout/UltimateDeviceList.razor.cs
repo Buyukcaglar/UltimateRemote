@@ -13,8 +13,8 @@ public sealed partial class UltimateDeviceList
         set{}
 
     }
-    private Func<UltimateDeviceInfo, string> _labelFunc = deviceInfo =>
-        $"{deviceInfo.Name} - {deviceInfo.IpAddress} {GetShortDeviceName(deviceInfo.Type)} v{deviceInfo.Version}";
+    private readonly Func<UltimateDeviceInfo, string> _labelFunc = deviceInfo =>
+        $"{deviceInfo.Name} - {deviceInfo.IpAddress}";
 
     private string DropdownLabel => null != _selectedDevice ? _labelFunc(_selectedDevice) : "Select Device";
 
@@ -36,13 +36,4 @@ public sealed partial class UltimateDeviceList
 
     private async void OnDeviceListUpdated(object? sender, EventArgs eventArgs)
         => await base.InvokeAsync(StateHasChanged);
-
-    private static string GetShortDeviceName(UltimateDeviceType deviceType)
-        => deviceType switch
-        {
-            UltimateDeviceType.None => "N/A",
-            UltimateDeviceType.Ultimate1541 => "UII",
-            UltimateDeviceType.UltimateC64 => "U64",
-            _ => "???"
-        };
 }

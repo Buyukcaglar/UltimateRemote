@@ -87,7 +87,7 @@
                                     @bind-Value="device.Name">
                     <CustomLabel>
                         <span class="text-body">
-                            @Strings.DeviceManager.NewDeviceLabel(idx: ++idx, ip: device.IpAddress, device.Version)
+                            @Strings.DeviceManager.NewDeviceLabel(idx: ++idx, ip: device.IpAddress, device.ApiVersion)
                         </span>
                         <DropdownList T="UltimateDeviceType"
                                       Options="_deviceTypes"
@@ -135,7 +135,7 @@
                 <tr>
                     <td>@device.Name</td>
                     <td class="text-center">@device.IpAddress</td>
-                    <td class="text-center">@($"v{device.Version}")</td>
+                    <td class="text-center">@($"v{device.ApiVersion}")</td>
                     <td class="text-center">@device.Type.GetStringValue()</td>
                     <td class="text-center"><BoolBadge BoolFunc="@(() => device.Online)" TrueText="ONLINE" FalseText="OFFLINE" /></td>
                     <td class="text-center"><BoolBadge BoolFunc="@(() => device.Equals(DeviceManager.GetCurrentDevice(ToastService)))" TrueText="YES" FalseText="NO" /></td>

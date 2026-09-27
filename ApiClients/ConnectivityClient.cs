@@ -13,9 +13,9 @@ public sealed partial class UltimateDevice
             var versionInfo = await _heartBeatHttpClient.GetFromJsonAsync<VersionResponse>(ApiUrls.Version(IpAddress));
             if (!string.IsNullOrWhiteSpace(versionInfo?.Version))
             {
-                if (Version != versionInfo.Version)
+                if (ApiVersion != versionInfo.Version)
                 {
-                    Version = versionInfo.Version;
+                    ApiVersion = versionInfo.Version;
                     updated = true;
                 }
 

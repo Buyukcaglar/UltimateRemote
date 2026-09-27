@@ -69,7 +69,7 @@ public sealed partial class StorageContentFileSearch : ComponentBase, IDisposabl
             return;
         }
 
-        if (!IgnoreApiV0174CharWarning && currentDevice.Version == Strings.ApiVersions.V01)
+        if (!IgnoreApiV0174CharWarning && currentDevice.ApiVersion == Strings.ApiVersions.V01)
         {
             _currentDeviceName = currentDevice.Name;
             if(PrefsMgr.ApiV01CharLimitEnforcement)

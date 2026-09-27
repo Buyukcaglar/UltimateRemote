@@ -9,7 +9,16 @@ internal class DummyDevice : IUltimateDevice
     public bool Current { get; } = true;
     public string Name { get; set; } = "DummyDevice";
     public string IpAddress { get; set; } = "0.0.0.0";
-    public string Version { get; set; } = "0.0";
+    public string ApiVersion { get; set; } = "0.0";
+
+    public string ProductName { get; set; } = "Dummydevice";
+    public string FirmwareVersion { get; set; } = "0.0";
+    public string FpgaVersion { get; set; } = "0.0";
+    public string? CoreVersion { get; set; }
+    public string Hostname { get; set; } = "";
+    public string? UniqueId { get; set; }
+
+
     public UltimateDeviceType Type
     {
         get => UltimateDeviceType.None;
@@ -39,6 +48,9 @@ internal class DummyDevice : IUltimateDevice
 
     public Task<VersionResponse?> QueryVersion()
         => NoDeviceResponse<VersionResponse>();
+
+    public Task<InfoResponse> QueryInfo()
+        => Task.FromResult(InfoResponse.NoDeviceResponse());
 
     public Task<ApiResponse?> ResetMachine()
         => NoDeviceResponse<ApiResponse>();

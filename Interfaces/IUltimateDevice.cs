@@ -10,7 +10,13 @@ public interface IUltimateDevice
     bool Current { get; }
     string Name { get; set; }
     string IpAddress { get; set; }
-    string Version { get; set; }
+    string ApiVersion { get; set; }
+    string ProductName { get; set; }
+    string FirmwareVersion { get; set; }
+    string FpgaVersion { get; set; }
+    string? CoreVersion { get; set; }
+    string Hostname { get; set; }
+    string? UniqueId { get; set; }
     UltimateDeviceType Type { get; set; }
     bool Online { get; }
     void SelectDevice();
@@ -22,6 +28,7 @@ public interface IUltimateDevice
     void SetDefaultApiClientTimeout(uint timeOutInSeconds);
     void ChangeApiClientTimeout(uint timeOutInSeconds);
     Task<VersionResponse?> QueryVersion();
+    Task<InfoResponse> QueryInfo();
     Task<ApiResponse?> ResetMachine();
     Task<ApiResponse?> RebootMachine();
     Task<ApiResponse?> PauseMachine();

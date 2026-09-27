@@ -41,7 +41,7 @@
                     <BasicFunction FuncType="@item.Type" />
                     break;
                 case LayoutItemType.PowerOffMachine:
-                    @if (DeviceManager.GetCurrentDevice(ToastService).Type == UltimateDeviceType.UltimateC64)
+                    @if (DeviceManager.GetCurrentDevice(ToastService).Type == UltimateDeviceType.Computer)
                     {
                         <BasicFunction FuncType="@item.Type" />
                     }
@@ -59,7 +59,7 @@
                     <Drive BusId="@(item.GetData<KeyValuePair<string, int>>().Value)" />
                     break;
                 case LayoutItemType.Streams:
-                    @if (DeviceManager.GetCurrentDevice(ToastService).Type == UltimateDeviceType.UltimateC64)
+                    @if (DeviceManager.GetCurrentDevice(ToastService).Type == UltimateDeviceType.Computer)
                     {
                         <Streams /> 
                     }

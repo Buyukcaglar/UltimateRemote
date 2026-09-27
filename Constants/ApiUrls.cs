@@ -6,9 +6,11 @@ public class ApiUrls
     private static string UrlBase(string deviceIp) => $"http://{deviceIp}";
     
     private const string VersionUri = "/v1/version";
-    
+    private const string InfoUri = "/v1/info";
+
     public static string Version(string deviceIp) => $"{UrlBase(deviceIp)}{VersionUri}";
-    
+    public static string Info(string deviceIp) => $"{UrlBase(deviceIp)}{InfoUri}";
+
     private const string RunnersUri = "/v1/runners";
     private const string ConfigsUri = "/v1/configs";
     private const string MachineUri = "/v1/machine";

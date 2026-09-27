@@ -72,25 +72,6 @@ public sealed partial class UserFile : BaseComponent
         => (Item.Extension, ItemType: Item.Type, ActionType: _actionType) switch
         {
             { Extension: "d64" or "g64" or "d71" or "g71" or "d81" } => MountImage(Item.Type),
-
-            /*
-            { Extension: "d64" or "g64" or "d71" or "g71" or "d81", ItemType: LayoutItemType.StorageContentFile } => CurrentDevice.MountOnDeviceImage(_selectedDrive.DriveId, ItemLocationPath, DiskImageType.NotSpecified, _diskMode)
-                .ExecOnSuccess((mountImageResponse) =>
-                {
-                    DisplaySuccessToast(message: Strings.FloppyDrive.ToastMsgSuccessfulMountResult(mountImageResponse),
-                        Strings.FloppyDrive.ToastTitleSuccessfulMountResult);
-                    DeviceManager.InvokeDeviceListUpdatedEvent();
-                    return Task.CompletedTask;
-                }),
-            { Extension: "d64" or "g64" or "d71" or "g71" or "d81", ItemType: LayoutItemType.UploadedFile } => CurrentDevice.MountUploadedImage(_selectedDrive.DriveId, Item.ContentBytes!, Item.FileName!, DiskImageType.NotSpecified, _diskMode)
-                .ExecOnSuccess((mountImageResponse) =>
-                {
-                    DisplaySuccessToast(message: Strings.FloppyDrive.ToastMsgSuccessfulMountResult(mountImageResponse),
-                        Strings.FloppyDrive.ToastTitleSuccessfulMountResult);
-                    DeviceManager.InvokeDeviceListUpdatedEvent();
-                    return Task.CompletedTask;
-                }),
-            */
             
             { Extension: "prg", ItemType: LayoutItemType.StorageContentFile, ActionType: ActionType.Run } => CurrentDevice.RunPrgFileOnDevice(ItemLocationPath),
             { Extension: "prg", ItemType: LayoutItemType.StorageContentFile, ActionType: ActionType.Load } => CurrentDevice.LoadPrgFileOnDevice(ItemLocationPath)

@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using System.Net.Http.Json;
 using System.Text.Json;
 using UltimateRemote.Models;
 using UltimateRemote.Models.ResponseModels;
@@ -9,7 +8,7 @@ public sealed class DeviceScanner(HttpClient httpClient)
 {
     public event EventHandler<IpScanResult>? IpScanCompletedEvent;
 
-    public async Task<DeviceScanResult> ScanDevices(string ipAddress)
+    public async Task<DeviceScanResult>  ScanDevices(string ipAddress)
     {
         ipAddress = IPAddress.Parse(ipAddress).ToString();
 
@@ -28,7 +27,7 @@ public sealed class DeviceScanner(HttpClient httpClient)
             };
         }
 #endif
-        var scanTasks = Enumerable.Range(0, 255).Select(rng => ScanIp2($"{partialIp}.{rng}"));
+        var scanTasks = Enumerable.Range(0, 255).Select(rng => ScanIp($"{partialIp}.{rng}"));
 
         var scanResults = await Task.WhenAll(scanTasks).ConfigureAwait(false);
 
@@ -46,49 +45,43 @@ public sealed class DeviceScanner(HttpClient httpClient)
 
     private async Task<IpScanResult> ScanIp(string ip)
     {
-        var retVal = new IpScanResult(ip);
-        var response = default(VersionResponse?);
+        var retVal = IpScanResult.Empty(ip);
+        var apiVersionResponse = default(VersionResponse?);
+        var deviceInfoResponse = default(InfoResponse?);
 
         try
         {
-            var requestUrl = ApiUrls.Version(ip);
-            response = await httpClient.GetFromJsonAsync<VersionResponse?>(requestUrl);
-        }
-        catch (Exception ex)
-        {
-            System.Diagnostics.Debug.WriteLine(ex);
-        }
+            var apiVersionHttpResponse = await httpClient.GetAsync(ApiUrls.Version(ip), HttpCompletionOption.ResponseContentRead);
+            var deviceInfoHttpResponse = await httpClient.GetAsync(ApiUrls.Info(ip), HttpCompletionOption.ResponseContentRead);
 
-        if (string.IsNullOrWhiteSpace(response?.Version))
-            return retVal;
-
-        retVal.Version = response?.Version;
-
-        return retVal;
-    }
-
-    private async Task<IpScanResult> ScanIp2(string ip)
-    {
-        var retVal = new IpScanResult(ip);
-        var response = default(VersionResponse?);
-        try
-        {
-            //var requestUrl = $"http://{ip}/v1/version";
-            var requestUrl = ApiUrls.Version(ip);
-            var httpResponse = await httpClient.GetAsync(requestUrl, HttpCompletionOption.ResponseContentRead);
-            if (httpResponse is { IsSuccessStatusCode: true })
+            if (apiVersionHttpResponse is { IsSuccessStatusCode: true })
             {
-                await using var responseStream = await httpResponse.Content.ReadAsStreamAsync();
-                response = await JsonSerializer.DeserializeAsync<VersionResponse>(responseStream);
+                await using var responseStream = await apiVersionHttpResponse.Content.ReadAsStreamAsync();
+                apiVersionResponse = await JsonSerializer.DeserializeAsync<VersionResponse>(responseStream);
             }
-        }
-        catch (Exception ex)
-        {
-            System.Diagnostics.Debug.WriteLine(ex);
-        }
 
-        if (!string.IsNullOrWhiteSpace(response?.Version))
-            retVal.Version = response?.Version;
+            if (deviceInfoHttpResponse is { IsSuccessStatusCode: true })
+            {
+                await using var responseStream = await deviceInfoHttpResponse.Content.ReadAsStreamAsync();
+                deviceInfoResponse = await JsonSerializer.DeserializeAsync<InfoResponse>(responseStream);
+            }
+
+        }
+        catch { }
+
+        if (!string.IsNullOrWhiteSpace(apiVersionResponse?.Version))
+            retVal.ApiVersion = apiVersionResponse.Version;
+
+        if (null != deviceInfoResponse)
+        {
+            retVal.DeviceType = deviceInfoResponse.DeviceType;
+            retVal.ProductName = deviceInfoResponse.Product;
+            retVal.FirmwareVersion = deviceInfoResponse.FirmwareVersion;
+            retVal.FpgaVersion = deviceInfoResponse.FpgaVersion;
+            retVal.CoreVersion = deviceInfoResponse.CoreVersion;
+            retVal.Hostname = deviceInfoResponse.Hostname;
+            retVal.UniqueId = deviceInfoResponse.UniqueId;
+        }
 
         IpScanCompletedEvent?.Invoke(this, retVal);
 

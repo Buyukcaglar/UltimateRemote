@@ -1,2 +1,0 @@
-﻿
-namespace UltimateRemote.Models.ResponseModels;

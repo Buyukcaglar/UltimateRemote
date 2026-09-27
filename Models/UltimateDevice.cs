@@ -24,7 +24,19 @@ public sealed partial class UltimateDevice(IHttpClientFactory httpClientFactory,
 
     public string IpAddress { get; set; } = default!;
 
-    public string Version { get; set; } = default!;
+    public string ApiVersion { get; set; } = default!;
+
+    public string ProductName { get; set; } = default!;
+
+    public string FirmwareVersion { get; set; } = default!;
+
+    public string FpgaVersion { get; set; } = default!;
+
+    public string? CoreVersion { get; set; } = default!;
+
+    public string Hostname { get; set; } = default!;
+
+    public string? UniqueId { get; set; }
 
     public UltimateDeviceType Type { get; set; }
 

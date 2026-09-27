@@ -19,5 +19,21 @@ public sealed partial class UltimateDevice
 
         return versionResponse;
     }
-        
+
+    public async Task<InfoResponse> QueryInfo()
+    {
+        var infoResponse = default(InfoResponse?);
+
+        try
+        {
+            infoResponse = await _heartBeatHttpClient.GetFromJsonAsync<InfoResponse>(ApiUrls.Version(IpAddress));
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine(ex);
+        }
+
+        return infoResponse;
+    }
+
 }

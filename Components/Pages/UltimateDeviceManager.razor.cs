@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
 using System.Net;
 using UltimateRemote.Components.Shared;
-using UltimateRemote.Enums;
 using UltimateRemote.Interfaces;
 using UltimateRemote.Models;
-using static Microsoft.Maui.ApplicationModel.Permissions;
 
 namespace UltimateRemote.Components.Pages;
 
@@ -19,10 +17,10 @@ public sealed partial class UltimateDeviceManager : BaseComponent
     private int _found;
     private const int TotalScan = 256;
     private UltimateDeviceInfo[]? _devicesToBeRegistered;
-    private readonly UltimateDeviceType[] _deviceTypes 
-        = UltimateDeviceType.Ultimate1541.GetEnumValues()[1..];
+    private readonly UltimateDeviceType[] _deviceTypes
+        = UltimateDeviceType.Cartridge.GetEnumValues()[1..];
 
-    private UltimateDeviceInfo _manualRegisterDevice = new ();
+    private UltimateDeviceInfo _manualRegisterDevice = new();
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -65,11 +63,11 @@ public sealed partial class UltimateDeviceManager : BaseComponent
         ResetScanResults();
 
         var deviceIp = IpAddressService.GetIpAddress();
-        
-        if (!string.IsNullOrWhiteSpace(deviceIp)) 
+
+        if (!string.IsNullOrWhiteSpace(deviceIp))
             return ScanIp(deviceIp);
-        
-        DisplayErrorToast(message: Strings.ErrorMessages.CouldNotObtainLocalIpAddress, 
+
+        DisplayErrorToast(message: Strings.ErrorMessages.CouldNotObtainLocalIpAddress,
             title: Strings.DeviceManager.ToastTitleCouldNotObtainLocalIp);
         return Task.CompletedTask;
     }
@@ -77,17 +75,17 @@ public sealed partial class UltimateDeviceManager : BaseComponent
     private async Task ScanIp(string? ipAddress)
     {
         ResetScanResults();
-        
+
         // <Not neccessary>
         if (string.IsNullOrWhiteSpace(ipAddress))
             return;
-        
+
         ipAddress = ipAddress.Trim();
         // </Not neccessary>
 
         var scanResult = await ExecuteUiBlockingTask(task: DeviceScanner.ScanDevices(ipAddress),
             blockingMessage: Strings.DeviceManager.ScanningDevices(ipAddress));
-        
+
         if (scanResult is not { Found: true })
         {
             var message = !string.IsNullOrWhiteSpace(scanResult?.Message)
@@ -97,12 +95,20 @@ public sealed partial class UltimateDeviceManager : BaseComponent
             return;
         }
 
-        _devicesToBeRegistered = scanResult!.DeviceAddresses.Select(result => new UltimateDeviceInfo
+        _devicesToBeRegistered = scanResult.DeviceAddresses.Select(result => new UltimateDeviceInfo
         {
+            Name = $"{result.ProductName} ({result.FirmwareVersion})",
             IpAddress = result.IpAddress,
-            Version = !string.IsNullOrWhiteSpace(result.Version) ? result.Version : "0.0"
+            ApiVersion = result.ApiVersion,
+            ProductName = result.ProductName,
+            FirmwareVersion = result.FirmwareVersion,
+            FpgaVersion = result.FpgaVersion,
+            CoreVersion = result.CoreVersion,
+            Hostname = result.Hostname,
+            UniqueId = result.UniqueId,
+            Type = result.DeviceType
         }).ToArray();
-        
+
         await ScrollToElementWithId("deviceRegistry");
     }
 
@@ -110,35 +116,50 @@ public sealed partial class UltimateDeviceManager : BaseComponent
     {
         if (!ValidateIpAddress(_manualRegisterDevice.IpAddress))
         {
-            DisplayWarningToast(Strings.DeviceManager.EnterValidIpAddress, 
+            DisplayWarningToast(Strings.DeviceManager.EnterValidIpAddress,
                 Strings.DeviceManager.InvalidIpAddress);
             return;
         }
 
         if (_manualRegisterDevice.Type == UltimateDeviceType.None)
         {
-            DisplayWarningToast(Strings.DeviceManager.ToastMsgSelectDeviceType, 
+            DisplayWarningToast(Strings.DeviceManager.ToastMsgSelectDeviceType,
                 Strings.DeviceManager.ToastTitleSelectDeviceType);
             return;
         }
 
         var tempDevice = DeviceManager.GetDevice(_manualRegisterDevice);
-        var apiResult = await ExecuteUiBlockingTask(tempDevice.QueryVersion(),
+        var infoResponse = await ExecuteUiBlockingTask(tempDevice.QueryInfo(),
             Strings.DeviceManager.AccessingDevice(tempDevice.IpAddress));
-        
+        var versionResponse = await ExecuteUiBlockingTask(tempDevice.QueryVersion(),
+            Strings.DeviceManager.AccessingDevice(tempDevice.IpAddress));
+
         tempDevice.Dispose();
-        
-        if (string.IsNullOrWhiteSpace(apiResult?.Version))
+
+        string?[] controlParams =
+        [
+            infoResponse?.Product, infoResponse?.FirmwareVersion, infoResponse?.FpgaVersion, infoResponse?.Hostname,
+            infoResponse?.UniqueId, versionResponse?.Version
+        ];
+
+        if (controlParams.Any(string.IsNullOrWhiteSpace))
         {
             DisplayWarningToast(Strings.DeviceManager.ToastMsgUnableToQueryDevice(_manualRegisterDevice.IpAddress),
                 Strings.DeviceManager.ToastTitleUnableToQueryDevice);
             return;
         }
 
-        var version = apiResult.Version;
-        
-        DeviceManager.AddDevice(_manualRegisterDevice.Name, _manualRegisterDevice.IpAddress, version,
-            _manualRegisterDevice.Type);
+        DeviceManager.AddDevice(
+            _manualRegisterDevice.Name,
+            _manualRegisterDevice.IpAddress,
+            versionResponse!.Version!,
+            infoResponse!.Product,
+            infoResponse.FirmwareVersion,
+            infoResponse.FpgaVersion,
+            infoResponse.CoreVersion,
+            infoResponse.Hostname,
+            infoResponse.UniqueId,
+            infoResponse.DeviceType);
 
         _manualRegisterDevice = new UltimateDeviceInfo();
     }
@@ -173,14 +194,14 @@ public sealed partial class UltimateDeviceManager : BaseComponent
         {
             if (_devicesToBeRegistered.Any(device => device.Type == UltimateDeviceType.None))
             {
-                DisplayWarningToast(Strings.DeviceManager.ToastMsgSelectDeviceType, 
+                DisplayWarningToast(Strings.DeviceManager.ToastMsgSelectDeviceType,
                     Strings.DeviceManager.ToastTitleSelectDeviceType);
                 return Task.CompletedTask;
             }
 
             DeviceManager.AddDevices(_devicesToBeRegistered);
         }
-            
+
         ResetScanResults();
         return Task.CompletedTask;
     }
@@ -196,6 +217,6 @@ public sealed partial class UltimateDeviceManager : BaseComponent
         return Task.CompletedTask;
     }
 
-    
+
 
 }

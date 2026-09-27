@@ -1,7 +1,6 @@
 ﻿namespace UltimateRemote.Enums;
 
-// ULTIMATE-II+L, ULTIMATE-II+, ULTIMATE-II, ULTIMATE 64
-public enum UltimateDeviceType {[StringValue("NA")] None, [StringValue("Ultimate-II")] Ultimate1541, [StringValue("Ultimate 64")] UltimateC64 }
+public enum UltimateDeviceType {[StringValue("NA")] None, [StringValue("Cartridge")] Cartridge, [StringValue("Computer")] Computer }
 
 public enum DiskImageType { [StringValue("Auto")] NotSpecified, [StringValue("D64")] D64, [StringValue("G64")] G64, [StringValue("D71")] D71, [StringValue("G71")] G71, [StringValue("D81")] D81 }
 
