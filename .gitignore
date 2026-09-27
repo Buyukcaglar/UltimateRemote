@@ -364,3 +364,9 @@ FodyWeavers.xsd
 
 #Custom Project Ralted Files
 _ProjectFiles/
+
+# Claude Code MCP config (machine-specific absolute paths)
+.mcp.json
+
+# Local UE2 emulator install (binaries, firmware, live flash image, ROMs, MCP run dirs)
+/tools/
